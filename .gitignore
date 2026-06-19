@@ -1,0 +1,17 @@
+# Arquivos do Sistema Operacional
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Arquivos de chaves privadas (caso decida empacotar crx localmente)
+*.pem
+
+# Outros arquivos temporários
+*.log
+*.tmp
