@@ -1,0 +1,796 @@
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("chrome-extension://__MSG_@@extension_id__/font/SF-Pro-Display-Regular.ttf");
+}
+@font-face {
+  font-family: "Quantico";
+  src:
+    local("Quantico"),
+    local("Quantico"),
+    url("chrome-extension://__MSG_@@extension_id__/font/Quantico-Regular.woff")
+      format("woff"),
+    url("chrome-extension://__MSG_@@extension_id__/font/quantico.regular.ttf")
+      format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Quantico";
+  src:
+    local("Quantico Bold"),
+    local("Quantico-Bold"),
+    url("chrome-extension://__MSG_@@extension_id__/font/Quantico-Bold.woff")
+      format("woff"),
+    url("chrome-extension://__MSG_@@extension_id__/font/quantico.bold.ttf")
+      format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@media (max-width: 1264px) {
+  .exta-mass-main-btn-title {
+    display: none;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(900px);
+  }
+}
+@keyframes anim-right {
+  0% {
+    left: 0;
+    right: 100%;
+  }
+  12.5% {
+    left: 0;
+    right: 0;
+  }
+  50% {
+    left: 0;
+    right: 0;
+  }
+  62.5% {
+    left: 100%;
+    right: 0;
+  }
+  100% {
+    left: 100%;
+    right: 0;
+  }
+}
+@keyframes anim-left {
+  0% {
+    left: 100%;
+    right: 0;
+  }
+  12.5% {
+    left: 0;
+    right: 0;
+  }
+  50% {
+    left: 0;
+    right: 0;
+  }
+  62.5% {
+    left: 0;
+    right: 100%;
+  }
+  100% {
+    left: 0;
+    right: 100%;
+  }
+}
+@keyframes anim-bottom {
+  0% {
+    top: 0;
+    bottom: 100%;
+  }
+  12.5% {
+    top: 0;
+    bottom: 0;
+  }
+  50% {
+    top: 0;
+    bottom: 0;
+  }
+  62.5% {
+    top: 100%;
+    bottom: 0;
+  }
+  100% {
+    top: 100%;
+    bottom: 0;
+  }
+}
+@keyframes anim-top {
+  0% {
+    top: 100%;
+    bottom: 0;
+  }
+  12.5% {
+    top: 0;
+    bottom: 0;
+  }
+  50% {
+    top: 0;
+    bottom: 0;
+  }
+  62.5% {
+    top: 0;
+    bottom: 100%;
+  }
+  100% {
+    top: 0;
+    bottom: 100%;
+  }
+}
+/*
+Mass Btn Button in left bar
+ */
+.exta-mass-main-btn-wrapper .exta-mass-main-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 24px;
+  cursor: pointer;
+  width: 100%;
+}
+.exta-mass-main-btn-wrapper .exta-mass-main-btn .exta-mass-main-btn-icon {
+  position: relative;
+  border: none;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/icon_58.svg");
+  background-size: contain;
+}
+.exta-mass-main-btn-wrapper .exta-mass-main-btn .exta-mass-main-btn-title {
+  font-family: "SF Pro Display";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #434343;
+  background-size: 100%;
+  margin-left: 2px;
+  user-select: none;
+}
+.exta-mass-main-btn-wrapper .exta-mass-main-btn .exta-spining-loader {
+  position: absolute;
+  margin: 12px;
+}
+.exta-mass-main-btn-wrapper .exta-mass-main-btn.dark .exta-mass-main-btn-title {
+  color: #f5f5f5;
+}
+.exta-mass-main-btn-wrapper .exta-mass-main-btn.dark .exta_sneak_1:after,
+.exta-mass-main-btn-wrapper .exta-mass-main-btn.dark .exta_sneak_2:after,
+.exta-mass-main-btn-wrapper .exta-mass-main-btn.dark .exta_sneak_2:before,
+.exta-mass-main-btn-wrapper .exta-mass-main-btn.dark .exta_sneak_1:before {
+  background: #ffffff;
+}
+.exta-mass-main-btn-wrapper:hover .exta-mass-main-btn .exta-mass-main-btn-icon {
+  transform: scale(105%);
+}
+/**
+btns wrapper on post
+ */
+.exta-download-button-post-wrapper {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+*:hover > .exta-download-button-post-wrapper {
+  display: flex;
+}
+/**
+btns wrapper on feed reels page
+ */
+.exta-download-button-reels-feed-wrapper {
+  display: flex;
+}
+.exta-download-button-reels-feed-wrapper .exta-simple-download-button {
+  margin: 2px 0 0;
+}
+/**
+simple btn main class
+ */
+.exta-simple-download-button {
+  position: relative;
+  cursor: pointer;
+  z-index: 5;
+  border: none;
+  height: 24px;
+  width: 24px;
+  margin: 9px 0 0 9px;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_single_icon.svg");
+  background-position: center;
+}
+.exta-simple-download-button.carousel {
+  margin: 6px 0 0 9px;
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_all_icon.svg");
+}
+.exta-simple-download-button:hover {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_single_icon_hover.svg");
+}
+.exta-simple-download-button:hover.carousel {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_all_icon_hover.svg");
+}
+/**
+loader
+ */
+.exta-spining-loader {
+  z-index: 6;
+  position: absolute;
+  border: 2px solid #ffffff;
+  border-top: 2px solid #1482ff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  animation: spin 1s linear infinite;
+  background: transparent;
+}
+/*
+Stories
+*/
+.exta-download-button-stories-wrapper {
+  position: fixed;
+  left: 120px;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  z-index: 99;
+  margin-top: 12px;
+}
+.exta-download-button-stories-wrapper .exta-story-single-download-button,
+.exta-download-button-stories-wrapper .exta-story-all-download-button {
+  margin-left: 26px;
+  cursor: pointer;
+  width: auto;
+  height: 36px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.exta-download-button-stories-wrapper
+  .exta-story-single-download-button:hover
+  .exta-simple-download-button,
+.exta-download-button-stories-wrapper
+  .exta-story-all-download-button:hover
+  .exta-simple-download-button {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_single_icon_hover.svg");
+}
+.exta-download-button-stories-wrapper
+  .exta-story-single-download-button:hover
+  .exta-simple-download-button.carousel,
+.exta-download-button-stories-wrapper
+  .exta-story-all-download-button:hover
+  .exta-simple-download-button.carousel {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/dw_all_icon_hover.svg");
+}
+.exta-download-button-stories-wrapper
+  .exta-story-single-download-button
+  .exta-simple-download-button,
+.exta-download-button-stories-wrapper
+  .exta-story-all-download-button
+  .exta-simple-download-button {
+  margin: 0 0 0 10px !important;
+}
+.exta-download-button-stories-wrapper .exta-story-single-download-button span,
+.exta-download-button-stories-wrapper .exta-story-all-download-button span {
+  margin-left: 7px;
+}
+/*
+Dialog
+ */
+.exta-interceptor-loader-base {
+  position: fixed;
+  bottom: 0;
+  opacity: 0.5;
+  background: #000000;
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+}
+.exta-dialog-base {
+  position: fixed;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+  width: 540px;
+  height: 174px;
+  box-sizing: border-box;
+  display: flex;
+  background: #f3f6f9;
+  box-shadow: 0 4px 20px rgba(0, 82, 212, 0.15);
+  border-radius: 24px;
+  border: 2px solid transparent;
+}
+.exta-dialog-base .exta-dialog-title-wrapper {
+  height: 52px;
+  width: 100%;
+  position: relative;
+}
+.exta-dialog-base .exta-dialog-title-wrapper .exta-dialog-title {
+  color: #222222;
+  top: 16px;
+  left: 20px;
+  position: absolute;
+  font-family: "Quantico";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+}
+.exta-dialog-base .exta-dialog-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 20px;
+}
+.exta-dialog-base
+  .exta-dialog-content-wrapper
+  .exta-dialog-progress-percents-text {
+  font-family: "Quantico";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+.exta-dialog-base .exta-dialog-content-wrapper .exta-msg-slow {
+  display: none;
+  font-family: "Quantico";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 15px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.exta-dialog-base .exta-dialog-content-wrapper .exta-dialog-progress-bar {
+  position: relative;
+  width: 500px;
+  height: 10px;
+  border-color: transparent;
+  background: #cbd0d6;
+  border-radius: 10px;
+}
+.exta-dialog-base
+  .exta-dialog-content-wrapper
+  .exta-dialog-progress-bar
+  .exta-dialog-progress {
+  position: absolute;
+  height: 10px;
+  left: 0;
+  top: 0;
+  transition: all 0.5s ease-in-out;
+  color: #ffffff;
+  background: #0052d4;
+  border-radius: 10px;
+}
+.exta-dialog-base
+  .exta-dialog-content-wrapper
+  .exta-dialog-progress-bar.infinite {
+  overflow: hidden;
+}
+.exta-dialog-base
+  .exta-dialog-content-wrapper
+  .exta-dialog-progress-bar.infinite
+  .exta-dialog-progress {
+  width: 30%;
+  left: -30%;
+  animation: loading 2s ease-in 2s infinite;
+}
+.exta-dialog-base .exta-dialog-footer {
+  height: 50px;
+  padding: 0 20px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.exta-dialog-base .exta-dialog-footer .exta-dialog-stop-save-base,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-cancel-base,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-continue-base,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-close-base {
+  width: 130px;
+  height: 42px;
+  border-width: 0;
+  justify-content: center;
+  font-family: "Quantico";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  background: #0052d4;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base
+  .exta-tooltiptext {
+  font-family: "Quantico";
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  height: 49px;
+  right: 21px;
+  top: 49px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #222222;
+  display: flex;
+  align-items: center;
+  text-align: start;
+  padding-left: 10px;
+  width: 220px;
+  letter-spacing: normal;
+  background: #f0ede3;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+.exta-dialog-base .exta-dialog-footer .exta-dialog-stop-save-base.transparent,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-cancel-base.transparent,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-continue-base.transparent,
+.exta-dialog-base .exta-dialog-footer .exta-dialog-close-base.transparent {
+  background: transparent;
+  border: 2px solid #000000;
+  color: #000000;
+  position: relative;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base.transparent:hover,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base.transparent:hover,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base.transparent:hover,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base.transparent:hover {
+  background: #393939 !important;
+  color: #ffffff !important;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base.transparent:active,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base.transparent:active,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base.transparent:active,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base.transparent:active {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+.exta-dialog-base .exta-dialog-footer .exta-dialog-stop-save-base[disabled],
+.exta-dialog-base .exta-dialog-footer .exta-dialog-cancel-base[disabled],
+.exta-dialog-base .exta-dialog-footer .exta-dialog-continue-base[disabled],
+.exta-dialog-base .exta-dialog-footer .exta-dialog-close-base[disabled] {
+  cursor: not-allowed;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base:hover:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base:hover:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base:hover:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base:hover:not([disabled]) {
+  background: #0052d4;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base:hover:not([disabled])
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base:hover:not([disabled])
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base:hover:not([disabled])
+  .exta-tooltiptext,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base:hover:not([disabled])
+  .exta-tooltiptext {
+  visibility: visible;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base:hover:not([disabled])
+  .exta-tooltiptext::after,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base:hover:not([disabled])
+  .exta-tooltiptext::after,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base:hover:not([disabled])
+  .exta-tooltiptext::after,
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base:hover:not([disabled])
+  .exta-tooltiptext::after {
+  top: 49px;
+  right: 55px;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  border-color: #f0ede3 transparent transparent transparent;
+}
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-stop-save-base:active:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-cancel-base:active:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-continue-base:active:not([disabled]),
+.exta-dialog-base
+  .exta-dialog-footer
+  .exta-dialog-close-base:active:not([disabled]) {
+  background: #0052d4;
+}
+.exta-dialog-base .exta-dialog-footer .exta-message-zip-split {
+  font-family: "Quantico";
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 20px;
+  max-width: 350px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.exta-dialog-base .exta-dialog-footer.with_msg {
+  justify-content: space-between;
+}
+.exta-dialog-base.exta-dialog-message {
+  height: 190px;
+}
+.exta-dialog-base.exta-dialog-message .exta-dialog-content-wrapper {
+  flex-direction: row;
+  margin: 0 0 0 22px;
+  align-items: center;
+}
+.exta-dialog-base.exta-dialog-message
+  .exta-dialog-content-wrapper
+  .exta-err-logo {
+  height: 60px;
+  width: 60px;
+  background: url("chrome-extension://__MSG_@@extension_id__/icons/warning.svg")
+    no-repeat;
+}
+.exta-dialog-base.exta-dialog-message
+  .exta-dialog-content-wrapper
+  .exta-err-wait-logo {
+  background: url("chrome-extension://__MSG_@@extension_id__/icons/clock.svg")
+    no-repeat;
+  height: 60px;
+  width: 60px;
+}
+.exta-dialog-base.exta-dialog-message
+  .exta-dialog-content-wrapper
+  .exta-dialog-message-text {
+  font-family: "Quantico" !important;
+  font-style: normal;
+  color: #222222;
+  margin-left: 17.5px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+.exta-dialog-base.exta-dialog-policy {
+  width: 435px;
+  height: 260px;
+  background-color: #eef3f8;
+  border: 1px solid #ffffff;
+  padding: 10px;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-title {
+  font-size: 20px;
+  position: relative;
+  left: 0;
+  top: 8px;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-title .h1 {
+  font-weight: 700;
+  margin-right: 5px;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-title .h2 {
+  font-weight: 400;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-content-wrapper {
+  background-color: #fafcff;
+  margin: 0;
+  padding: 20px;
+  border-radius: 10px;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .policy-content-header {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .policy-content-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .policy-content-check {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 15px;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .policy-content-check
+  .check {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #000;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .policy-content-check
+  .check.checked {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/check.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 13px;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-footer {
+  margin-top: 10px;
+  padding: 0;
+  justify-content: space-between;
+}
+.exta-dialog-base.exta-dialog-policy .exta-dialog-footer button {
+  margin-left: 0;
+  width: 202.5px;
+}
+.exta-dialog-base.exta-dialog-policy
+  .exta-dialog-footer
+  .exta-dialog-continue-base.exta-disabled {
+  background-color: #9adbfb;
+}
+.exta-dialog-base.dark {
+  background: #1c1c1c;
+  color: #ffffff;
+}
+.exta-dialog-base.dark .exta-dialog-title-wrapper .exta-dialog-title {
+  color: #ffffff;
+}
+.exta-dialog-base.dark .exta-dialog-content-wrapper .exta-dialog-progress-bar {
+  background: #434343;
+}
+.exta-dialog-base.dark .exta-dialog-content-wrapper .exta-dialog-message-text {
+  color: #ffffff;
+}
+.exta-dialog-base.dark
+  .exta-dialog-content-wrapper
+  .exta-dialog-progress-percents-text {
+  color: #ffffff;
+}
+.exta-dialog-base.dark .exta-dialog-content-wrapper .exta-err-wait-logo {
+  background: url("chrome-extension://__MSG_@@extension_id__/icons/clock_light.svg")
+    no-repeat;
+}
+.exta-dialog-base.dark .exta-dialog-content-wrapper .exta-err-logo {
+  background: url("chrome-extension://__MSG_@@extension_id__/icons/warning_light.svg")
+    no-repeat;
+}
+.exta-dialog-base.dark .exta-dialog-content-wrapper .exta-msg-slow {
+  color: rgba(255, 255, 255, 0.5);
+}
+.exta-dialog-base.dark .exta-dialog-footer .exta-message-zip-split {
+  color: rgba(255, 255, 255, 0.5);
+}
+.exta-dialog-base.dark.exta-dialog-policy .exta-dialog-content-wrapper {
+  background-color: inherit;
+}
+.exta-dialog-base.dark.exta-dialog-policy .exta-dialog-content-wrapper .check {
+  border-color: white;
+}
+.exta-dialog-base.dark.exta-dialog-policy
+  .exta-dialog-content-wrapper
+  .check.checked {
+  background-image: url("chrome-extension://__MSG_@@extension_id__/icons/check_white.svg");
+}
+.exta-dialog-base.dark.exta-dialog-policy
+  .exta-dialog-footer
+  .exta-dialog-cancel-base.transparent {
+  border-color: white;
+  color: white;
+}
+.exta_sneak_1:after,
+.exta_sneak_2:after,
+.exta_sneak_2:before,
+.exta_sneak_1:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  background: #000000;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}
+.exta_sneak_1:before {
+  top: -1px;
+  left: -1px;
+  height: 2px;
+  animation-delay: 0s;
+  animation-name: anim-right;
+}
+.exta_sneak_1:after {
+  top: -1px;
+  right: -1px;
+  width: 2px;
+  animation-delay: 0.5s;
+  animation-name: anim-bottom;
+}
+.exta_sneak_2:before {
+  bottom: -1px;
+  right: -1px;
+  height: 2px;
+  animation-delay: 1s;
+  animation-name: anim-left;
+}
+.exta_sneak_2:after {
+  bottom: -1px;
+  left: -1px;
+  width: 2px;
+  animation-delay: 1.5s;
+  animation-name: anim-top;
+}

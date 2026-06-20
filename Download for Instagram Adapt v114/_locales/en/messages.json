@@ -1,0 +1,161 @@
+{
+  "AllOptionTitle": {
+    "message": "Baixar todas as publicações da página"
+  },
+  "ads_notify_button": {
+    "message": "Não mostrar notificações promocionais novamente"
+  },
+  "ads_notify_desc": {
+    "message": "Em instantes, o ExDU: Downloader profissional para Instagram irá redirecionar você para conteúdo promocional de acordo com os Termos de Uso. Você pode desativar anúncios a qualquer momento nas Opções. Clicando no botão abaixo, você pode ativar o modo silencioso de publicidade."
+  },
+  "ads_notify_policy": {
+    "message": "Exibimos esta página e fornecemos a opção de desativação conforme exigido pelas políticas da Chrome Web Store. A publicidade é o que nos permite manter a extensão gratuita para todos. Se optar por desativar, você simplesmente deixará de apoiar o projeto. Agradecemos a compreensão."
+  },
+  "all": {
+    "message": "Tudo"
+  },
+  "amountTitle": {
+    "message": "Baixar por sequência"
+  },
+  "any_type": {
+    "message": "Qualquer tipo"
+  },
+  "dateTitle": {
+    "message": "Baixar por período"
+  },
+  "delimLineText": {
+    "message": "ou"
+  },
+  "description": {
+    "message": "Baixe Stories, Fotos, Vídeos e Reels do Instagram com um clique. Extensão de downloader rápida, segura e fácil de usar."
+  },
+  "dialogCancel": {
+    "message": "Cancelar"
+  },
+  "dialogOk": {
+    "message": "OK"
+  },
+  "dialogStopSave": {
+    "message": "Parar e Salvar"
+  },
+  "dialogTitleZip": {
+    "message": "Preparando arquivo ZIP"
+  },
+  "disabledOptionToolTip": {
+    "message": "Parar o download e salvar as publicações preparadas"
+  },
+  "downloadAllBtn": {
+    "message": "Baixar tudo"
+  },
+  "downloadBtn": {
+    "message": "Baixar"
+  },
+  "downloadDoneSuccess": {
+    "message": "Download concluído com sucesso"
+  },
+  "downloading": {
+    "message": "Baixando"
+  },
+  "dwErr": {
+    "message": "Erro ao baixar"
+  },
+  "enable_promotional_content": {
+    "message": "Ativar conteúdo promocional"
+  },
+  "enable_promotional_notifications": {
+    "message": "Ativar notificações promocionais"
+  },
+  "error": {
+    "message": "Erro"
+  },
+  "fromLbl": {
+    "message": "de"
+  },
+  "go_to_pro_menu": {
+    "message": "Modo Avançado"
+  },
+  "go_to_simple_menu": {
+    "message": "Modo Simples"
+  },
+  "items": {
+    "message": "itens"
+  },
+  "mainBtnNewText": {
+    "message": "ExDU Downloader"
+  },
+  "media_not_found": {
+    "message": "Mídia não encontrada nesta página"
+  },
+  "most_commented": {
+    "message": "Mais comentados"
+  },
+  "most_liked": {
+    "message": "Mais curtidos"
+  },
+  "name": {
+    "message": "ExDU: Downloader profissional para Instagram"
+  },
+  "noPhotosFromDate": {
+    "message": "Sem fotos para estas datas"
+  },
+  "noPhotosInPosts": {
+    "message": "Sem fotos no intervalo selecionado"
+  },
+  "noPostsFromDate": {
+    "message": "Sem publicações para estas datas"
+  },
+  "noVideosFromDate": {
+    "message": "Sem vídeos para estas datas"
+  },
+  "noVideosInPosts": {
+    "message": "Sem vídeos no intervalo selecionado"
+  },
+  "notAllDwErr": {
+    "message": "Alguns arquivos não puderam ser preparados"
+  },
+  "only_photo": {
+    "message": "Foto"
+  },
+  "only_video": {
+    "message": "Vídeo"
+  },
+  "oops": {
+    "message": "Ops"
+  },
+  "prepared": {
+    "message": "Preparado"
+  },
+  "preparing": {
+    "message": "Preparando"
+  },
+  "rate_us": {
+    "message": "Avalie-nos"
+  },
+  "save": {
+    "message": "Salvar"
+  },
+  "slow_connection": {
+    "message": "A velocidade de download está baixa devido a uma conexão de Internet fraca"
+  },
+  "smthWentWrong": {
+    "message": "Ocorreu um erro"
+  },
+  "split_archives_explanation": {
+    "message": "Dividimos os arquivos em vários arquivos ZIP para que seu navegador tenha memória RAM suficiente e possa baixar todos os arquivos"
+  },
+  "toLbl": {
+    "message": "até"
+  },
+  "unsupported_page_type": {
+    "message": "O download em massa não está disponível nesta página"
+  },
+  "viewedReelsTitle": {
+    "message": "Baixar Reels assistidos"
+  },
+  "waitDownloadingEnd": {
+    "message": "Por favor, aguarde até que o download de outra aba seja concluído"
+  },
+  "your_rate": {
+    "message": "Sua avaliação"
+  }
+}

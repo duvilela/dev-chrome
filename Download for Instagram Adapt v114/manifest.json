@@ -1,0 +1,33 @@
+{
+   "action": {
+      "default_icon": "/icons/icon_16.png"
+   },
+   "background": {
+      "service_worker": "/js/bg.js"
+   },
+   "content_scripts": [ {
+      "css": [ "/css/style.css", "/css/menu.css" ],
+      "js": [ "/js/app.js" ],
+      "matches": [ "https://*.instagram.com/*" ],
+      "run_at": "document_idle"
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_description__",
+   "host_permissions": [ "https://*.instagram.com/*" ],
+   "icons": {
+      "256": "/icons/icon_256.png",
+      "58": "/icons/icon_58.png"
+   },
+   "manifest_version": 3,
+   "name": "__MSG_name__",
+   "author": "@duhvilela",
+   "options_ui": {
+      "page": "options.html"
+   },
+   "permissions": [ "webRequest", "cookies", "storage", "downloads", "tabs" ],
+   "version": "1.1.4",
+   "web_accessible_resources": [ {
+      "matches": [ "https://*.instagram.com/*" ],
+      "resources": [ "/font/*", "/icons/*" ]
+   } ]
+}
