@@ -1,0 +1,42 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "assets/images/icon16.png",
+         "19": "assets/images/icon19.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "/js/sw.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "assets/app.css", "assets/button.css" ],
+      "js": [ "js/app.js" ],
+      "matches": [ "https://*.tiktok.com/*" ],
+      "run_at": "document_idle"
+   } ],
+   "declarative_net_request": {
+      "rule_resources": [ {
+         "enabled": true,
+         "id": "ruleset_1",
+         "path": "assets/rules.json"
+      } ]
+   },
+   "default_locale": "en",
+   "description": "__MSG_description__",
+   "host_permissions": [ "https://*.tiktokv.com/*", "https://*.tiktok.com/*" ],
+   "icons": {
+      "128": "assets/images/icon128.png",
+      "32": "assets/images/icon32.png",
+      "48": "assets/images/icon48.png"
+   },
+   "manifest_version": 3,
+   "name": "__MSG_name__",
+   "permissions": [ "storage", "tabs", "downloads", "declarativeNetRequestWithHostAccess", "webRequest" ],
+   "version": "1.1.1",
+   "web_accessible_resources": [ {
+      "matches": [ "https://*.tiktok.com/*" ],
+      "resources": [ "assets/images/*.svg", "assets/images/*.png", "js/bridge_script.js" ]
+   } ]
+}

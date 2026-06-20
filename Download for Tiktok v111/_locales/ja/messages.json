@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "この動画についてChatGPTに質問する"
+   },
+   "available_now": {
+      "message": "現在利用可能"
+   },
+   "cancel": {
+      "message": "キャンセル"
+   },
+   "continue": {
+      "message": "続行"
+   },
+   "description": {
+      "message": "TikTokの動画や写真を透かしなしで保存。単体でも一括でもダウンロード可能。ChatGPT連携でスマートに活用。Chrome用拡張機能"
+   },
+   "disable_one_by_one_warning": {
+      "message": "今後このメッセージを表示しない"
+   },
+   "download": {
+      "message": "ダウンロード"
+   },
+   "download_all": {
+      "message": "すべてダウンロード"
+   },
+   "download_by_zip": {
+      "message": "ZIPを作成"
+   },
+   "download_from": {
+      "message": "次からダウンロード："
+   },
+   "download_last": {
+      "message": "最近の投稿をダウンロード"
+   },
+   "download_one_by_one": {
+      "message": "個別にダウンロード"
+   },
+   "download_with_watermark_setting": {
+      "message": "可能であれば透かし付きでダウンロード"
+   },
+   "downloaded": {
+      "message": "ダウンロード完了"
+   },
+   "downloading": {
+      "message": "ダウンロード中..."
+   },
+   "enough": {
+      "message": "停止"
+   },
+   "error": {
+      "message": "エラー"
+   },
+   "found": {
+      "message": "見つかりました"
+   },
+   "go_to_downloads_settings": {
+      "message": "ダウンロード設定に移動"
+   },
+   "later_you_can_get_more": {
+      "message": "後でもっとダウンロードできます"
+   },
+   "name": {
+      "message": "TikTokダウンローダー – 透かしなしで保存"
+   },
+   "no_dates_video": {
+      "message": "この期間には投稿が見つかりませんでした"
+   },
+   "one_by_one_warning_text": {
+      "message": "1つずつダウンロードする場合、事前に保存フォルダを選択または作成し、「毎回保存先を確認する」オプションをオフにするのがおすすめです"
+   },
+   "popup_reload": {
+      "message": "ページを更新して再試行してください"
+   },
+   "popup_to_tiktok": {
+      "message": "TikTokへ移動"
+   },
+   "posts": {
+      "message": "投稿"
+   },
+   "save": {
+      "message": "保存"
+   },
+   "send2ai": {
+      "message": "AIに送信"
+   },
+   "settings": {
+      "message": "設定"
+   },
+   "stop_button_description": {
+      "message": "必要なメディアが揃ったら、いつでもダウンロードを停止できます"
+   },
+   "to": {
+      "message": "〜"
+   },
+   "tryAgainLater": {
+      "message": "後でもう一度お試しください"
+   },
+   "video_not_found": {
+      "message": "このページで動画が見つかりませんでした"
+   },
+   "video_selected": {
+      "message": "選択された動画と写真"
+   },
+   "wait_download_in_another_tab": {
+      "message": "別のタブでのダウンロードが完了するまでお待ちください"
+   }
+}

@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "Спросить у ChatGPT об этом видео"
+   },
+   "available_now": {
+      "message": "Уже доступно"
+   },
+   "cancel": {
+      "message": "Отмена"
+   },
+   "continue": {
+      "message": "Продолжить"
+   },
+   "description": {
+      "message": "Скачивайте видео и фото с TikTok прямо в Chrome. Без водяных знаков, логина и ограничений. Массовое или одиночное скачивание. Есть интеграция с ChatGPT"
+   },
+   "disable_one_by_one_warning": {
+      "message": "Больше не показывать"
+   },
+   "download": {
+      "message": "Скачать"
+   },
+   "download_all": {
+      "message": "Скачать всё"
+   },
+   "download_by_zip": {
+      "message": "Создать ZIP"
+   },
+   "download_from": {
+      "message": "Скачать с"
+   },
+   "download_last": {
+      "message": "Скачать последние"
+   },
+   "download_one_by_one": {
+      "message": "Скачать по одному"
+   },
+   "download_with_watermark_setting": {
+      "message": "Скачать с водяным знаком, если возможно"
+   },
+   "downloaded": {
+      "message": "Скачано"
+   },
+   "downloading": {
+      "message": "Скачивание..."
+   },
+   "enough": {
+      "message": "Стоп"
+   },
+   "error": {
+      "message": "Ошибка"
+   },
+   "found": {
+      "message": "Найдено"
+   },
+   "go_to_downloads_settings": {
+      "message": "Перейти в настройки загрузки"
+   },
+   "later_you_can_get_more": {
+      "message": "Позже вы сможете скачать больше"
+   },
+   "name": {
+      "message": "TikTok Downloader – Скачивай без водяных знаков"
+   },
+   "no_dates_video": {
+      "message": "Не найдено публикаций за выбранные даты"
+   },
+   "one_by_one_warning_text": {
+      "message": "Если вы используете скачивание по одному, рекомендуется заранее выбрать или создать папку для сохранения и отключить опцию 'Спрашивать каждый раз, куда сохранять'"
+   },
+   "popup_reload": {
+      "message": "Пожалуйста, обновите страницу и попробуйте снова"
+   },
+   "popup_to_tiktok": {
+      "message": "Перейти в TikTok"
+   },
+   "posts": {
+      "message": "публикаций"
+   },
+   "save": {
+      "message": "Сохранить"
+   },
+   "send2ai": {
+      "message": "Отправить в ИИ"
+   },
+   "settings": {
+      "message": "Настройки"
+   },
+   "stop_button_description": {
+      "message": "Вы можете остановить скачивание в любой момент, если уже получили достаточно медиа"
+   },
+   "to": {
+      "message": "по"
+   },
+   "tryAgainLater": {
+      "message": "Попробуйте позже"
+   },
+   "video_not_found": {
+      "message": "На текущей странице не найдено видео"
+   },
+   "video_selected": {
+      "message": "выбрано видео и фото"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Пожалуйста, дождитесь завершения скачивания в другой вкладке"
+   }
+}

@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "Ask ChatGPT about this video"
+   },
+   "available_now": {
+      "message": "Now available"
+   },
+   "cancel": {
+      "message": "Cancel"
+   },
+   "continue": {
+      "message": "Continue"
+   },
+   "description": {
+      "message": "TikTok downloader for Chrome. Save videos and photos in bulk. Download with or without watermark. Quick send to ChatGPT for analysis"
+   },
+   "disable_one_by_one_warning": {
+      "message": "Don't show this anymore"
+   },
+   "download": {
+      "message": "Download"
+   },
+   "download_all": {
+      "message": "Download all"
+   },
+   "download_by_zip": {
+      "message": "Create ZIP"
+   },
+   "download_from": {
+      "message": "Download from"
+   },
+   "download_last": {
+      "message": "Download last"
+   },
+   "download_one_by_one": {
+      "message": "Download"
+   },
+   "download_with_watermark_setting": {
+      "message": "Download with a watermark if possible"
+   },
+   "downloaded": {
+      "message": "Downloaded"
+   },
+   "downloading": {
+      "message": "Downloading..."
+   },
+   "enough": {
+      "message": "Stop"
+   },
+   "error": {
+      "message": "Error"
+   },
+   "found": {
+      "message": "Found"
+   },
+   "go_to_downloads_settings": {
+      "message": "Go to download settings"
+   },
+   "later_you_can_get_more": {
+      "message": "Later you can download more"
+   },
+   "name": {
+      "message": "TikTok Downloader – Save Videos, No Watermark"
+   },
+   "no_dates_video": {
+      "message": "No posts found for these dates"
+   },
+   "one_by_one_warning_text": {
+      "message": "When using one-by-one downloading its a good idea to choose or create save folder in advance, and switch off 'Ask each time where to download' option"
+   },
+   "popup_reload": {
+      "message": "Please refresh the page and try again"
+   },
+   "popup_to_tiktok": {
+      "message": "Go to TikTok"
+   },
+   "posts": {
+      "message": "posts"
+   },
+   "save": {
+      "message": "Save"
+   },
+   "send2ai": {
+      "message": "Send to AI"
+   },
+   "settings": {
+      "message": "Settings"
+   },
+   "stop_button_description": {
+      "message": "You can stop download at any time if you got enough media"
+   },
+   "to": {
+      "message": "to"
+   },
+   "tryAgainLater": {
+      "message": "Please try again later"
+   },
+   "video_not_found": {
+      "message": "Not found video on current page"
+   },
+   "video_selected": {
+      "message": "videos and photos selected"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Please wait downloading in another tab is finished"
+   }
+}

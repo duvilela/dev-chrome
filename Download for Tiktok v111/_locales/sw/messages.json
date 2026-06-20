@@ -1,0 +1,8 @@
+{
+   "description": {
+      "message": "Chrome 擴充功能，支援下載 TikTok 影片與圖片，無須登入、無浮水印、可批次儲存。內建 ChatGPT AI 整合與內容分析"
+   },
+   "name": {
+      "message": "TikTok 下載器 – 批次儲存無浮水印影片與圖片"
+   }
+}

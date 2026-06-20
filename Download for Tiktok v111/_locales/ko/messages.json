@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "이 영상에 대해 ChatGPT에게 물어보기"
+   },
+   "available_now": {
+      "message": "지금 이용 가능"
+   },
+   "cancel": {
+      "message": "취소"
+   },
+   "continue": {
+      "message": "계속"
+   },
+   "description": {
+      "message": "TikTok 영상과 사진을 워터마크 없이 저장하세요. 단일 또는 일괄 다운로드 가능. ChatGPT 연동 포함. Chrome용 확장 프로그램입니다"
+   },
+   "disable_one_by_one_warning": {
+      "message": "다시 표시하지 않기"
+   },
+   "download": {
+      "message": "다운로드"
+   },
+   "download_all": {
+      "message": "모두 다운로드"
+   },
+   "download_by_zip": {
+      "message": "ZIP 생성"
+   },
+   "download_from": {
+      "message": "다음에서 다운로드:"
+   },
+   "download_last": {
+      "message": "최근 항목 다운로드"
+   },
+   "download_one_by_one": {
+      "message": "하나씩 다운로드"
+   },
+   "download_with_watermark_setting": {
+      "message": "가능하면 워터마크 포함 다운로드"
+   },
+   "downloaded": {
+      "message": "다운로드 완료됨"
+   },
+   "downloading": {
+      "message": "다운로드 중..."
+   },
+   "enough": {
+      "message": "중지"
+   },
+   "error": {
+      "message": "오류"
+   },
+   "found": {
+      "message": "발견됨"
+   },
+   "go_to_downloads_settings": {
+      "message": "다운로드 설정으로 이동"
+   },
+   "later_you_can_get_more": {
+      "message": "나중에 더 많이 다운로드할 수 있어요"
+   },
+   "name": {
+      "message": "TikTok 다운로더 – 워터마크 없이 저장"
+   },
+   "no_dates_video": {
+      "message": "해당 날짜의 게시물을 찾을 수 없습니다"
+   },
+   "one_by_one_warning_text": {
+      "message": "하나씩 다운로드할 경우, 미리 저장 폴더를 선택하거나 생성하고 ‘매번 다운로드 위치 묻기’ 옵션을 끄는 것이 좋습니다"
+   },
+   "popup_reload": {
+      "message": "페이지를 새로고침하고 다시 시도하세요"
+   },
+   "popup_to_tiktok": {
+      "message": "TikTok으로 이동"
+   },
+   "posts": {
+      "message": "게시물"
+   },
+   "save": {
+      "message": "저장"
+   },
+   "send2ai": {
+      "message": "AI로 보내기"
+   },
+   "settings": {
+      "message": "설정"
+   },
+   "stop_button_description": {
+      "message": "충분한 콘텐츠를 받았다면 언제든지 다운로드를 중지할 수 있어요"
+   },
+   "to": {
+      "message": "~까지"
+   },
+   "tryAgainLater": {
+      "message": "나중에 다시 시도하세요"
+   },
+   "video_not_found": {
+      "message": "현재 페이지에서 영상을 찾을 수 없습니다"
+   },
+   "video_selected": {
+      "message": "선택된 영상 및 사진"
+   },
+   "wait_download_in_another_tab": {
+      "message": "다른 탭의 다운로드가 끝날 때까지 기다려 주세요"
+   }
+}

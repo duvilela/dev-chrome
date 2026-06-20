@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "Preguntar a ChatGPT sobre este video"
+   },
+   "available_now": {
+      "message": "Disponible ahora"
+   },
+   "cancel": {
+      "message": "Cancelar"
+   },
+   "continue": {
+      "message": "Continuar"
+   },
+   "description": {
+      "message": "Extensión para Chrome que descarga videos y fotos de TikTok sin marca de agua. Descargas individuales o masivas. Con integración ChatGPT"
+   },
+   "disable_one_by_one_warning": {
+      "message": "No mostrar esto de nuevo"
+   },
+   "download": {
+      "message": "Descargar"
+   },
+   "download_all": {
+      "message": "Descargar todo"
+   },
+   "download_by_zip": {
+      "message": "Crear ZIP"
+   },
+   "download_from": {
+      "message": "Descargar desde"
+   },
+   "download_last": {
+      "message": "Descargar los últimos"
+   },
+   "download_one_by_one": {
+      "message": "Descargar uno por uno"
+   },
+   "download_with_watermark_setting": {
+      "message": "Descargar con marca de agua si es posible"
+   },
+   "downloaded": {
+      "message": "Descargado"
+   },
+   "downloading": {
+      "message": "Descargando..."
+   },
+   "enough": {
+      "message": "Detener"
+   },
+   "error": {
+      "message": "Error"
+   },
+   "found": {
+      "message": "Encontrado"
+   },
+   "go_to_downloads_settings": {
+      "message": "Ir a configuración de descargas"
+   },
+   "later_you_can_get_more": {
+      "message": "Después podrás descargar más"
+   },
+   "name": {
+      "message": "Descargador TikTok – Videos sin marca de agua"
+   },
+   "no_dates_video": {
+      "message": "No se encontraron publicaciones para estas fechas"
+   },
+   "one_by_one_warning_text": {
+      "message": "Si usas la descarga uno por uno, es recomendable elegir o crear una carpeta de guardado previamente y desactivar la opción 'Preguntar siempre dónde guardar'"
+   },
+   "popup_reload": {
+      "message": "Por favor, actualiza la página e inténtalo de nuevo"
+   },
+   "popup_to_tiktok": {
+      "message": "Ir a TikTok"
+   },
+   "posts": {
+      "message": "publicaciones"
+   },
+   "save": {
+      "message": "Guardar"
+   },
+   "send2ai": {
+      "message": "Enviar a IA"
+   },
+   "settings": {
+      "message": "Configuración"
+   },
+   "stop_button_description": {
+      "message": "Puedes detener la descarga en cualquier momento si ya tienes suficiente contenido"
+   },
+   "to": {
+      "message": "hasta"
+   },
+   "tryAgainLater": {
+      "message": "Por favor, inténtalo más tarde"
+   },
+   "video_not_found": {
+      "message": "No se encontró ningún video en esta página"
+   },
+   "video_selected": {
+      "message": "vídeos y fotos seleccionados"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Por favor, espera a que termine la descarga en otra pestaña"
+   }
+}

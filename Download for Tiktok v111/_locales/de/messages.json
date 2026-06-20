@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "ChatGPT zu diesem Video befragen"
+   },
+   "available_now": {
+      "message": "Jetzt verfügbar"
+   },
+   "cancel": {
+      "message": "Abbrechen"
+   },
+   "continue": {
+      "message": "Weiter"
+   },
+   "description": {
+      "message": "Lade TikTok-Videos und -Bilder mit oder ohne Wasserzeichen herunter – einzeln oder im Bulk. Inklusive ChatGPT-Integration für smarte Inhaltsanalyse"
+   },
+   "disable_one_by_one_warning": {
+      "message": "Nicht mehr anzeigen"
+   },
+   "download": {
+      "message": "Herunterladen"
+   },
+   "download_all": {
+      "message": "Alle herunterladen"
+   },
+   "download_by_zip": {
+      "message": "ZIP erstellen"
+   },
+   "download_from": {
+      "message": "Herunterladen von"
+   },
+   "download_last": {
+      "message": "Letzte herunterladen"
+   },
+   "download_one_by_one": {
+      "message": "Einzeln herunterladen"
+   },
+   "download_with_watermark_setting": {
+      "message": "Wenn möglich, mit Wasserzeichen herunterladen"
+   },
+   "downloaded": {
+      "message": "Heruntergeladen"
+   },
+   "downloading": {
+      "message": "Wird heruntergeladen..."
+   },
+   "enough": {
+      "message": "Stopp"
+   },
+   "error": {
+      "message": "Fehler"
+   },
+   "found": {
+      "message": "Gefunden"
+   },
+   "go_to_downloads_settings": {
+      "message": "Zu den Download-Einstellungen"
+   },
+   "later_you_can_get_more": {
+      "message": "Später kannst du mehr herunterladen"
+   },
+   "name": {
+      "message": "TikTok Downloader – Videos ohne Wasserzeichen"
+   },
+   "no_dates_video": {
+      "message": "Für die ausgewählten Daten wurden keine Beiträge gefunden"
+   },
+   "one_by_one_warning_text": {
+      "message": "Wenn du einzeln herunterlädst, wähle am besten vorher einen Zielordner und deaktiviere die Option 'Jedes Mal fragen, wo gespeichert werden soll'"
+   },
+   "popup_reload": {
+      "message": "Bitte lade die Seite neu und versuche es erneut"
+   },
+   "popup_to_tiktok": {
+      "message": "Zu TikTok wechseln"
+   },
+   "posts": {
+      "message": "Beiträge"
+   },
+   "save": {
+      "message": "Speichern"
+   },
+   "send2ai": {
+      "message": "An KI senden"
+   },
+   "settings": {
+      "message": "Einstellungen"
+   },
+   "stop_button_description": {
+      "message": "Du kannst den Download jederzeit stoppen, wenn du genug Medien hast"
+   },
+   "to": {
+      "message": "bis"
+   },
+   "tryAgainLater": {
+      "message": "Bitte versuche es später erneut"
+   },
+   "video_not_found": {
+      "message": "Kein Video auf dieser Seite gefunden"
+   },
+   "video_selected": {
+      "message": "Videos und Bilder ausgewählt"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Bitte warte, bis der Download im anderen Tab abgeschlossen ist"
+   }
+}

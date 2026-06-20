@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "Perguntar ao ChatGPT sobre este vídeo"
+   },
+   "available_now": {
+      "message": "Disponível agora"
+   },
+   "cancel": {
+      "message": "Cancelar"
+   },
+   "continue": {
+      "message": "Continuar"
+   },
+   "description": {
+      "message": "Guarde vídeos e fotos do TikTok no Chrome. Com ou sem marca de água. Descargas únicas ou em massa. Inclui integração com ChatGPT para análise inteligente"
+   },
+   "disable_one_by_one_warning": {
+      "message": "Não mostrar novamente"
+   },
+   "download": {
+      "message": "Baixar"
+   },
+   "download_all": {
+      "message": "Baixar tudo"
+   },
+   "download_by_zip": {
+      "message": "Criar ZIP"
+   },
+   "download_from": {
+      "message": "Baixar de"
+   },
+   "download_last": {
+      "message": "Baixar os mais recentes"
+   },
+   "download_one_by_one": {
+      "message": "Baixar individualmente"
+   },
+   "download_with_watermark_setting": {
+      "message": "Baixar com marca d’água se possível"
+   },
+   "downloaded": {
+      "message": "Baixado"
+   },
+   "downloading": {
+      "message": "Baixando..."
+   },
+   "enough": {
+      "message": "Parar"
+   },
+   "error": {
+      "message": "Erro"
+   },
+   "found": {
+      "message": "Encontrado"
+   },
+   "go_to_downloads_settings": {
+      "message": "Ir para as configurações de download"
+   },
+   "later_you_can_get_more": {
+      "message": "Você poderá baixar mais depois"
+   },
+   "name": {
+      "message": "Downloader TikTok – Vídeos sem marca de água"
+   },
+   "no_dates_video": {
+      "message": "Nenhuma publicação encontrada para essas datas"
+   },
+   "one_by_one_warning_text": {
+      "message": "Ao usar o download individual, é recomendável escolher ou criar uma pasta de destino com antecedência e desativar a opção 'Perguntar onde salvar a cada vez'"
+   },
+   "popup_reload": {
+      "message": "Atualize a página e tente novamente"
+   },
+   "popup_to_tiktok": {
+      "message": "Ir para o TikTok"
+   },
+   "posts": {
+      "message": "publicações"
+   },
+   "save": {
+      "message": "Salvar"
+   },
+   "send2ai": {
+      "message": "Enviar para IA"
+   },
+   "settings": {
+      "message": "Configurações"
+   },
+   "stop_button_description": {
+      "message": "Você pode parar o download a qualquer momento se já tiver conteúdo suficiente"
+   },
+   "to": {
+      "message": "até"
+   },
+   "tryAgainLater": {
+      "message": "Tente novamente mais tarde"
+   },
+   "video_not_found": {
+      "message": "Nenhum vídeo encontrado nesta página"
+   },
+   "video_selected": {
+      "message": "vídeos e fotos selecionados"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Aguarde até que o download em outra aba termine"
+   }
+}

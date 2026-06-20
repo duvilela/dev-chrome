@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "Demander à ChatGPT à propos de cette vidéo"
+   },
+   "available_now": {
+      "message": "Disponible maintenant"
+   },
+   "cancel": {
+      "message": "Annuler"
+   },
+   "continue": {
+      "message": "Continuer"
+   },
+   "description": {
+      "message": "Téléchargez des vidéos et photos TikTok avec ou sans filigrane. Téléchargements individuels ou en masse. Extension Chrome avec IA (ChatGPT)"
+   },
+   "disable_one_by_one_warning": {
+      "message": "Ne plus afficher ce message"
+   },
+   "download": {
+      "message": "Télécharger"
+   },
+   "download_all": {
+      "message": "Tout télécharger"
+   },
+   "download_by_zip": {
+      "message": "Créer un ZIP"
+   },
+   "download_from": {
+      "message": "Télécharger depuis"
+   },
+   "download_last": {
+      "message": "Télécharger les dernières"
+   },
+   "download_one_by_one": {
+      "message": "Télécharger individuellement"
+   },
+   "download_with_watermark_setting": {
+      "message": "Télécharger avec filigrane si possible"
+   },
+   "downloaded": {
+      "message": "Téléchargé"
+   },
+   "downloading": {
+      "message": "Téléchargement en cours..."
+   },
+   "enough": {
+      "message": "Arrêter"
+   },
+   "error": {
+      "message": "Erreur"
+   },
+   "found": {
+      "message": "Trouvé"
+   },
+   "go_to_downloads_settings": {
+      "message": "Aller aux paramètres de téléchargement"
+   },
+   "later_you_can_get_more": {
+      "message": "Vous pourrez en télécharger plus plus tard"
+   },
+   "name": {
+      "message": "Téléchargeur TikTok – Vidéos sans filigrane"
+   },
+   "no_dates_video": {
+      "message": "Aucune publication trouvée pour ces dates"
+   },
+   "one_by_one_warning_text": {
+      "message": "Lors d’un téléchargement individuel, il est conseillé de choisir ou créer un dossier à l’avance, et de désactiver l’option 'Toujours demander où enregistrer'"
+   },
+   "popup_reload": {
+      "message": "Veuillez actualiser la page et réessayer"
+   },
+   "popup_to_tiktok": {
+      "message": "Aller sur TikTok"
+   },
+   "posts": {
+      "message": "publications"
+   },
+   "save": {
+      "message": "Enregistrer"
+   },
+   "send2ai": {
+      "message": "Envoyer à l'IA"
+   },
+   "settings": {
+      "message": "Paramètres"
+   },
+   "stop_button_description": {
+      "message": "Vous pouvez arrêter le téléchargement à tout moment si vous avez assez de contenu"
+   },
+   "to": {
+      "message": "à"
+   },
+   "tryAgainLater": {
+      "message": "Veuillez réessayer plus tard"
+   },
+   "video_not_found": {
+      "message": "Aucune vidéo trouvée sur cette page"
+   },
+   "video_selected": {
+      "message": "vidéos et photos sélectionnées"
+   },
+   "wait_download_in_another_tab": {
+      "message": "Veuillez attendre la fin du téléchargement dans un autre onglet"
+   }
+}

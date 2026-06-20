@@ -1,0 +1,107 @@
+{
+   "askgpt": {
+      "message": "询问 ChatGPT 关于此视频"
+   },
+   "available_now": {
+      "message": "现在可用"
+   },
+   "cancel": {
+      "message": "取消"
+   },
+   "continue": {
+      "message": "继续"
+   },
+   "description": {
+      "message": "Chrome扩展程序，可下载TikTok视频和图片，无需登录，支持批量保存，无水印，支持ChatGPT AI分析与整理功能"
+   },
+   "disable_one_by_one_warning": {
+      "message": "不再显示此提示"
+   },
+   "download": {
+      "message": "下载"
+   },
+   "download_all": {
+      "message": "全部下载"
+   },
+   "download_by_zip": {
+      "message": "创建 ZIP"
+   },
+   "download_from": {
+      "message": "下载自"
+   },
+   "download_last": {
+      "message": "下载最新内容"
+   },
+   "download_one_by_one": {
+      "message": "逐个下载"
+   },
+   "download_with_watermark_setting": {
+      "message": "如果可能，带水印下载"
+   },
+   "downloaded": {
+      "message": "已下载"
+   },
+   "downloading": {
+      "message": "下载中..."
+   },
+   "enough": {
+      "message": "停止"
+   },
+   "error": {
+      "message": "错误"
+   },
+   "found": {
+      "message": "已找到"
+   },
+   "go_to_downloads_settings": {
+      "message": "前往下载设置"
+   },
+   "later_you_can_get_more": {
+      "message": "稍后你可以下载更多内容"
+   },
+   "name": {
+      "message": "TikTok下载器 – 批量保存无水印视频和图片"
+   },
+   "no_dates_video": {
+      "message": "所选日期没有发现内容"
+   },
+   "one_by_one_warning_text": {
+      "message": "使用逐个下载时，建议提前选择或创建保存文件夹，并关闭“每次询问保存位置”的选项"
+   },
+   "popup_reload": {
+      "message": "请刷新页面后重试"
+   },
+   "popup_to_tiktok": {
+      "message": "前往 TikTok"
+   },
+   "posts": {
+      "message": "内容"
+   },
+   "save": {
+      "message": "保存"
+   },
+   "send2ai": {
+      "message": "发送至 AI"
+   },
+   "settings": {
+      "message": "设置"
+   },
+   "stop_button_description": {
+      "message": "如果你已经获取了足够的内容，可以随时停止下载"
+   },
+   "to": {
+      "message": "至"
+   },
+   "tryAgainLater": {
+      "message": "请稍后再试"
+   },
+   "video_not_found": {
+      "message": "当前页面未找到视频"
+   },
+   "video_selected": {
+      "message": "已选择的视频和照片"
+   },
+   "wait_download_in_another_tab": {
+      "message": "请等待另一个标签页的下载完成"
+   }
+}
