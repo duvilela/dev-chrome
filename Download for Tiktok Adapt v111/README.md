@@ -1,6 +1,6 @@
-# Download for Tiktok (v1.1.1)
+# Download for Tiktok Adapt (v1.1.1)
 
-O **Download for Tiktok** é uma extensão de navegador leve, rápida e totalmente livre de anúncios, desenvolvida para salvar vídeos e fotos do TikTok diretamente no seu computador sem qualquer marca d'água e sem exigir login.
+O **Download for Tiktok Adapt** é uma extensão de navegador leve, rápida e totalmente livre de anúncios, desenvolvida para salvar vídeos e fotos do TikTok diretamente no seu computador sem qualquer marca d'água e sem exigir login.
 
 Esta versão (**v1.1.1**) é distribuída de forma limpa, segura e sem propagandas.
 
@@ -19,11 +19,11 @@ Esta versão (**v1.1.1**) é distribuída de forma limpa, segura e sem propagand
 
 Como a extensão é distribuída no formato de código aberto descompactado, siga os passos abaixo para instalar:
 
-1. Faça o download ou clone a pasta `Download for Tiktok v111` do repositório para o seu computador.
+1. Faça o download ou clone a pasta `Download for Tiktok Adapt v111` do repositório para o seu computador.
 2. Abra o Google Chrome e digite **`chrome://extensions/`** na barra de endereços.
 3. No canto superior direito da página de extensões, ative a opção **"Modo do desenvolvedor"**.
 4. No canto superior esquerdo, clique no botão **"Carregar sem compactação"**.
-5. Localize e selecione a pasta **`Download for Tiktok v111`** (a pasta principal que contém o arquivo `manifest.json`).
+5. Localize e selecione a pasta **`Download for Tiktok Adapt v111`** (a pasta principal que contém o arquivo `manifest.json`).
 6. A extensão será instalada e estará visível na barra de ferramentas do seu navegador!
 
 ---
