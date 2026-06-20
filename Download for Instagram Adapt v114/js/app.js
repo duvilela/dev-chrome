@@ -8603,8 +8603,7 @@
               n,
               i;
             if (
-              (this.rated || (e += this.ki()),
-              "user_reels_page" === this.li || "user_tag_page" === this.li)
+              ("user_reels_page" === this.li || "user_tag_page" === this.li)
             )
               e += this.$i(t);
             else {
