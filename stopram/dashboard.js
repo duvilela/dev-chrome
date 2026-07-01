@@ -336,7 +336,7 @@ function renderTabsTable() {
     const domain = getDomain(tab.url);
     const firstChar = tab.title ? tab.title.charAt(0).toUpperCase() : '?';
     const faviconHTML = tab.favIconUrl && tab.favIconUrl.startsWith('http')
-      ? `<img class="tab-icon" src="${tab.favIconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`
+      ? `<img class="tab-icon" src="${tab.favIconUrl}">`
       : '';
     const fallbackIconHTML = `<div class="tab-icon-fallback" style="${tab.favIconUrl && tab.favIconUrl.startsWith('http') ? 'display:none;' : ''}">${firstChar}</div>`;
 
@@ -390,6 +390,17 @@ function renderTabsTable() {
 
   tabsListBody.innerHTML = rowsHTML;
 
+  // Handle broken favicons dynamically (inline onerror is blocked by CSP in MV3 Extensions)
+  document.querySelectorAll('.tab-icon').forEach(img => {
+    img.addEventListener('error', (e) => {
+      e.target.style.display = 'none';
+      const fallback = e.target.nextElementSibling;
+      if (fallback) {
+        fallback.style.display = 'flex';
+      }
+    });
+  });
+ 
   // Add click events to action buttons
   document.querySelectorAll('.btn-reload-action').forEach(btn => {
     btn.addEventListener('click', (e) => {
