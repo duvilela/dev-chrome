@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopRAM | Apresentação e Guia de Uso</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #09090b;
+            --bg-card: rgba(24, 24, 27, 0.45);
+            --bg-card-hover: rgba(24, 24, 27, 0.75);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.15);
+            --accent-purple: #8b5cf6;
+            --accent-purple-glow: rgba(139, 92, 246, 0.15);
+            --accent-blue: #00D2FF;
+            --accent-royal: #0052D4;
+            
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow & Grid */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            pointer-events: none;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .orb-1 {
+            top: -10%;
+            left: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-cyan-glow) 0%, transparent 70%);
+        }
+        .orb-2 {
+            bottom: 10%;
+            right: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-purple-glow) 0%, transparent 70%);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            z-index: 1000;
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .brand-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #09090b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Content layout */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 40px auto 80px auto;
+            padding: 0 2rem;
+            flex-grow: 1;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Presentation Header */
+        .presentation-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .large-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+            flex-shrink: 0;
+        }
+
+        .header-info {
+            flex-grow: 1;
+        }
+
+        .header-info h1 {
+            font-family: var(--font-title);
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .badge-version {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .desc-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-royal) 100%);
+            color: #09090b;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Notice / Warning */
+        .notice-box {
+            background: rgba(245, 158, 11, 0.04);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 3.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .notice-icon {
+            color: var(--accent-cyan);
+            font-size: 1.25rem;
+            margin-top: 2px;
+        }
+
+        .notice-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .notice-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Detail Sections */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-h2 {
+            font-family: var(--font-title);
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-h2 i {
+            color: var(--accent-cyan);
+        }
+
+        /* Grid Layouts for features */
+        .features-detailed {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card-header i {
+            color: var(--accent-cyan);
+        }
+
+        .feature-card-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Tutorial steps */
+        .tutorial-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .t-step {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .t-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+            font-family: var(--font-title);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .t-content h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .t-content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .t-content code {
+            font-family: var(--font-body);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        /* Safety & Privacy */
+        .privacy-box {
+            background: rgba(16, 185, 129, 0.02);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .privacy-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .privacy-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .privacy-item i {
+            color: #10b981;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .presentation-header { flex-direction: column; text-align: center; align-items: center; }
+            .header-buttons { justify-content: center; }
+            .features-detailed { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Fixed Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-avatar">D</div>
+                <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar ao Hub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">Hub de Extensões</a>
+            <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+            <span>StopRAM</span>
+        </nav>
+
+        <!-- Header Block -->
+        <section class="presentation-header">
+            <div class="large-icon">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <div class="header-info">
+                <h1>StopRAM - Limitador de RAM</h1>
+                <div class="header-meta">
+                    <span class="badge-version">v1.0.0</span>
+                    <span>•</span>
+                    <span>Manifest V3</span>
+                    <span>•</span>
+                    <span>100% Local e Seguro</span>
+                </div>
+                <p class="desc-text">Uma extensão moderna que analisa e otimiza o uso de hardware do seu navegador aba por aba. Diga adeus ao travamento do computador liberando memória RAM de abas inativas de forma inteligente e automatizada.</p>
+                <div class="header-buttons">
+                    <a href="zips/stopram.zip" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Baixar Extensão (.ZIP)
+                    </a>
+                    <a href="https://github.com/duvilela/dev-chrome/tree/main/stopram" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-github"></i> Código Fonte
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discrete Notice explaining simulation mode -->
+        <div class="notice-box">
+            <i class="fas fa-info-circle notice-icon"></i>
+            <div class="notice-content">
+                <h4>Aviso Operacional sobre a API do Chrome</h4>
+                <p>Por questões de isolamento de segurança de processos, o Google Chrome impede que extensões no canal estável coletem diretamente dados de hardware de processos externos. O StopRAM detecta isso e ativa automaticamente o <strong>Modo Simulado</strong> de RAM, no qual os consumos flutuam de maneira dinâmica para testar a interface e a lógica do limitador. Para o monitoramento real do consumo físico, a extensão deve ser carregada nas versões de desenvolvimento (Chrome Dev ou Canary).</p>
+            </div>
+        </div>
+
+        <!-- Detailed Features -->
+        <section class="section">
+            <h2 class="section-h2">
+                <i class="fas fa-star"></i>
+                Recursos Premium e Lógica Interna
+            </h2>
+            <div class="features-detailed">
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-memory"></i> Otimização Inteligente de RAM
+                    </div>
+                    <p class="feature-card-desc">Reduz o consumo de memória RAM descartando (suspendendo) abas inativas de alto consumo. A aba continua aberta no navegador e recarrega de forma transparente quando você clica nela novamente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-chart-line"></i> Dashboard Completo de Controle
+                    </div>
+                    <p class="feature-card-desc">Fornece uma interface de administração avançada que reúne status das abas, uso de CPU, PIDs reais ou simulados, busca instantânea e gráfico de consumo por aba com alertas visuais HSL.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-sliders-h"></i> Ajustes Flexíveis
+                    </div>
+                    <p class="feature-card-desc">Permite configurar o limite ideal de RAM por aba (100 MB a 2 GB), a frequência de checagem do script de segundo plano (5s a 60s) e definir a ação ideal (Descartar, Recarregar, Fechar ou Notificar).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <i class="fas fa-bell"></i> Notificações do Sistema
+                    </div>
+                    <p class="feature-card-desc">Informa você de forma silenciosa sobre as ações tomadas em tempo real. Possui inteligência integrada para não suspender a aba de trabalho ativa, evitando perda de dados.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Tutorial -->
+        <section class="section">
+            <h2 class="section-h2">
+                <i class="fas fa-book-open"></i>
+                Guia Passo a Passo: Instalação e Testes
+            </h2>
+            <div class="tutorial-steps">
+                <div class="t-step">
+                    <div class="t-num">1</div>
+                    <div class="t-content">
+                        <h3>Baixe e Extraia o Arquivo</h3>
+                        <p>Clique no botão de download acima para baixar o arquivo <code>stopram.zip</code>. Extraia o conteúdo deste arquivo para uma pasta permanente em seu computador.</p>
+                    </div>
+                </div>
+                <div class="t-step">
+                    <div class="t-num">2</div>
+                    <div class="t-content">
+                        <h3>Carregue no Modo Desenvolvedor</h3>
+                        <p>No Chrome, acesse o endereço <code>chrome://extensions/</code>, ative o "Modo do desenvolvedor" no canto superior direito, clique em "Carregar sem compactação" no canto superior esquerdo e selecione a pasta da extensão extraída.</p>
+                    </div>
+                </div>
+                <div class="t-step">
+                    <div class="t-num">3</div>
+                    <div class="t-content">
+                        <h3>Acesse as Configurações e Defina um Limite de Teste</h3>
+                        <p>Abra o painel completo da extensão (clicando no ícone do StopRAM e em "Painel Completo"). Navegue até <strong>Configurações</strong> e defina o Limite de Memória para um valor baixo (como <code>150 MB</code>) e o intervalo para <code>5 segundos</code>.</p>
+                    </div>
+                </div>
+                <div class="t-step">
+                    <div class="t-num">4</div>
+                    <div class="t-content">
+                        <h3>Valide no Monitorador de Abas</h3>
+                        <p>Na aba <strong>Monitor de Abas</strong>, você verá a RAM simulada subir e descer. Assim que uma das abas ultrapassar os 150 MB, ela será automaticamente desativada (descartada) ou recarregada no navegador. O log será gravado no <strong>Histórico</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety and Privacy Section -->
+        <section class="section">
+            <div class="privacy-box">
+                <div class="privacy-title">
+                    <i class="fas fa-shield-alt"></i> Notas de Segurança e Privacidade
+                </div>
+                <div class="privacy-item">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <strong>Execução 100% Local</strong>: Todas as análises de memória, processos e decisões de suspensão são processadas inteiramente no seu próprio computador. Nenhum dado é enviado a servidores externos.
+                    </div>
+                </div>
+                <div class="privacy-item">
+                    <i class="fas fa-user-shield"></i>
+                    <div>
+                        <strong>Segurança dos Seus Dados</strong>: O script respeita totalmente o estado de atividade do usuário. A aba atualmente focada (ativa) nunca será suspensa para impedir qualquer perda de textos digitados ou carregamentos de formulários em andamento.
+                    </div>
+                </div>
+                <div class="privacy-item">
+                    <i class="fas fa-ban"></i>
+                    <div>
+                        <strong>Sem Rastreadores ou Anúncios</strong>: Esta extensão é desenvolvida puramente para produtividade e não inclui qualquer tipo de script de telemetria comercial, anúncio ou coleta comportamental.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/duvilela" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://duvilela.github.io/hub/" class="footer-link" target="_blank"><i class="fas fa-briefcase"></i> Portfólio Principal</a>
+        </div>
+        <p>&copy; 2026 duvilela. Desenvolvido para facilitar produtividade e estudo pessoal.</p>
+    </footer>
+</body>
+</html>
