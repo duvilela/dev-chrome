@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopRAM - Galeria de Telas e Apresentação</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-card: rgba(17, 17, 27, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-cyan: #06b6d4;
+            --accent-royal: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background Effects */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb-1 {
+            top: -10%;
+            right: -10%;
+            background: var(--accent-cyan);
+        }
+
+        .orb-2 {
+            bottom: -15%;
+            left: -10%;
+            background: var(--accent-purple);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            flex-grow: 1;
+        }
+
+        /* Fixed Navbar */
+        .navbar {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .brand-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-royal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #09090b;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Header block */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Showcase Grid Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Large Image Showcase Area */
+        .showcase-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 90px;
+        }
+
+        .showcase-frame {
+            background: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            cursor: zoom-in;
+        }
+
+        .showcase-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .showcase-details h2 {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .showcase-details h2 i {
+            color: var(--accent-cyan);
+        }
+
+        .showcase-details p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .showcase-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Thumbnails List Area */
+        .thumbnails-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .thumb-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 0.75rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .thumb-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .thumb-card.active {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.05);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .thumb-img-wrapper {
+            width: 100px;
+            height: 56px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb-info {
+            flex-grow: 1;
+        }
+
+        .thumb-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thumb-title span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .thumb-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Lightbox CSS */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 9, 11, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .lightbox-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Fixed Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-avatar">D</div>
+                <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
+            </a>
+            <div class="nav-right">
+                <a href="stopram.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar à Apresentação</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">Hub de Extensões</a>
+            <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+            <a href="stopram.html">StopRAM</a>
+            <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+            <span>Galeria de Telas</span>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Galeria de Telas do StopRAM</h1>
+            <p>Explore em alta resolução todas as interfaces que compõem o painel e controle da extensão.</p>
+        </header>
+
+        <!-- Gallery Section -->
+        <section class="gallery-grid">
+            
+            <!-- Showcase Column (Sticky) -->
+            <div class="showcase-area">
+                <div class="showcase-frame" id="showcase-frame" title="Clique para ampliar a imagem">
+                    <img src="Imagens/stopram1.png" id="active-image" class="showcase-img" alt="Tela do Monitor de Abas">
+                </div>
+                <div class="showcase-details">
+                    <h2 id="active-title"><i class="fas fa-desktop"></i> Monitor de Abas</h2>
+                    <span class="showcase-badge" id="active-badge">Dashboard Principal</span>
+                    <p id="active-desc" style="margin-top: 10px;">O painel de monitoramento dinâmico em tempo real. Exibe todas as abas abertas e seus consumos (RAM, CPU, PID), com alertas de consumo críticos em vermelho/laranja e badges de status. Permite recarregar, suspender ou fechar abas individualmente.</p>
+                </div>
+            </div>
+
+            <!-- List Column -->
+            <div class="thumbnails-area" id="thumbnails-container">
+                
+                <!-- Thumb 1 -->
+                <div class="thumb-card active" data-img="Imagens/stopram1.png" data-badge="Dashboard Principal" data-icon="fa-desktop" data-title="Monitor de Abas" data-desc="Exibe a lista interativa de todas as abas abertas no navegador, com o uso de RAM (bytes e percentual), uso de CPU, PID do processo e botões de ação rápida (Recarregar, Suspender e Fechar). Cores semânticas sinalizam abas críticas.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram1.png" class="thumb-img" alt="Monitor de Abas">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Monitor de Abas <span>(Tela 1)</span></div>
+                        <p class="thumb-desc">O dashboard em tempo real com estatísticas de consumo de RAM e CPU.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 2 -->
+                <div class="thumb-card" data-img="Imagens/stopram2.png" data-badge="Configurações" data-icon="fa-sliders-h" data-title="Configurações do Limitador" data-desc="Permite calibrar o limite de RAM por aba, ajustar o tempo de verificação periódica, habilitar notificações e forçar o Modo de Simulação para testes em canais estáveis do Chrome.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram2.png" class="thumb-img" alt="Configurações">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Configurações <span>(Tela 2)</span></div>
+                        <p class="thumb-desc">Ajuste de limite de RAM (em MB), intervalo de checagem e modo experimental.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 3 -->
+                <div class="thumb-card" data-img="Imagens/stopram3.png" data-badge="Popup Toolbar" data-icon="fa-window-restore" data-title="Popup de Acesso Rápido" data-desc="Interface compacta acionada a partir da barra de extensões. Lista as 4 abas com maior consumo de RAM no momento e exibe o consumo acumulado total, permitindo a suspensão em um único clique sem abrir o painel completo.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram3.png" class="thumb-img" alt="Popup Toolbar">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Popup Compacto <span>(Tela 3)</span></div>
+                        <p class="thumb-desc">Barra de ferramentas de acesso rápido na barra de extensões do Chrome.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 4 -->
+                <div class="thumb-card" data-img="Imagens/stopram4.png" data-badge="Gerenciamento de Exceções" data-icon="fa-shield-halved" data-title="Gerenciador de Permissões" data-desc="Painel para adicionar domínios protegidos (whitelist). Abas correspondentes a estas URLs mudam seu status para 'Especial' (em azul) e nunca são suspensas automaticamente ou manualmente pela extensão.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram4.png" class="thumb-img" alt="Gerenciador de Permissões">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Permissões <span>(Tela 4)</span></div>
+                        <p class="thumb-desc">Proteção customizada de domínios específicos contra suspensão de RAM.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 5 -->
+                <div class="thumb-card" data-img="Imagens/stopram5.png" data-badge="Histórico de Otimização" data-icon="fa-history" data-title="Histórico de Ações" data-desc="Registro detalhado e auditável de todas as otimizações automáticas ou manuais disparadas pela extensão, listando o ID da ação, horário, aba e descrição dos recursos poupados.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram5.png" class="thumb-img" alt="Histórico de Ações">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Histórico de Ações <span>(Tela 5)</span></div>
+                        <p class="thumb-desc">Logs de auditoria das suspensões, recargas ou skip de abas ativas/especiais.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 6 -->
+                <div class="thumb-card" data-img="Imagens/stopram6.png" data-badge="Ajuda & Termos" data-icon="fa-circle-info" data-title="Guia & Sobre o Autor" data-desc="Central de ajuda integrada para o usuário final, detalhando conceitos da extensão, além dos termos de licença de uso estritamente pessoal e não comercial do autor Everton Eduardo Vilela.">
+                    <div class="thumb-img-wrapper">
+                        <img src="Imagens/stopram6.png" class="thumb-img" alt="Guia & Sobre">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Guia & Sobre <span>(Tela 6)</span></div>
+                        <p class="thumb-desc">Instruções de uso, notas legais de licença não comercial e contatos do autor.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
+        <div class="lightbox-content">
+            <img src="" id="lightbox-img" alt="Visualização Ampliada">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/duvilela" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://duvilela.github.io/" class="footer-link" target="_blank"><i class="fas fa-briefcase"></i> Portfólio Principal</a>
+        </div>
+        <p>&copy; 2026 duvilela. Desenvolvido para facilitar produtividade e estudo pessoal.</p>
+    </footer>
+
+    <!-- Interactive script -->
+    <script>
+        const activeImg = document.getElementById('active-image');
+        const activeTitle = document.getElementById('active-title');
+        const activeBadge = document.getElementById('active-badge');
+        const activeDesc = document.getElementById('active-desc');
+        const showcaseFrame = document.getElementById('showcase-frame');
+        
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        const thumbCards = document.querySelectorAll('.thumb-card');
+
+        // Toggle Active image details
+        thumbCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove active class
+                thumbCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+
+                // Get details
+                const img = card.getAttribute('data-img');
+                const badge = card.getAttribute('data-badge');
+                const icon = card.getAttribute('data-icon');
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+
+                // Apply details with smooth fade
+                activeImg.style.opacity = 0;
+                setTimeout(() => {
+                    activeImg.src = img;
+                    activeTitle.innerHTML = `<i class="fas ${icon}"></i> ${title}`;
+                    activeBadge.textContent = badge;
+                    activeDesc.textContent = desc;
+                    activeImg.style.opacity = 1;
+                }, 200);
+            });
+        });
+
+        // Lightbox trigger
+        showcaseFrame.addEventListener('click', () => {
+            lightboxImg.src = activeImg.src;
+            lightbox.classList.add('open');
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('open');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
