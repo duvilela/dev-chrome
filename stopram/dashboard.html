@@ -40,6 +40,10 @@
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
           Histórico
         </button>
+        <button class="nav-item" data-tab="guide">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          Guia
+        </button>
       </nav>
 
       <div class="sidebar-footer">
@@ -313,6 +317,50 @@
                 <div class="empty-state">
                   Nenhuma ação foi aplicada ainda. O histórico aparecerá assim que alguma aba exceder o limite.
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GUIDE TAB -->
+        <section id="tab-guide" class="tab-pane">
+          <div class="card">
+            <div class="card-header">
+              <h3>Guia de Uso e Ajuda</h3>
+            </div>
+            <div class="card-body" style="line-height: 1.6; font-size: 0.95rem; display: flex; flex-direction: column; gap: 20px;">
+              <div>
+                <h4 style="color: var(--color-cyan); margin-bottom: 8px;">🚀 O que é o StopRAM?</h4>
+                <p>O StopRAM é um otimizador inteligente para o seu navegador. Ele monitora a quantidade de memória RAM que cada aba aberta consome. Se uma aba ultrapassar o limite configurado, a extensão toma uma atitude (como suspendê-la temporariamente) para liberar espaço no seu computador e evitar lentidão e travamentos.</p>
+              </div>
+
+              <div class="border-top" style="padding-top: 15px; border-top: 1px solid var(--border-color);">
+                <h4 style="color: var(--color-cyan); margin-bottom: 8px;">🛡️ Proteção de Abas (Abas Especiais)</h4>
+                <p>Existem abas importantes que você nunca vai querer suspender (como um vídeo tocando música de fundo, ou um formulário de trabalho). O StopRAM protege estas abas automaticamente se:</p>
+                <ul style="margin-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 6px; list-style-type: disc;">
+                  <li><strong>Aba estiver Ativa:</strong> A aba que você está olhando no momento nunca é suspensa para não atrapalhar sua navegação.</li>
+                  <li><strong>Aba estiver Fixada (Pinned):</strong> Abas que você fixou no topo do navegador são consideradas importantes e estão seguras.</li>
+                  <li><strong>Domínio nas Permissões:</strong> Você pode cadastrar sites (ex: <code>youtube.com</code>) na aba <strong>Permissões</strong> para protegê-los de qualquer descarte automático ou manual.</li>
+                </ul>
+              </div>
+
+              <div class="border-top" style="padding-top: 15px; border-top: 1px solid var(--border-color);">
+                <h4 style="color: var(--color-cyan); margin-bottom: 8px;">💡 O que significa "Suspender" uma aba?</h4>
+                <p>Quando uma aba é suspensa, a extensão "descarta" o processo dela na memória do Chrome. Isso reduz o consumo de RAM daquela aba para 0 MB. A aba continua aparecendo na barra de abas do seu navegador, e quando você clicar nela novamente, ela será recarregada automaticamente e de forma transparente.</p>
+              </div>
+
+              <div class="border-top" style="padding-top: 15px; border-top: 1px solid var(--border-color);">
+                <h4 style="color: var(--color-cyan); margin-bottom: 8px;">⚙️ Configurações Recomendadas</h4>
+                <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 6px; list-style-type: disc;">
+                  <li><strong>Limite de RAM:</strong> Recomendamos definir entre <code>300 MB</code> e <code>500 MB</code>. Valores muito baixos podem suspender abas com muita frequência.</li>
+                  <li><strong>Ação:</strong> A ação de <strong>Suspender Aba</strong> é a mais recomendada, pois economiza RAM sem fechar suas páginas de trabalho.</li>
+                  <li><strong>Intervalo de Checagem:</strong> Defina em <code>15 segundos</code> para um equilíbrio perfeito entre economia de energia e monitoramento ágil.</li>
+                </ul>
+              </div>
+
+              <div class="alert alert-info" style="margin-top: 10px;">
+                <strong>🔍 Nota sobre o Modo Simulação:</strong><br>
+                Por segurança, navegadores modernos limitam o acesso direto aos dados físicos de RAM. O StopRAM detecta isso e executa um motor híbrido de simulação para estimar o consumo de forma realista, permitindo testar e usar os descartes de abas normalmente em qualquer versão do Chrome.
               </div>
             </div>
           </div>

@@ -97,6 +97,9 @@ function updateHeaderMetadata() {
   } else if (currentTabId === 'history') {
     pageTitle.textContent = "Histórico de Ações";
     pageSubtitle.textContent = "Registro das otimizações executadas pelo StopRAM.";
+  } else if (currentTabId === 'guide') {
+    pageTitle.textContent = "Guia de Uso";
+    pageSubtitle.textContent = "Entenda como o StopRAM otimiza o seu computador de forma simples.";
   }
 }
 
