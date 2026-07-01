@@ -100,19 +100,6 @@ function renderConsumers(tabs) {
   tabs.forEach(tab => {
     const percent = Math.min(Math.round((tab.memory / limitBytes) * 100), 100);
     
-    let barColorClass = 'fill-green';
-    if (percent >= 85) {
-      barColorClass = 'fill-rose';
-    } else if (percent >= 50) {
-      barColorClass = 'fill-amber';
-    }
-
-    const firstChar = tab.title ? tab.title.charAt(0).toUpperCase() : '?';
-    const faviconHTML = tab.favIconUrl && tab.favIconUrl.startsWith('http')
-      ? `<img class="tab-icon" src="${tab.favIconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`
-      : '';
-    const fallbackIconHTML = `<div class="tab-icon-fallback" style="${tab.favIconUrl && tab.favIconUrl.startsWith('http') ? 'display:none;' : ''}">${firstChar}</div>`;
-
     const isSuspended = tab.discarded;
     const isActive = tab.active;
     const isSpecial = tab.isSpecial;
