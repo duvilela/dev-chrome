@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>StopRAM - Painel de Controle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">
+          <div class="chip-inner"></div>
+        </div>
+        <div class="brand-text">
+          <h1>StopRAM</h1>
+          <span>Limitador de Abas</span>
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="monitor">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1a6.85 6.85 0 0 0 0 9.79l-1.42 1.41a8.87 8.87 0 0 1 0-12.61c3.48-3.47 9.11-3.47 12.59 0l2.75-2.79V10.12zm-18 3.76h6.78l-2.74 2.82c2.73 2.7 7.15 2.8 9.88.1a6.85 6.85 0 0 0 0-9.79l1.42-1.41a8.87 8.87 0 0 1 0 12.61c-3.48 3.47-9.11 3.47-12.59 0l-2.75 2.79v-12.12z"/></svg>
+          Monitor de Abas
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          Configurações
+        </button>
+        <button class="nav-item" data-tab="history">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+          Histórico
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="developer-info">
+          <span>StopRAM v1.0.0</span>
+          <span class="status-indicator-container">
+            <span class="pulse-dot active"></span>
+            <span id="global-status-text">Simulando...</span>
+          </span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-title">
+          <h2 id="page-title">Monitoramento de Abas</h2>
+          <p id="page-subtitle" class="subtitle">Veja e gerencie o consumo de recursos das abas abertas.</p>
+        </div>
+        <div class="header-actions">
+          <div id="mode-badge" class="badge badge-warning">Modo Simulação</div>
+          <button id="btn-force-check" class="btn btn-primary">
+            <svg class="btn-icon" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Checar Agora
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB CONTAINER -->
+      <div class="tab-container">
+        
+        <!-- MONITOR TAB -->
+        <section id="tab-monitor" class="tab-pane active">
+          
+          <!-- STATISTICS CARDS -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-container bg-indigo">
+                <svg class="stat-icon" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15h2v2H8zm8 0h2v2h-2zm-4 0h2v2h-2zM4 11h16v2H4zm0-4h16v2H4z"/></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Abas Abertas</span>
+                <span class="stat-value" id="stat-total-tabs">-</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon-container bg-cyan">
+                <svg class="stat-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v6h-2zm0 8h2v2h-2z"/></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">RAM Total (Abas)</span>
+                <span class="stat-value" id="stat-total-ram">-</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon-container bg-green">
+                <svg class="stat-icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-9h2v2h-2zm0 4h2v4h-2z"/></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Abas Suspensas</span>
+                <span class="stat-value" id="stat-suspended-tabs">-</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-icon-container bg-rose">
+                <svg class="stat-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+              </div>
+              <div class="stat-details">
+                <span class="stat-label">Ações Aplicadas</span>
+                <span class="stat-value" id="stat-total-saves">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB LIST CARD -->
+          <div class="card card-table">
+            <div class="card-header">
+              <h3>Filtros e Busca</h3>
+              <div class="table-actions">
+                <div class="search-box">
+                  <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  <input type="text" id="search-tabs" placeholder="Buscar por título ou domínio...">
+                </div>
+                <select id="sort-tabs" class="select-input">
+                  <option value="memory-desc">Memória (Maior para Menor)</option>
+                  <option value="memory-asc">Memória (Menor para Maior)</option>
+                  <option value="title">Título A-Z</option>
+                  <option value="cpu-desc">Uso de CPU</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="data-table" id="table-tabs">
+                <thead>
+                  <tr>
+                    <th>Aba</th>
+                    <th style="width: 100px;">PID</th>
+                    <th style="width: 250px;">Consumo de RAM</th>
+                    <th style="width: 100px;">Uso de CPU</th>
+                    <th style="width: 130px;">Status</th>
+                    <th style="width: 180px; text-align: right;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="tabs-list-body">
+                  <!-- Dynamic content will go here -->
+                  <tr>
+                    <td colspan="6" class="loading-state">
+                      <div class="spinner"></div> Carregando abas do navegador...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SETTINGS TAB -->
+        <section id="tab-settings" class="tab-pane">
+          <div class="settings-grid">
+            
+            <!-- CONFIGURATION FORM -->
+            <div class="card">
+              <div class="card-header">
+                <h3>Regras de Gerenciamento</h3>
+              </div>
+              <div class="card-body">
+                
+                <!-- LIMIT SLIDER -->
+                <div class="form-group">
+                  <div class="slider-label-row">
+                    <label for="settings-limit">Limite de Memória por Aba</label>
+                    <span id="settings-limit-val" class="badge bg-indigo font-mono">300 MB</span>
+                  </div>
+                  <input type="range" id="settings-limit" min="100" max="2000" step="50" value="300" class="slider-input">
+                  <p class="input-desc">Define a RAM máxima que uma única aba pode usar antes que uma ação seja aplicada.</p>
+                </div>
+
+                <!-- ACTION SELECT -->
+                <div class="form-group">
+                  <label for="settings-action">Ação ao Exceder o Limite</label>
+                  <select id="settings-action" class="select-input">
+                    <option value="discard">Suspender Aba (Descartar da RAM, recomendável)</option>
+                    <option value="reload">Recarregar Aba (Limpa vazamentos de memória)</option>
+                    <option value="close">Fechar Aba (Remove a aba do navegador)</option>
+                    <option value="notify">Apenas Notificar (Alerta na Área de Trabalho)</option>
+                  </select>
+                  <p class="input-desc">
+                    A suspensão (discard) mantém a aba aberta no navegador, mas libera 100% da RAM. Quando você clica nela novamente, ela é recarregada de onde você parou.
+                  </p>
+                </div>
+
+                <!-- INTERVAL SELECT -->
+                <div class="form-group">
+                  <label for="settings-interval">Frequência de Verificação</label>
+                  <select id="settings-interval" class="select-input">
+                    <option value="5">A cada 5 segundos (Mais rápido, maior precisão)</option>
+                    <option value="10">A cada 10 segundos</option>
+                    <option value="15">A cada 15 segundos (Padrão)</option>
+                    <option value="30">A cada 30 segundos</option>
+                    <option value="60">A cada 1 minuto (Ideal para economia de bateria)</option>
+                  </select>
+                  <p class="input-desc">Define o tempo de intervalo em que a extensão varre os processos em busca de abusos de RAM.</p>
+                </div>
+
+                <!-- NOTIFICATIONS CHECKBOX -->
+                <div class="form-group checkbox-group">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="settings-notify" checked>
+                    <span class="checkmark"></span>
+                    Exibir notificações na Área de Trabalho
+                  </label>
+                  <p class="input-desc ml-check">Mostra um balão do sistema sempre que uma aba for suspensa ou recarregada automaticamente.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SYSTEM MODE AND DEBUG -->
+            <div class="card">
+              <div class="card-header">
+                <h3>Ambiente e Depuração</h3>
+              </div>
+              <div class="card-body">
+                
+                <div class="info-block">
+                  <div class="info-label">API chrome.processes</div>
+                  <div id="settings-api-status" class="info-value text-red">Indisponível (Chrome Estável)</div>
+                </div>
+
+                <div class="info-block">
+                  <div class="info-label">Modo Operacional</div>
+                  <div id="settings-operational-mode" class="info-value">Simulação Automática</div>
+                </div>
+
+                <!-- FORCE SIMULATION TOGGLE -->
+                <div class="form-group checkbox-group border-top">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="settings-force-sim">
+                    <span class="checkmark"></span>
+                    Forçar Modo de Simulação
+                  </label>
+                  <p class="input-desc ml-check">Simula consumos flutuantes de memória para todas as abas. Útil para testar a interface e o disparo de ações em qualquer versão do Chrome.</p>
+                </div>
+
+                <div class="alert alert-info">
+                  <strong>💡 Como testar agora:</strong><br>
+                  Ajuste o controle "Limite de Memória" acima para um valor baixo (como 150 MB) e mantenha o Modo de Simulação ativado. Em poucos segundos, algumas abas simuladas ultrapassarão o limite e você verá a suspensão ou recarga acontecendo na prática!
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- HISTORY TAB -->
+        <section id="tab-history" class="tab-pane">
+          <div class="card">
+            <div class="card-header">
+              <h3>Histórico de Ações de Otimização</h3>
+              <button id="btn-clear-history" class="btn btn-secondary">Limpar Histórico</button>
+            </div>
+            
+            <div class="card-body scrollable-history">
+              <div class="history-list" id="history-items-container">
+                <!-- Dynamic content will go here -->
+                <div class="empty-state">
+                  Nenhuma ação foi aplicada ainda. O histórico aparecerá assim que alguma aba exceder o limite.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+</body>
+<script src="dashboard.js"></script>
+</html>

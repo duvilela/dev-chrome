@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    
+    <!-- HEADER -->
+    <header class="popup-header">
+      <div class="brand">
+        <div class="logo-icon">
+          <div class="chip-inner"></div>
+        </div>
+        <div class="brand-text">
+          <h2>StopRAM</h2>
+          <span id="popup-mode-text">Simulando RAM</span>
+        </div>
+      </div>
+      <button id="btn-open-settings" class="icon-btn" title="Configurações">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </button>
+    </header>
+
+    <!-- STATS STRIP -->
+    <div class="stats-strip">
+      <div class="mini-stat">
+        <span class="lbl">Abas Abertas</span>
+        <span class="val" id="stat-tabs">-</span>
+      </div>
+      <div class="mini-stat">
+        <span class="lbl">RAM Total</span>
+        <span class="val font-mono" id="stat-ram">-</span>
+      </div>
+    </div>
+
+    <!-- LIST OF TOP CONSUMERS -->
+    <main class="popup-main">
+      <h3 class="section-title">Maiores Consumidores</h3>
+      <div class="consumers-list" id="consumers-list">
+        <!-- Dynamic rows here -->
+        <div class="loading-state">
+          <div class="spinner"></div> Carregando...
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="popup-footer">
+      <button id="btn-dashboard" class="btn btn-primary btn-full-width">
+        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H6v-2h8v2zm4-4H6v-2h12v2zm0-4H6V7h12v2z"/></svg>
+        Painel Completo
+      </button>
+    </footer>
+
+  </div>
+</body>
+<script src="popup.js"></script>
+</html>
