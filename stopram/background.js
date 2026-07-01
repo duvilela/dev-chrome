@@ -10,13 +10,16 @@ let monitoringIntervalId = null;
 
 // Initialize settings on installation
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(['settings', 'history'], (result) => {
+  chrome.storage.local.get(['settings', 'history', 'whitelist'], (result) => {
     const updates = {};
     if (!result.settings) {
       updates.settings = DEFAULT_SETTINGS;
     }
     if (!result.history) {
       updates.history = [];
+    }
+    if (!result.whitelist) {
+      updates.whitelist = [];
     }
     if (Object.keys(updates).length > 0) {
       chrome.storage.local.set(updates, () => {
@@ -94,10 +97,11 @@ chrome.runtime.onConnect.addListener((port) => {
 
 // Main memory checking routine
 function runMemoryCheck() {
-  chrome.storage.local.get(['settings', 'history', 'simulatedMemory'], (data) => {
+  chrome.storage.local.get(['settings', 'history', 'simulatedMemory', 'whitelist'], (data) => {
     const settings = data.settings || DEFAULT_SETTINGS;
     const history = data.history || [];
     let simulatedMemory = data.simulatedMemory || {};
+    const whitelist = data.whitelist || [];
     
     const isProcessesAvailable = typeof chrome.processes !== 'undefined';
     const useSimulation = !isProcessesAvailable || settings.simulationForce;
@@ -110,16 +114,16 @@ function runMemoryCheck() {
       }
 
       if (useSimulation) {
-        handleSimulationMode(tabs, settings, history, simulatedMemory);
+        handleSimulationMode(tabs, settings, history, simulatedMemory, whitelist);
       } else {
-        handleRealMode(tabs, settings, history);
+        handleRealMode(tabs, settings, history, whitelist);
       }
     });
   });
 }
 
 // SIMULATION ENGINE
-function handleSimulationMode(tabs, settings, history, simulatedMemory) {
+function handleSimulationMode(tabs, settings, history, simulatedMemory, whitelist) {
   const newSimulatedMemory = {};
   const tabMemoryData = [];
   const now = Date.now();
@@ -129,6 +133,10 @@ function handleSimulationMode(tabs, settings, history, simulatedMemory) {
   tabs.forEach((tab) => {
     const tabId = tab.id;
     if (!tabId) return;
+
+    const pinned = tab.pinned || false;
+    const whitelisted = isWhitelisted(tab.url, whitelist);
+    const isSpecial = pinned || whitelisted;
 
     // If tab is discarded, memory is 0
     if (tab.discarded) {
@@ -143,7 +151,10 @@ function handleSimulationMode(tabs, settings, history, simulatedMemory) {
         pid: -1,
         active: tab.active,
         discarded: true,
-        isSimulated: true
+        isSimulated: true,
+        pinned: pinned,
+        whitelisted: whitelisted,
+        isSpecial: isSpecial
       });
       return;
     }
@@ -193,12 +204,15 @@ function handleSimulationMode(tabs, settings, history, simulatedMemory) {
       pid: 20000 + tabId, // Mock PID
       active: tab.active,
       discarded: false,
-      isSimulated: true
+      isSimulated: true,
+      pinned: pinned,
+      whitelisted: whitelisted,
+      isSpecial: isSpecial
     });
 
     // Check limit
     if (currentMem >= settings.ramLimit) {
-      const result = executeTabAction(tab, currentMem, settings, updatedHistory);
+      const result = executeTabAction(tab, currentMem, settings, updatedHistory, whitelist);
       if (result.triggered) {
         updatedHistory = result.history;
         historyChanged = true;
@@ -226,12 +240,12 @@ function handleSimulationMode(tabs, settings, history, simulatedMemory) {
 }
 
 // REAL MONITORING ENGINE (chrome.processes)
-function handleRealMode(tabs, settings, history) {
+function handleRealMode(tabs, settings, history, whitelist) {
   chrome.processes.getProcessInfo([], true, (processes) => {
     if (chrome.runtime.lastError) {
       console.warn("Processes API error, falling back to Simulation Mode:", chrome.runtime.lastError.message);
       // Fallback
-      handleSimulationMode(tabs, settings, history, {});
+      handleSimulationMode(tabs, settings, history, {}, whitelist);
       return;
     }
 
@@ -271,6 +285,10 @@ function handleRealMode(tabs, settings, history) {
       const tabId = tab.id;
       if (!tabId) return;
 
+      const pinned = tab.pinned || false;
+      const whitelisted = isWhitelisted(tab.url, whitelist);
+      const isSpecial = pinned || whitelisted;
+
       if (tab.discarded) {
         tabMemoryData.push({
           tabId: tabId,
@@ -282,7 +300,10 @@ function handleRealMode(tabs, settings, history) {
           pid: -1,
           active: tab.active,
           discarded: true,
-          isSimulated: false
+          isSimulated: false,
+          pinned: pinned,
+          whitelisted: whitelisted,
+          isSpecial: isSpecial
         });
         return;
       }
@@ -302,12 +323,15 @@ function handleRealMode(tabs, settings, history) {
         pid: pid,
         active: tab.active,
         discarded: false,
-        isSimulated: false
+        isSimulated: false,
+        pinned: pinned,
+        whitelisted: whitelisted,
+        isSpecial: isSpecial
       });
 
       // Check limit (only if memory is valid)
       if (memory > 0 && memory >= settings.ramLimit) {
-        const result = executeTabAction(tab, memory, settings, updatedHistory);
+        const result = executeTabAction(tab, memory, settings, updatedHistory, whitelist);
         if (result.triggered) {
           updatedHistory = result.history;
           historyChanged = true;
@@ -332,7 +356,7 @@ function handleRealMode(tabs, settings, history) {
 }
 
 // ACTION DISPATCHER
-function executeTabAction(tab, memory, settings, history) {
+function executeTabAction(tab, memory, settings, history, whitelist) {
   const tabId = tab.id;
   const tabTitle = tab.title || 'Aba Sem Título';
   const limitMB = Math.round(settings.ramLimit / (1024 * 1024));
@@ -341,45 +365,89 @@ function executeTabAction(tab, memory, settings, history) {
   let finalAction = settings.action;
   let actionLoggedText = '';
   let skipAction = false;
+  let skipReason = '';
+
+  const pinned = tab.pinned || false;
+  const whitelisted = isWhitelisted(tab.url, whitelist);
+  const isSpecial = pinned || whitelisted;
 
   // Active tab safety check
   if (tab.active && finalAction === 'discard') {
     skipAction = true;
-    
-    // Check if we already logged a skip recently to avoid spam
-    const lastActiveLog = history.find(h => h.tabId === tabId && h.action === 'skip_active');
-    const oneMinuteAgo = Date.now() - 60 * 1000;
-    
-    if (lastActiveLog && lastActiveLog.timestamp > oneMinuteAgo) {
-      return { triggered: false };
-    }
+    skipReason = 'active';
+  } else if (isSpecial && finalAction === 'discard') {
+    skipAction = true;
+    skipReason = 'special';
   }
 
   if (skipAction) {
-    const historyItem = {
-      id: Math.random().toString(36).substring(2, 9),
-      timestamp: Date.now(),
-      tabId: tabId,
-      tabTitle: tabTitle,
-      url: tab.url || '',
-      action: 'skip_active',
-      memoryUsed: memory,
-      description: `Aba consumindo ${currentMB} MB (limite: ${limitMB} MB). Suspensão ignorada por ser a aba ativa.`
-    };
-    
-    const newHistory = [historyItem, ...history].slice(0, 50);
-    
-    if (settings.notificationsEnabled) {
-      chrome.notifications.create(`skip-${tabId}-${Date.now()}`, {
-        type: 'basic',
-        iconUrl: 'icon128.png',
-        title: 'Aviso de Memória: Aba Ativa',
-        message: `A aba "${tabTitle}" está usando ${currentMB} MB, mas não foi suspensa por ser a aba ativa.`,
-        priority: 1
-      });
-    }
+    if (skipReason === 'active') {
+      const lastActiveLog = history.find(h => h.tabId === tabId && h.action === 'skip_active');
+      const oneMinuteAgo = Date.now() - 60 * 1000;
+      
+      if (lastActiveLog && lastActiveLog.timestamp > oneMinuteAgo) {
+        return { triggered: false };
+      }
 
-    return { triggered: true, history: newHistory };
+      const historyItem = {
+        id: Math.random().toString(36).substring(2, 9),
+        timestamp: Date.now(),
+        tabId: tabId,
+        tabTitle: tabTitle,
+        url: tab.url || '',
+        action: 'skip_active',
+        memoryUsed: memory,
+        description: `Aba consumindo ${currentMB} MB (limite: ${limitMB} MB). Suspensão ignorada por ser a aba ativa.`
+      };
+      
+      const newHistory = [historyItem, ...history].slice(0, 50);
+      
+      if (settings.notificationsEnabled) {
+        chrome.notifications.create(`skip-${tabId}-${Date.now()}`, {
+          type: 'basic',
+          iconUrl: 'icon128.png',
+          title: 'Aviso de Memória: Aba Ativa',
+          message: `A aba "${tabTitle}" está usando ${currentMB} MB, mas não foi suspensa por ser a aba ativa.`,
+          priority: 1
+        });
+      }
+
+      return { triggered: true, history: newHistory };
+    } else {
+      // Special tab skip
+      const lastSpecialLog = history.find(h => h.tabId === tabId && h.action === 'skip_special');
+      const oneMinuteAgo = Date.now() - 60 * 1000;
+      
+      if (lastSpecialLog && lastSpecialLog.timestamp > oneMinuteAgo) {
+        return { triggered: false };
+      }
+
+      const specialReason = pinned ? 'fixada' : 'na lista de permissões';
+      const historyItem = {
+        id: Math.random().toString(36).substring(2, 9),
+        timestamp: Date.now(),
+        tabId: tabId,
+        tabTitle: tabTitle,
+        url: tab.url || '',
+        action: 'skip_special',
+        memoryUsed: memory,
+        description: `Aba usando ${currentMB} MB superou o limite de ${limitMB} MB. Suspensão ignorada por ser uma aba especial (${specialReason}).`
+      };
+      
+      const newHistory = [historyItem, ...history].slice(0, 50);
+      
+      if (settings.notificationsEnabled) {
+        chrome.notifications.create(`special-${tabId}-${Date.now()}`, {
+          type: 'basic',
+          iconUrl: 'icon128.png',
+          title: 'Aviso de Memória: Aba Especial',
+          message: `A aba "${tabTitle}" está usando ${currentMB} MB, mas não foi suspensa por ser uma aba especial (${specialReason}).`,
+          priority: 1
+        });
+      }
+
+      return { triggered: true, history: newHistory };
+    }
   }
 
   // Execute action
@@ -451,36 +519,51 @@ function notifyUIUpdated() {
 // LISTEN FOR MANUAL USER ACTIONS FROM PORT/MESSAGES
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'forceDiscard') {
-    chrome.tabs.discard(message.tabId, (discardedTab) => {
-      if (chrome.runtime.lastError) {
-        sendResponse({ success: false, error: chrome.runtime.lastError.message });
-      } else {
-        // Reset simulation memory of this tab
-        chrome.storage.local.get(['simulatedMemory', 'history'], (data) => {
-          let simulatedMemory = data.simulatedMemory || {};
-          simulatedMemory[message.tabId] = 0;
-          
-          chrome.tabs.get(message.tabId, (tab) => {
-            const tabTitle = tab ? tab.title : 'Aba';
-            const historyItem = {
-              id: Math.random().toString(36).substring(2, 9),
-              timestamp: Date.now(),
-              tabId: message.tabId,
-              tabTitle: tabTitle,
-              url: tab ? tab.url : '',
-              action: 'manual_discard',
-              memoryUsed: 0,
-              description: `Aba suspensa manualmente pelo usuário.`
-            };
-            const newHistory = [historyItem, ...(data.history || [])].slice(0, 50);
-            
-            chrome.storage.local.set({ simulatedMemory, history: newHistory }, () => {
-              runMemoryCheck();
-              sendResponse({ success: true });
-            });
-          });
-        });
+    chrome.tabs.get(message.tabId, (tab) => {
+      if (chrome.runtime.lastError || !tab) {
+        sendResponse({ success: false, error: "Aba não encontrada." });
+        return;
       }
+      
+      chrome.storage.local.get(['whitelist'], (wData) => {
+        const whitelist = wData.whitelist || [];
+        const whitelisted = isWhitelisted(tab.url, whitelist);
+        const isSpecial = tab.pinned || whitelisted;
+        
+        if (isSpecial) {
+          sendResponse({ success: false, error: "Abas especiais (fixadas ou permitidas) não podem ser suspensas." });
+          return;
+        }
+        
+        chrome.tabs.discard(message.tabId, (discardedTab) => {
+          if (chrome.runtime.lastError) {
+            sendResponse({ success: false, error: chrome.runtime.lastError.message });
+          } else {
+            // Reset simulation memory of this tab
+            chrome.storage.local.get(['simulatedMemory', 'history'], (data) => {
+              let simulatedMemory = data.simulatedMemory || {};
+              simulatedMemory[message.tabId] = 0;
+              
+              const historyItem = {
+                id: Math.random().toString(36).substring(2, 9),
+                timestamp: Date.now(),
+                tabId: message.tabId,
+                tabTitle: tab.title || 'Aba',
+                url: tab.url || '',
+                action: 'manual_discard',
+                memoryUsed: 0,
+                description: `Aba suspensa manualmente pelo usuário.`
+              };
+              const newHistory = [historyItem, ...(data.history || [])].slice(0, 50);
+              
+              chrome.storage.local.set({ simulatedMemory, history: newHistory }, () => {
+                runMemoryCheck();
+                sendResponse({ success: true });
+              });
+            });
+          }
+        });
+      });
     });
     return true; // async response
   }
@@ -548,3 +631,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return false;
   }
 });
+
+function isWhitelisted(url, whitelist) {
+  if (!url || !whitelist || whitelist.length === 0) return false;
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return whitelist.some(item => {
+      const cleanedItem = item.trim().toLowerCase();
+      if (!cleanedItem) return false;
+      return hostname.includes(cleanedItem) || cleanedItem.includes(hostname);
+    });
+  } catch (e) {
+    return whitelist.some(item => {
+      const cleanedItem = item.trim().toLowerCase();
+      if (!cleanedItem) return false;
+      return url.toLowerCase().includes(cleanedItem);
+    });
+  }
+}

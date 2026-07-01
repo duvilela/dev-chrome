@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "StopRAM - Limitador de Memória",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Monitora e otimiza o uso de memória RAM das suas abas, suspendendo ou recarregando as que ultrapassam os limites definidos.",
   "permissions": [
     "processes",

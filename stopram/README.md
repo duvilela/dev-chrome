@@ -9,19 +9,23 @@ A extensão conta com um **Modo de Simulação Inteligente**, permitindo testar 
 ## 💎 Principais Funcionalidades
 
 - **Monitoramento Dinâmico**: Visualização em tempo real das abas abertas, seus respectivos Process IDs (PID), uso de CPU e consumo de memória RAM.
+- **Exceções e Proteção (Abas Especiais)**:
+  - **Permissões (Whitelist)**: Uma seção dedicada para adicionar domínios (ex: `youtube.com`). Abas destes sites são protegidas de suspensão automática ou manual, aparecendo com o estado "Especial" (azul).
+  - **Abas Fixadas (Pinned)**: Qualquer aba fixada nativamente no Chrome é automaticamente protegida contra suspensão e identificada como "Especial", sem necessidade de regras adicionais.
 - **Ações Automáticas Personalizáveis**:
-  - **Suspender Aba (Descarte)**: Libera 100% da memória RAM da aba inativa, mantendo-a aberta no navegador para recarga automática ao ser clicada.
-  - **Recarregar Aba**: Força a recarga para limpar vazamentos de memória.
-  - **Fechar Aba**: Remove a aba para economizar recursos críticos.
+  - **Suspender Aba (Descarte)**: Libera 100% da memória RAM da aba inativa, mantendo-a aberta no navegador para recarga automática ao ser clicada. (Bloqueado para abas "Especiais").
+  - **Recarregar Aba**: Força a recarga para limpar vazamentos de memória (funciona para abas normais e especiais).
+  - **Fechar Aba**: Remove a aba para economizar recursos críticos (funciona para abas normais e especiais).
   - **Apenas Notificar**: Exibe um alerta nativo na área de trabalho.
 - **Painel de Controle SaaS (Full Dashboard)**:
   - Lista de abas interativa com busca instantânea e ordenação (por RAM, CPU ou título).
-  - Gráficos visuais de consumo com cores semânticas de alerta (verde, amarelo, vermelho pulsante).
+  - Gerenciador de exceções (Permissões) para cadastrar e remover domínios protegidos.
+  - Gráficos visuais de consumo com cores de alerta (verde, amarelo, vermelho pulsante) e status especial (azul).
   - Formulário completo para definir limites de RAM (100 MB a 2 GB) e frequências de varredura (5s a 60s).
   - Histórico detalhado de ações aplicadas pela extensão.
 - **Popup Compacto (Toolbar)**:
-  - Exibição instantânea das 4 abas que mais consomem recursos.
-  - Atalhos rápidos para suspender ou recarregar abas individualmente.
+  - Exibição instantânea das 4 abas que mais consomem recursos, com identificação de abas "Especiais".
+  - Atalhos rápidos para suspender ou recarregar abas individualmente (botão de suspensão desabilitado para abas protegidas).
   - Indicador do uso de RAM total somado de todas as abas.
   - Acesso direto ao painel completo.
 

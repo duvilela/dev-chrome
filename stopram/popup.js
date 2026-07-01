@@ -115,9 +115,26 @@ function renderConsumers(tabs) {
 
     const isSuspended = tab.discarded;
     const isActive = tab.active;
+    const isSpecial = tab.isSpecial;
+    const specialClass = isSpecial ? 'special-row' : '';
+
+    let barColorClass = 'fill-green';
+    if (isSpecial) {
+      barColorClass = 'fill-special';
+    } else if (percent >= 85) {
+      barColorClass = 'fill-rose';
+    } else if (percent >= 50) {
+      barColorClass = 'fill-amber';
+    }
+
+    const firstChar = tab.title ? tab.title.charAt(0).toUpperCase() : '?';
+    const faviconHTML = tab.favIconUrl && tab.favIconUrl.startsWith('http')
+      ? `<img class="tab-icon" src="${tab.favIconUrl}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`
+      : '';
+    const fallbackIconHTML = `<div class="tab-icon-fallback" style="${tab.favIconUrl && tab.favIconUrl.startsWith('http') ? 'display:none;' : ''}">${firstChar}</div>`;
 
     listHTML += `
-      <div class="tab-row">
+      <div class="tab-row ${specialClass}">
         <div class="row-top">
           ${faviconHTML}
           ${fallbackIconHTML}
@@ -126,7 +143,7 @@ function renderConsumers(tabs) {
             <button class="mini-btn btn-reload" data-id="${tab.tabId}" title="Recarregar" ${isSuspended ? 'disabled' : ''}>
               <svg class="mini-btn-icon" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
             </button>
-            <button class="mini-btn btn-discard" data-id="${tab.tabId}" title="${isActive ? 'Abas ativas não podem ser suspensas' : 'Suspender'}" ${isSuspended || isActive ? 'disabled' : ''}>
+            <button class="mini-btn btn-discard" data-id="${tab.tabId}" title="${isSpecial ? 'Abas especiais não podem ser suspensas' : (isActive ? 'Abas ativas não podem ser suspensas' : 'Suspender')}" ${isSuspended || isActive || isSpecial ? 'disabled' : ''}>
               <svg class="mini-btn-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
             </button>
           </div>
@@ -135,7 +152,7 @@ function renderConsumers(tabs) {
           <div class="progress-bar-bg">
             <div class="progress-bar-fill ${barColorClass}" style="width: ${percent}%;"></div>
           </div>
-          <span class="memory-value">${formatBytes(tab.memory)}</span>
+          <span class="memory-value" style="${isSpecial ? 'color: #3b82f6;' : ''}">${formatBytes(tab.memory)}</span>
         </div>
       </div>
     `;

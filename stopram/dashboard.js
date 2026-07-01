@@ -91,6 +91,9 @@ function updateHeaderMetadata() {
   } else if (currentTabId === 'settings') {
     pageTitle.textContent = "Configurações";
     pageSubtitle.textContent = "Defina regras automáticas de gerenciamento de RAM e comportamento.";
+  } else if (currentTabId === 'permissions') {
+    pageTitle.textContent = "Permissões";
+    pageSubtitle.textContent = "Gerencie domínios protegidos que nunca serão suspensos.";
   } else if (currentTabId === 'history') {
     pageTitle.textContent = "Histórico de Ações";
     pageSubtitle.textContent = "Registro das otimizações executadas pelo StopRAM.";
@@ -139,6 +142,18 @@ function setupEventListeners() {
   settingsNotify.addEventListener('change', saveSettings);
   settingsForceSim.addEventListener('change', saveSettings);
 
+  // Permissions form listeners
+  const btnAddPermission = document.getElementById('btn-add-permission');
+  const inputPermissionUrl = document.getElementById('permission-url');
+  if (btnAddPermission && inputPermissionUrl) {
+    btnAddPermission.addEventListener('click', addPermissionEntry);
+    inputPermissionUrl.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addPermissionEntry();
+      }
+    });
+  }
+
   // Clear History
   btnClearHistory.addEventListener('click', () => {
     if (confirm("Tem certeza que deseja limpar todo o histórico de ações?")) {
@@ -158,7 +173,7 @@ function setupEventListeners() {
 
 // LOAD SETTINGS AND DATA
 function loadSettingsAndData() {
-  chrome.storage.local.get(['settings', 'tabMemoryData', 'history', 'mode'], (data) => {
+  chrome.storage.local.get(['settings', 'tabMemoryData', 'history', 'mode', 'whitelist'], (data) => {
     localSettings = data.settings || {
       ramLimit: 300 * 1024 * 1024,
       action: 'discard',
@@ -170,6 +185,7 @@ function loadSettingsAndData() {
     lastTabMemoryData = data.tabMemoryData || [];
     const history = data.history || [];
     const mode = data.mode || 'simulation';
+    const whitelist = data.whitelist || [];
 
     // Update Header Badges
     const isProcessesAvailable = typeof chrome.processes !== 'undefined';
@@ -214,6 +230,7 @@ function loadSettingsAndData() {
     // Render components
     renderTabsTable();
     renderHistoryList(history);
+    renderPermissionsList(whitelist);
   });
 }
 
@@ -306,6 +323,8 @@ function renderTabsTable() {
     let statusBadgeHTML = '<span class="badge badge-secondary">Inativa</span>';
     if (tab.discarded) {
       statusBadgeHTML = '<span class="badge badge-secondary">Suspensa</span>';
+    } else if (tab.isSpecial) {
+      statusBadgeHTML = '<span class="badge badge-special">Especial</span>';
     } else if (tab.active) {
       statusBadgeHTML = '<span class="badge badge-success">Ativa</span>';
     }
@@ -321,6 +340,7 @@ function renderTabsTable() {
     // Action button state
     const isSuspended = tab.discarded;
     const isActive = tab.active;
+    const isSpecial = tab.isSpecial;
 
     rowsHTML += `
       <tr class="${rowClass}">
@@ -353,7 +373,7 @@ function renderTabsTable() {
             <button class="btn-table-action btn-reload-action" data-action="reload" data-id="${tab.tabId}" title="Recarregar aba" ${isSuspended ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
               <svg class="btn-table-action-icon" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
             </button>
-            <button class="btn-table-action btn-discard-action" data-action="discard" data-id="${tab.tabId}" title="${isActive ? 'Abas ativas não podem ser suspensas' : 'Suspender aba (liberar RAM)'}" ${isSuspended || isActive ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+            <button class="btn-table-action btn-discard-action" data-action="discard" data-id="${tab.tabId}" title="${isSpecial ? 'Abas especiais não podem ser suspensas' : (isActive ? 'Abas ativas não podem ser suspensas' : 'Suspender aba (liberar RAM)')}" ${isSuspended || isActive || isSpecial ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
               <svg class="btn-table-action-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
             </button>
             <button class="btn-table-action btn-close-action" data-action="close" data-id="${tab.tabId}" data-title="${escapeHtml(tab.title)}" data-url="${escapeHtml(tab.url)}" title="Fechar aba">
@@ -507,4 +527,74 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function renderPermissionsList(whitelist) {
+  const listContainer = document.getElementById('permissions-list');
+  if (!listContainer) return;
+  
+  if (whitelist.length === 0) {
+    listContainer.innerHTML = `<li class="empty-state" style="padding: 10px 0;">Nenhum domínio adicionado ainda.</li>`;
+    return;
+  }
+  
+  let html = '';
+  whitelist.forEach((item, index) => {
+    html += `
+      <li style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
+        <span style="font-weight: 500; font-size: 0.9rem; font-family: var(--font-sans); color: var(--text-primary);">${escapeHtml(item)}</span>
+        <button class="btn-table-action btn-close-action btn-delete-permission" data-index="${index}" title="Remover permissão" style="padding: 4px; background: none; border: none; cursor: pointer; color: var(--text-secondary);">
+          <svg class="btn-table-action-icon" viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </li>
+    `;
+  });
+  
+  listContainer.innerHTML = html;
+  
+  // Add delete click events
+  document.querySelectorAll('.btn-delete-permission').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = parseInt(e.currentTarget.getAttribute('data-index'), 10);
+      chrome.storage.local.get(['whitelist'], (res) => {
+        const list = res.whitelist || [];
+        list.splice(idx, 1);
+        chrome.storage.local.set({ whitelist: list }, () => {
+          chrome.runtime.sendMessage({ action: 'triggerCheck' });
+        });
+      });
+    });
+  });
+}
+
+function addPermissionEntry() {
+  const input = document.getElementById('permission-url');
+  if (!input) return;
+  const url = input.value.trim().toLowerCase();
+  if (!url) return;
+  
+  // Simple domain cleaner (remove protocol if user typed it)
+  let cleanDomain = url;
+  try {
+    if (url.includes('://')) {
+      cleanDomain = new URL(url).hostname;
+    } else if (url.startsWith('www.')) {
+      cleanDomain = url.substring(4);
+    }
+  } catch(e) {
+    // fallback
+  }
+  
+  chrome.storage.local.get(['whitelist'], (res) => {
+    const list = res.whitelist || [];
+    if (!list.includes(cleanDomain)) {
+      list.push(cleanDomain);
+      chrome.storage.local.set({ whitelist: list }, () => {
+        input.value = '';
+        chrome.runtime.sendMessage({ action: 'triggerCheck' });
+      });
+    } else {
+      alert("Este domínio já está na lista.");
+    }
+  });
 }

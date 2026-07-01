@@ -32,6 +32,10 @@
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
           Configurações
         </button>
+        <button class="nav-item" data-tab="permissions">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l5.59-5.59L17 9l-7 7z"/></svg>
+          Permissões
+        </button>
         <button class="nav-item" data-tab="history">
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
           Histórico
@@ -40,7 +44,7 @@
 
       <div class="sidebar-footer">
         <div class="developer-info">
-          <span>StopRAM v1.0.0</span>
+          <span>StopRAM v1.1.0</span>
           <span class="status-indicator-container">
             <span class="pulse-dot active"></span>
             <span id="global-status-text">Simulando...</span>
@@ -252,6 +256,43 @@
                   Ajuste o controle "Limite de Memória" acima para um valor baixo (como 150 MB) e mantenha o Modo de Simulação ativado. Em poucos segundos, algumas abas simuladas ultrapassarão o limite e você verá a suspensão ou recarga acontecendo na prática!
                 </div>
 
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- PERMISSIONS TAB -->
+        <section id="tab-permissions" class="tab-pane">
+          <div class="settings-grid">
+            
+            <!-- ADD PERMISSION FORM -->
+            <div class="card">
+              <div class="card-header">
+                <h3>Adicionar Exceção de Aba</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="permission-url">Domínio ou Site (Ex: youtube.com)</label>
+                  <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <input type="text" id="permission-url" class="select-input" style="flex-grow: 1;" placeholder="Ex: youtube.com, gmail.com, etc.">
+                    <button id="btn-add-permission" class="btn btn-primary">Adicionar</button>
+                  </div>
+                  <p class="input-desc">Abas que correspondam a esta regra nunca serão suspensas da RAM automaticamente. Elas receberão o estado de "Aba Especial".</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- LIST OF EXCEPTIONS -->
+            <div class="card">
+              <div class="card-header">
+                <h3>Domínios Permitidos (Exceções)</h3>
+              </div>
+              <div class="card-body">
+                <ul id="permissions-list" style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                  <!-- Dynamic entries will go here -->
+                  <li class="empty-state" style="padding: 10px 0;">Nenhum domínio adicionado ainda.</li>
+                </ul>
               </div>
             </div>
 

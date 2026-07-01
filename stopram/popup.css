@@ -223,6 +223,10 @@ body {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+.tab-row.special-row {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
 .row-top {
   display: flex;
   align-items: center;
@@ -327,6 +331,7 @@ body {
 .fill-green { background: linear-gradient(90deg, #059669, #10b981); }
 .fill-amber { background: linear-gradient(90deg, #d97706, #f59e0b); }
 .fill-rose { background: linear-gradient(90deg, #e11d48, #f43f5e); }
+.fill-special { background: linear-gradient(90deg, #2563eb, #3b82f6); }
 
 .memory-value {
   font-size: 0.75rem;
