@@ -100,6 +100,9 @@ function updateHeaderMetadata() {
   } else if (currentTabId === 'guide') {
     pageTitle.textContent = "Guia de Uso";
     pageSubtitle.textContent = "Entenda como o StopRAM otimiza o seu computador de forma simples.";
+  } else if (currentTabId === 'about') {
+    pageTitle.textContent = "Sobre a Extensão";
+    pageSubtitle.textContent = "Créditos do desenvolvedor e termos de licença não comercial.";
   }
 }
 
