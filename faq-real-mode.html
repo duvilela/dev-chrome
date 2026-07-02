@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopRAM - Diferença entre Consumo Real e Balão do Chrome</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-card: rgba(17, 17, 27, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-cyan: #06b6d4;
+            --accent-royal: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* Background Effects */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb-1 {
+            top: -10%;
+            right: -10%;
+            background: var(--accent-cyan);
+        }
+
+        .orb-2 {
+            bottom: -15%;
+            left: -10%;
+            background: var(--accent-purple);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 0;
+            flex-grow: 1;
+        }
+
+        /* Fixed Navbar */
+        .navbar {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .brand-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-royal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #09090b;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Page Title */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-title);
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Card Section */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--accent-cyan);
+        }
+
+        .section-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+
+        .section-card ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .section-card li strong {
+            color: #fff;
+        }
+
+        /* Highlight box */
+        .alert-info {
+            background: rgba(6, 182, 212, 0.04);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .alert-info strong {
+            color: var(--accent-cyan);
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .alert-success strong {
+            color: #10b981;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Fixed Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-avatar">D</div>
+                <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
+            </a>
+            <div class="nav-right">
+                <a href="stopram.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar à Apresentação</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Por que o consumo no Modo Real é menor do que no Balão do Chrome?</h1>
+            <p>Esclarecimentos sobre os bastidores da captura física de hardware pela API chrome.processes no Chrome Dev/Canary.</p>
+        </header>
+
+        <!-- Section 1: The Contrast -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-eye-slash"></i> O que acontecia no Modo Simulação</h2>
+            <p>No Chrome Estável, o StopRAM opera obrigatoriamente no <strong>Modo Simulação</strong>. Como as APIs de hardware são bloqueadas, o sistema gera consumos fictícios usando algoritmos de flutuação dinâmica.</p>
+            <p>Essa simulação foi calibrada com números relativamente altos (ex: `257 MB` ou `326 MB`) e flutuações constantes para fins estéticos e demonstrativos, simulando o peso que um site costuma ter. Isso gerava a impressão de que a extensão capturava o consumo real, mas eram valores puramente matemáticos.</p>
+        </div>
+
+        <!-- Section 2: Multiprocess Architecture -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-cubes"></i> A Arquitetura Multiprocesso do Chrome</h2>
+            <p>Ao migrar para versões de desenvolvimento como o **Chrome Dev ou Canary**, a extensão ganha acesso de hardware e desativa a simulação, ativando o **Modo Real** (indicado pelo badge verde no painel).</p>
+            <p>Sob este modo, a diferença drástica entre os valores medidos pelo balão nativo do Chrome e o painel StopRAM se deve a como a memória é estruturada internamente no navegador:</p>
+            <ul>
+                <li><strong>O Balão do Chrome (Ex: 635 MB ou 842 MB):</strong> Mostra o consumo <strong>total acumulado</strong> em todas as pontas necessárias para rodar aquela aba. Isso engloba o processo do renderizador, scripts secundários, anúncios de terceiros em iframes, e principalmente o <strong>processo compartilhado de GPU (placa de vídeo)</strong> e o <strong>serviço de áudio</strong>, onde ficam os buffers pesados de decodificação de vídeo do YouTube.</li>
+                <li><strong>A API chrome.processes (Ex: 30 MB):</strong> Por restrições de segurança de sandbox, a API oficial do Chrome só consegue mapear para a extensão a <strong>Memória Privada (Private Memory)</strong> exclusiva do processo renderizador principal da aba (a estrutura DOM, o código JavaScript ativo da página e estilos). A memória pesada de placa de vídeo e reprodução de áudio, que roda em processos compartilhados globais do navegador, não pode ser atribuída isoladamente a uma única aba pela API.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3: Mitigation/Enhancement -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-cogs"></i> Agregação de Processos Ativada</h2>
+            <p>Muitas abas modernas (especialmente sites complexos e com publicidade) criam processos renderizadores adicionais, conhecidos como <em>sub-frames</em> ou <em>out-of-process iframes</em>.</p>
+            <p>Para atenuar e aproximar os dados ao consumo máximo real, a lógica do StopRAM em <code>background.js</code> foi atualizada para **somar (acumular) a memória privada e o uso de CPU de todos os sub-processos associados ao mesmo ID de aba**. Isso consolida os dados de sub-frames secundários no valor final exibido no painel no Modo Real.</p>
+        </div>
+
+        <!-- Section 4: Configuration Tips -->
+        <div class="section-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.01);">
+            <h2 class="section-title" style="color: #10b981;"><i class="fas fa-lightbulb"></i> Como Configurar Limites no Modo Real</h2>
+            <p>Como a API <code>chrome.processes</code> captura estritamente o consumo de memória privada do renderizador (que é bem menor que o consumo total da aba com a GPU), você deve ajustar a sua régua de limites no painel:</p>
+            <div class="alert-success">
+                <i class="fas fa-sliders-h"></i> <strong>Dica de Calibração:</strong> No <strong>Modo Real</strong>, reduza o controle deslizante de limite de RAM de volta a valores entre <strong>30 MB e 80 MB</strong>. Como os processos de renderização puros são leves, limites altos de 300 MB nunca serão atingidos e a aba não será suspensa. Configurando a régua mais baixa, você capturará picos no processamento da página e a suspensão atuará perfeitamente.
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/duvilela" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://duvilela.github.io/" class="footer-link" target="_blank"><i class="fas fa-briefcase"></i> Portfólio Principal</a>
+        </div>
+        <p>&copy; 2026 duvilela. Desenvolvido para facilitar produtividade e estudo pessoal.</p>
+    </footer>
+</body>
+</html>
