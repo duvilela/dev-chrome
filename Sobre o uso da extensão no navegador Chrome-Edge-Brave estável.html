@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopRAM - Notas de Funcionamento em Navegadores Estáveis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-card: rgba(17, 17, 27, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-cyan: #06b6d4;
+            --accent-royal: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* Background Effects */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb-1 {
+            top: -10%;
+            right: -10%;
+            background: var(--accent-cyan);
+        }
+
+        .orb-2 {
+            bottom: -15%;
+            left: -10%;
+            background: var(--accent-purple);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 0;
+            flex-grow: 1;
+        }
+
+        /* Fixed Navbar */
+        .navbar {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .brand-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-royal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #09090b;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Page Title */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-title);
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Card Section */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--accent-cyan);
+        }
+
+        .section-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+
+        .section-card ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .section-card li strong {
+            color: #fff;
+        }
+
+        /* Highlight box */
+        .alert-info {
+            background: rgba(6, 182, 212, 0.04);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .alert-info strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Fixed Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-avatar">D</div>
+                <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
+            </a>
+            <div class="nav-right">
+                <a href="stopram.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar à Apresentação</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Funcionamento Técnico em Navegadores Estáveis</h1>
+            <p>Esclarecimentos detalhados sobre o Modo Simulação e a coleta de dados de RAM e CPU no Chrome, Edge e Brave.</p>
+        </header>
+
+        <!-- Section 1: The Challenge -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-ban"></i> Restrição da API chrome.processes</h2>
+            <p>Por questões rígidas de segurança e isolamento de processos (sandbox), o Google Chrome e demais navegadores baseados no Chromium (como Microsoft Edge, Brave e Opera) em suas versões estáveis <strong>bloqueiam o uso da API <code>chrome.processes</code></strong> por extensões tradicionais.</p>
+            <p>Essa API fornece informações físicas sobre o Process ID (PID) e o consumo de hardware real de cada aba. Sem ela, uma extensão comum de navegador não possui permissões no sistema operacional para questionar o consumo físico individual de RAM de outra aba.</p>
+            <div class="alert-info">
+                <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Para ativar o monitoramento físico em tempo real por meio da API <code>chrome.processes</code>, a extensão precisa ser executada em canais de desenvolvimento do navegador, como o <strong>Chrome Dev</strong> ou <strong>Chrome Canary</strong>.
+            </div>
+        </div>
+
+        <!-- Section 2: How Simulation Works -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-project-diagram"></i> Como Funciona o Modo Simulação</h2>
+            <p>Quando detecta que a API do sistema está indisponível, o StopRAM ativa automaticamente seu <strong>motor híbrido de simulação</strong> no script de segundo plano (service worker). Ele simula o consumo de recursos das abas através de algoritmos de flutuação altamente realistas:</p>
+            <ul>
+                <li><strong>Consumo Inicial Diferenciado:</strong> Abas ativas (em foco) iniciam consumindo entre <strong>120 MB e 270 MB</strong>. Abas de segundo plano iniciam em consumo reduzido, entre <strong>40 MB e 140 MB</strong>.</li>
+                <li><strong>Flutuação Dinâmica (Drift):</strong> A cada ciclo de verificação, o algoritmo altera de forma flutuante a RAM de cada aba. Abas ativas tendem a subir de consumo mais rapidamente devido à interação simulada do usuário.</li>
+                <li><strong>Simulação de Vazamento de Memória (Memory Leak):</strong> A cada 7 abas criadas, o script ativa um multiplicador de consumo de <strong>1.5x</strong> em uma delas. Isso faz com que essa aba cresça continuamente de forma artificial, simulando uma página mal otimizada até que o limite de RAM configurado seja atingido.</li>
+                <li><strong>Uso de CPU e PID Coerentes:</strong> Abas ativas simulam o uso de CPU entre <strong>4.0% e 18.0%</strong>, enquanto abas de fundo ficam abaixo de <strong>1.5%</strong>. Também são criados Process IDs fictícios na faixa de <code>20000 + tabId</code>.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3: Data Origin -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-code-branch"></i> De Onde os Dados São Puxados?</h2>
+            <p>O StopRAM <strong>não utiliza</strong> APIs de hardware do sistema (como <code>chrome.system.memory</code> ou <code>chrome.system.cpu</code>) para calcular o consumo de abas individuais pelos seguintes motivos:</p>
+            <ul>
+                <li>A API <strong><code>chrome.system.memory</code></strong> informa apenas dados globais da máquina (RAM total física e RAM livre geral no computador), não oferecendo detalhes de abas individuais.</li>
+                <li>A API <strong><code>chrome.system.cpu</code></strong> reporta apenas o uso e arquitetura geral dos núcleos físicos do processador.</li>
+            </ul>
+            <p>Dessa forma, o StopRAM puxa os <strong>metadados reais das abas</strong> (Título, URL, Ícone, se está Fixada, Ativa ou Suspensa) diretamente da API <strong><code>chrome.tabs</code></strong>. Com base nessas abas reais identificadas, o script gera e calcula as métricas de RAM/CPU programaticamente utilizando matemática probabilística e persistência local no <code>chrome.storage.local</code>.</p>
+        </div>
+
+        <!-- Section 4: Real Action -->
+        <div class="section-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.01);">
+            <h2 class="section-title" style="color: #10b981;"><i class="fas fa-check-circle"></i> O Descarte das Abas é Real!</h2>
+            <p>É fundamental ressaltar que, embora as métricas de RAM/CPU no Chrome estável sejam simuladas para testar e operar a extensão, **a ação de descarte das abas é 100% real**.</p>
+            <p>Quando a extensão atinge a regra limite e decide aplicar a ação de <strong>"Suspender Aba"</strong>, ela executa a chamada nativa <strong><code>chrome.tabs.discard(tabId)</code></strong>. Esta função é totalmente suportada em qualquer canal do Chrome e faz com que o navegador elimine fisicamente o processo daquela aba da memória RAM do seu computador de verdade, poupando hardware real.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/duvilela" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://duvilela.github.io/" class="footer-link" target="_blank"><i class="fas fa-briefcase"></i> Portfólio Principal</a>
+        </div>
+        <p>&copy; 2026 duvilela. Desenvolvido para facilitar produtividade e estudo pessoal.</p>
+    </footer>
+</body>
+</html>
