@@ -38,6 +38,7 @@ const settingsNotify = document.getElementById('settings-notify');
 const settingsApiStatus = document.getElementById('settings-api-status');
 const settingsOperationalMode = document.getElementById('settings-operational-mode');
 const settingsForceSim = document.getElementById('settings-force-sim');
+const settingsContingencyBlock = document.getElementById('settings-contingency-block');
 
 // History Elements
 const historyItemsContainer = document.getElementById('history-items-container');
@@ -210,6 +211,9 @@ function loadSettingsAndData() {
       pulseDot.className = "pulse-dot active";
       settingsOperationalMode.textContent = "Monitoramento Real";
       settingsOperationalMode.className = "info-value text-green";
+      if (settingsContingencyBlock) {
+        settingsContingencyBlock.style.display = "none";
+      }
     } else {
       modeBadge.textContent = "Modo Simulação";
       modeBadge.className = "badge badge-warning";
@@ -217,6 +221,9 @@ function loadSettingsAndData() {
       pulseDot.className = "pulse-dot simulated";
       settingsOperationalMode.textContent = isProcessesAvailable ? "Simulação Forçada" : "Simulação Automática";
       settingsOperationalMode.className = "info-value text-amber";
+      if (settingsContingencyBlock) {
+        settingsContingencyBlock.style.display = "flex";
+      }
     }
 
     // Sync settings form elements (only if settings page is loaded/active)

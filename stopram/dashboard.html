@@ -249,6 +249,11 @@
                   <div id="settings-operational-mode" class="info-value">Simulação Automática</div>
                 </div>
 
+                <div class="info-block" id="settings-contingency-block" style="display: flex;">
+                  <div class="info-label" style="color: var(--color-rose);">Contingência</div>
+                  <div id="settings-contingency-value" class="info-value" style="color: var(--color-rose);">API Chrome.Tabs</div>
+                </div>
+
                 <!-- FORCE SIMULATION TOGGLE -->
                 <div class="form-group checkbox-group border-top">
                   <label class="checkbox-container">
@@ -363,8 +368,8 @@
               </div>
 
               <div class="alert alert-info" style="margin-top: 10px;">
-                <strong>🔍 Nota sobre o Modo Simulação:</strong><br>
-                Por segurança, navegadores modernos limitam o acesso direto aos dados físicos de RAM. O StopRAM detecta isso e executa um motor híbrido de simulação para estimar o consumo de forma realista, permitindo testar e usar os descartes de abas normalmente em qualquer versão do Chrome.
+                <strong>🔍 Nota sobre Contingência e Simulação:</strong><br>
+                Nas versões estáveis do Chrome, o Modo de Simulação ativa por padrão a <strong>contingência em modo simulação</strong> usando o modo ativo para a <strong>API Chrome Tabs</strong> para gerenciar as abas e simular os dados. Já nas versões onde a API <strong>chrome.processes</strong> é liberada (versões de desenvolvimento), a extensão ativa automaticamente o <strong>modo real</strong> de monitoramento físico de hardware usando a respectiva API.
               </div>
             </div>
           </div>
