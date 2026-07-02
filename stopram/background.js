@@ -266,17 +266,24 @@ function handleRealMode(tabs, settings, history, whitelist) {
       };
     }
 
-    // Map tabId -> pid details
+    // Map tabId -> pid details (aggregating if multiple processes belong to the same tab)
     const tabToProcessMap = {};
-    for (let pid in pidMap) {
+    for (let pidStr in pidMap) {
+      const pid = parseInt(pidStr, 10);
       const proc = pidMap[pid];
       proc.tasks.forEach((task) => {
         if (task.tabId) {
-          tabToProcessMap[task.tabId] = {
-            pid: parseInt(pid, 10),
-            memory: proc.memory,
-            cpu: proc.cpu
-          };
+          const tId = task.tabId;
+          if (!tabToProcessMap[tId]) {
+            tabToProcessMap[tId] = {
+              pid: pid,
+              memory: proc.memory,
+              cpu: proc.cpu
+            };
+          } else {
+            tabToProcessMap[tId].memory += proc.memory;
+            tabToProcessMap[tId].cpu += proc.cpu;
+          }
         }
       });
     }
