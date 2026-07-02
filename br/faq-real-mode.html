@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StopRAM - Notas de Funcionamento em Navegadores Estáveis</title>
+    <title>StopRAM - Diferença entre Consumo Real e Balão do Chrome</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -134,6 +134,11 @@
             color: #09090b;
         }
 
+        .nav-right {
+            display: flex;
+            gap: 10px;
+        }
+
         .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
@@ -242,6 +247,20 @@
             color: var(--accent-cyan);
         }
 
+        .alert-success {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .alert-success strong {
+            color: #10b981;
+        }
+
         /* Footer */
         .footer {
             border-top: 1px solid var(--border);
@@ -279,7 +298,7 @@
     <!-- Fixed Navbar -->
     <header class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">
+            <a href="../index.html" class="nav-brand">
                 <div class="brand-avatar">D</div>
                 <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
             </a>
@@ -296,49 +315,44 @@
         
         <!-- Page Header -->
         <header class="page-header">
-            <h1>Funcionamento Técnico em Navegadores Estáveis</h1>
-            <p>Esclarecimentos detalhados sobre o Modo Simulação e a coleta de dados de RAM e CPU no Chrome, Edge e Brave.</p>
+            <h1>Por que o consumo no Modo Real é menor do que no Balão do Chrome?</h1>
+            <p>Esclarecimentos sobre os bastidores da captura física de hardware pela API chrome.processes no Chrome Dev/Canary.</p>
         </header>
 
-        <!-- Section 1: The Challenge -->
+        <!-- Section 1: The Contrast -->
         <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-ban"></i> Restrição da API chrome.processes</h2>
-            <p>Por questões rígidas de segurança e isolamento de processos (sandbox), o Google Chrome e demais navegadores baseados no Chromium (como Microsoft Edge, Brave e Opera) em suas versões estáveis <strong>bloqueiam o uso da API <code>chrome.processes</code></strong> por extensões tradicionais.</p>
-            <p>Essa API fornece informações físicas sobre o Process ID (PID) e o consumo de hardware real de cada aba. Sem ela, uma extensão comum de navegador não possui permissões no sistema operacional para questionar o consumo físico individual de RAM de outra aba.</p>
-            <div class="alert-info">
-                <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Para ativar o monitoramento físico em tempo real por meio da API <code>chrome.processes</code>, a extensão precisa ser executada em canais de desenvolvimento do navegador, como o <strong>Chrome Dev</strong> ou <strong>Chrome Canary</strong>.
+            <h2 class="section-title"><i class="fas fa-eye-slash"></i> O que acontecia no Modo Simulação</h2>
+            <p>No Chrome Estável, o StopRAM opera obrigatoriamente no <strong>Modo Simulação</strong>. Como as APIs de hardware são bloqueadas, o sistema gera consumos fictícios usando algoritmos de flutuação dinâmica.</p>
+            <p>Essa simulação foi calibrada com números relativamente altos (ex: `257 MB` ou `326 MB`) e flutuações constantes para fins estéticos e demonstrativos, simulando o peso que um site costuma ter. Isso gerava a impressão de que a extensão capturava o consumo real, mas eram valores puramente matemáticos.</p>
+        </div>
+
+        <!-- Section 2: Multiprocess Architecture -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-cubes"></i> A Arquitetura Multiprocesso do Chrome</h2>
+            <p>Ao migrar para versões de desenvolvimento como o **Chrome Dev ou Canary**, a extensão ganha acesso de hardware e desativa a simulação, ativando o **Modo Real** (indicado pelo badge verde no painel).</p>
+            <p>Sob este modo, a diferença drástica entre os valores medidos pelo balão nativo do Chrome e o painel StopRAM se deve a como a memória é estruturada internamente no navegador:</p>
+            <ul>
+                <li><strong>O Balão do Chrome (Ex: 635 MB ou 842 MB):</strong> Mostra o consumo <strong>total acumulado</strong> em todas as pontas necessárias para rodar aquela aba. Isso engloba o processo do renderizador, scripts secundários, anúncios de terceiros em iframes, e principalmente o <strong>processo compartilhado de GPU (placa de vídeo)</strong> e o <strong>serviço de áudio</strong>, onde ficam os buffers pesados de decodificação de vídeo do YouTube.</li>
+                <li><strong>A API chrome.processes (Ex: 30 MB):</strong> Por restrições de segurança de sandbox, a API oficial do Chrome só consegue mapear para a extensão a <strong>Memória Privada (Private Memory)</strong> exclusiva do processo renderizador principal da aba (a estrutura DOM, o código JavaScript ativo da página e estilos). A memória pesada de placa de vídeo e reprodução de áudio, que roda em processos compartilhados globais do navegador, não pode ser atribuída isoladamente a uma única aba pela API.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3: Mitigation/Enhancement -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-cogs"></i> Agregação de Processos Ativada</h2>
+            <p>Para atenuar e aproximar os dados ao consumo máximo real, a lógica do StopRAM em <code>background.js</code> foi atualizada para **somar (acumular) a memória privada e o uso de CPU de todos os sub-processos associados ao mesmo ID de aba**. Isso consolida os dados de sub-frames secundários no valor final exibido no painel no Modo Real.</p>
+        </div>
+
+        <!-- Section 4: Configuration Tips -->
+        <div class="section-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.01);">
+            <h2 class="section-title" style="color: #10b981;"><i class="fas fa-lightbulb"></i> Como Configurar Limites no Modo Real</h2>
+            <p>Graças ao nosso sistema de <strong>Agregação de Processos</strong> em segundo plano, a extensão consolida todos os sub-processos vinculados à aba. Isso faz com que os valores exibidos no painel fiquem extremamente próximos aos reais exibidos no Gerenciador de Tarefas do Chrome (ex: cerca de 1.0 GB para um vídeo no YouTube).</p>
+            <div class="alert-success">
+                <i class="fas fa-sliders-h"></i> <strong>Diretriz de Calibração:</strong> Com a leitura agregada precisa, você pode configurar o controle deslizante de limite de RAM normalmente para valores realistas (como <strong>300 MB</strong>, <strong>500 MB</strong> ou até <strong>1.5 GB</strong>). Quando a aba atingir o consumo real consolidado, o StopRAM disparará a suspensão de forma perfeitamente alinhada com o uso de hardware do seu sistema!
             </div>
         </div>
 
-        <!-- Section 2: How Simulation Works -->
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-project-diagram"></i> Como Funciona o Modo Simulação</h2>
-            <p>Quando detecta que a API do sistema está indisponível, o StopRAM ativa automaticamente seu <strong>motor híbrido de simulação</strong> no script de segundo plano (service worker). Ele simula o consumo de recursos das abas através de algoritmos de flutuação altamente realistas:</p>
-            <ul>
-                <li><strong>Consumo Inicial Diferenciado:</strong> Abas ativas (em foco) iniciam consumindo entre <strong>120 MB e 270 MB</strong>. Abas de segundo plano iniciam em consumo reduzido, entre <strong>40 MB e 140 MB</strong>.</li>
-                <li><strong>Flutuação Dinâmica (Drift):</strong> A cada ciclo de verificação, o algoritmo altera de forma flutuante a RAM de cada aba. Abas ativas tendem a subir de consumo mais rapidamente devido à interação simulada do usuário.</li>
-                <li><strong>Simulação de Vazamento de Memória (Memory Leak):</strong> A cada 7 abas criadas, o script ativa um multiplicador de consumo de <strong>1.5x</strong> em uma delas. Isso faz com que essa aba cresça continuamente de forma artificial, simulando uma página mal otimizada até que o limite de RAM configurado seja atingido.</li>
-                <li><strong>Uso de CPU e PID Coerentes:</strong> Abas ativas simulam o uso de CPU entre <strong>4.0% e 18.0%</strong>, enquanto abas de fundo ficam abaixo de <strong>1.5%</strong>. Também são criados Process IDs fictícios na faixa de <code>20000 + tabId</code>.</li>
-            </ul>
-        </div>
 
-        <!-- Section 3: Data Origin -->
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-code-branch"></i> De Onde os Dados São Puxados?</h2>
-            <p>O StopRAM <strong>não utiliza</strong> APIs de hardware do sistema (como <code>chrome.system.memory</code> ou <code>chrome.system.cpu</code>) para calcular o consumo de abas individuais pelos seguintes motivos:</p>
-            <ul>
-                <li>A API <strong><code>chrome.system.memory</code></strong> informa apenas dados globais da máquina (RAM total física e RAM livre geral no computador), não oferecendo detalhes de abas individuais.</li>
-                <li>A API <strong><code>chrome.system.cpu</code></strong> reporta apenas o uso e arquitetura geral dos núcleos físicos do processador.</li>
-            </ul>
-            <p>Dessa forma, o StopRAM puxa os <strong>metadados reais das abas</strong> (Título, URL, Ícone, se está Fixada, Ativa ou Suspensa) diretamente da API <strong><code>chrome.tabs</code></strong>. Com base nessas abas reais identificadas, o script gera e calcula as métricas de RAM/CPU programaticamente utilizando matemática probabilística e persistência local no <code>chrome.storage.local</code>.</p>
-        </div>
-
-        <!-- Section 4: Real Action -->
-        <div class="section-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.01);">
-            <h2 class="section-title" style="color: #10b981;"><i class="fas fa-check-circle"></i> O Descarte das Abas é Real!</h2>
-            <p>É fundamental ressaltar que, embora as métricas de RAM/CPU no Chrome estável sejam simuladas para testar e operar a extensão, **a ação de descarte das abas é 100% real**.</p>
-            <p>Quando a extensão atinge a regra limite e decide aplicar a ação de <strong>"Suspender Aba"</strong>, ela executa a chamada nativa <strong><code>chrome.tabs.discard(tabId)</code></strong>. Esta função é totalmente suportada em qualquer canal do Chrome e faz com que o navegador elimine fisicamente o processo daquela aba da memória RAM do seu computador de verdade, poupando hardware real.</p>
-        </div>
 
     </main>
 
@@ -352,3 +366,4 @@
     </footer>
 </body>
 </html>
+
