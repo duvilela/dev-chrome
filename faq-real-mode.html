@@ -340,18 +340,19 @@
         <!-- Section 3: Mitigation/Enhancement -->
         <div class="section-card">
             <h2 class="section-title"><i class="fas fa-cogs"></i> Agregação de Processos Ativada</h2>
-            <p>Muitas abas modernas (especialmente sites complexos e com publicidade) criam processos renderizadores adicionais, conhecidos como <em>sub-frames</em> ou <em>out-of-process iframes</em>.</p>
             <p>Para atenuar e aproximar os dados ao consumo máximo real, a lógica do StopRAM em <code>background.js</code> foi atualizada para **somar (acumular) a memória privada e o uso de CPU de todos os sub-processos associados ao mesmo ID de aba**. Isso consolida os dados de sub-frames secundários no valor final exibido no painel no Modo Real.</p>
         </div>
 
         <!-- Section 4: Configuration Tips -->
         <div class="section-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.01);">
             <h2 class="section-title" style="color: #10b981;"><i class="fas fa-lightbulb"></i> Como Configurar Limites no Modo Real</h2>
-            <p>Como a API <code>chrome.processes</code> captura estritamente o consumo de memória privada do renderizador (que é bem menor que o consumo total da aba com a GPU), você deve ajustar a sua régua de limites no painel:</p>
+            <p>Graças ao nosso sistema de <strong>Agregação de Processos</strong> em segundo plano, a extensão consolida todos os sub-processos vinculados à aba. Isso faz com que os valores exibidos no painel fiquem extremamente próximos aos reais exibidos no Gerenciador de Tarefas do Chrome (ex: cerca de 1.0 GB para um vídeo no YouTube).</p>
             <div class="alert-success">
-                <i class="fas fa-sliders-h"></i> <strong>Dica de Calibração:</strong> No <strong>Modo Real</strong>, reduza o controle deslizante de limite de RAM de volta a valores entre <strong>30 MB e 80 MB</strong>. Como os processos de renderização puros são leves, limites altos de 300 MB nunca serão atingidos e a aba não será suspensa. Configurando a régua mais baixa, você capturará picos no processamento da página e a suspensão atuará perfeitamente.
+                <i class="fas fa-sliders-h"></i> <strong>Diretriz de Calibração:</strong> Com a leitura agregada precisa, você pode configurar o controle deslizante de limite de RAM normalmente para valores realistas (como <strong>300 MB</strong>, <strong>500 MB</strong> ou até <strong>1.5 GB</strong>). Quando a aba atingir o consumo real consolidado, o StopRAM disparará a suspensão de forma perfeitamente alinhada com o uso de hardware do seu sistema!
             </div>
         </div>
+
+
 
     </main>
 
