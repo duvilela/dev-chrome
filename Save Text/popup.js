@@ -2,10 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // ELEMENTOS DO DOM
   const mainView = document.getElementById("main-view");
   const settingsView = document.getElementById("settings-view");
+  const aboutView = document.getElementById("about-view");
   
   const toggleSettingsBtn = document.getElementById("toggle-settings-btn");
+  const toggleAboutBtn = document.getElementById("toggle-about-btn");
   const advancedModeBtn = document.getElementById("advanced-mode-btn");
   const backBtn = document.getElementById("back-btn");
+  const aboutBackBtn = document.getElementById("about-back-btn");
 
   // CONFIGURAÇÃO DO MODO ABA (AVANÇADO)
   if (document.documentElement.classList.contains("mode-tab")) {
@@ -433,29 +436,63 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // CONFIGURAÇÕES - ABRE E FECHA
-  toggleSettingsBtn.addEventListener("click", () => {
-    mainView.classList.add("hidden");
-    settingsView.classList.remove("hidden");
-    
-    // Sincroniza estado da sidebar
-    const settingsMenuItem = document.querySelector('.menu-item[data-target="settings-view"]');
-    if (settingsMenuItem) {
-      document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
-      settingsMenuItem.classList.add("active");
-    }
-  });
+  if (toggleSettingsBtn) {
+    toggleSettingsBtn.addEventListener("click", () => {
+      mainView.classList.add("hidden");
+      if (aboutView) aboutView.classList.add("hidden");
+      settingsView.classList.remove("hidden");
+      
+      // Sincroniza estado da sidebar
+      const settingsMenuItem = document.querySelector('.menu-item[data-target="settings-view"]');
+      if (settingsMenuItem) {
+        document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+        settingsMenuItem.classList.add("active");
+      }
+    });
+  }
 
-  backBtn.addEventListener("click", () => {
-    settingsView.classList.add("hidden");
-    mainView.classList.remove("hidden");
-    
-    // Sincroniza estado da sidebar
-    const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
-    if (recortesMenuItem) {
-      document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
-      recortesMenuItem.classList.add("active");
-    }
-  });
+  if (toggleAboutBtn) {
+    toggleAboutBtn.addEventListener("click", () => {
+      mainView.classList.add("hidden");
+      settingsView.classList.add("hidden");
+      if (aboutView) aboutView.classList.remove("hidden");
+      
+      const aboutMenuItem = document.querySelector('.menu-item[data-target="about-view"]');
+      if (aboutMenuItem) {
+        document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+        aboutMenuItem.classList.add("active");
+      }
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      settingsView.classList.add("hidden");
+      if (aboutView) aboutView.classList.add("hidden");
+      mainView.classList.remove("hidden");
+      
+      // Sincroniza estado da sidebar
+      const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
+      if (recortesMenuItem) {
+        document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+        recortesMenuItem.classList.add("active");
+      }
+    });
+  }
+
+  if (aboutBackBtn) {
+    aboutBackBtn.addEventListener("click", () => {
+      if (aboutView) aboutView.classList.add("hidden");
+      settingsView.classList.add("hidden");
+      mainView.classList.remove("hidden");
+      
+      const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
+      if (recortesMenuItem) {
+        document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+        recortesMenuItem.classList.add("active");
+      }
+    });
+  }
 
   // NAVEGAÇÃO DA SIDEBAR (MODO ABA/AVANÇADO)
   const menuItems = document.querySelectorAll(".sidebar .menu-item");

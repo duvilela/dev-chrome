@@ -206,6 +206,12 @@ button {
   flex: 1;
 }
 
+/* TOP CONTROLS BAR */
+.top-controls-bar {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ADD NOTE SECTION */
 .add-note-section {
   margin-bottom: 14px;
@@ -771,7 +777,13 @@ input:checked + .slider:before {
 }
 
 /* BASE UTILITIES */
-.hidden {
+.hidden,
+html.mode-tab .hidden,
+html.mode-tab .app-main.hidden,
+body .hidden,
+.app-layout .hidden,
+.app-container .hidden,
+#notes-container .hidden {
   display: none !important;
 }
 
@@ -926,7 +938,7 @@ html.mode-tab .stats-bar .stat-divider {
 }
 
 /* Main body in tab mode */
-html.mode-tab .app-main {
+html.mode-tab .app-main:not(.hidden) {
   flex: 1 !important;
   height: auto !important;
   overflow: hidden !important;
@@ -947,10 +959,24 @@ html.mode-tab .notes-list-section {
   padding-right: 8px;
 }
 
-/* Quick Add Box in Tab Mode */
-html.mode-tab .add-note-section {
-  max-width: 600px;
-  margin-bottom: 16px;
+/* Top Controls Bar in Tab Mode */
+html.mode-tab .top-controls-bar {
+  display: grid !important;
+  grid-template-columns: 3fr 2fr !important;
+  gap: 24px !important;
+  align-items: start !important;
+  margin-bottom: 24px !important;
+  background: rgba(255, 255, 255, 0.015);
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+html.mode-tab .add-note-section,
+html.mode-tab .search-section {
+  margin-bottom: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
 }
 
 /* NOTES CONTAINER GRID (STICKY NOTES STYLE) IN TAB MODE */
