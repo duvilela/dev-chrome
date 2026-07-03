@@ -433,60 +433,12 @@ document.addEventListener("DOMContentLoaded", () => {
     mainView.classList.remove("hidden");
   });
 
-  // NAVEGAÇÃO DA SIDEBAR (MODO ABA/AVANÇADO)
-  const menuItems = document.querySelectorAll(".menu-item");
-  menuItems.forEach(item => {
-    item.addEventListener("click", () => {
-      menuItems.forEach(i => i.classList.remove("active"));
-      item.classList.add("active");
-      
-      const target = item.getAttribute("data-target");
-      document.querySelectorAll(".app-main").forEach(view => {
-        view.classList.add("hidden");
-      });
-      document.getElementById(target).classList.remove("hidden");
-    });
-  });
-
-  // ADICIONAR NOTA COMPLETA (MODO ABA/AVANÇADO)
-  const fullNoteInput = document.getElementById("full-note-input");
-  const fullAddNoteBtn = document.getElementById("full-add-note-btn");
-  if (fullAddNoteBtn) {
-    fullAddNoteBtn.addEventListener("click", () => {
-      const text = fullNoteInput.value.trim();
-      if (!text) return;
-
-      const newNote = {
-        id: "note_" + Date.now() + "_" + Math.random().toString(36).substring(2, 11),
-        text: text,
-        url: "manual",
-        title: "Nota Manual",
-        date: new Date().toISOString()
-      };
-
-      notes.unshift(newNote);
-      chrome.storage.local.set({ notes: notes }, () => {
-        fullNoteInput.value = "";
-        renderNotes();
-        
-        // Retorna para a aba principal
-        const mainMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
-        if (mainMenuItem) mainMenuItem.click();
-      });
-    });
-  }
-
-  // OCULTAR ELEMENTOS REDUNDANTES EM MODO ABA
-  if (document.documentElement.classList.contains("mode-tab")) {
-    if (toggleSettingsBtn) toggleSettingsBtn.style.display = "none";
-  }
-
   // CONFIGURAÇÕES - SALVA ALTERAÇÕES
   autoDownloadToggle.addEventListener("change", (e) => {
     settings.autoDownload = e.target.checked;
     chrome.storage.local.set({ settings });
     
-    // Forçar atualização das estatísticas no Modo Aba
+    // Atualiza estatística no Modo Aba
     const statsAutoDownloads = document.getElementById("stats-auto-downloads");
     if (statsAutoDownloads) statsAutoDownloads.textContent = settings.autoDownload ? "Ativo" : "Inativo";
   });

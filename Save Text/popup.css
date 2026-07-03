@@ -770,40 +770,17 @@ input:checked + .slider:before {
   }
 }
 
-/* LAYOUT BASE */
-.app-layout {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+/* BASE UTILITIES */
+.hidden {
+  display: none !important;
 }
 
-.sidebar {
+/* STATS BAR */
+.stats-bar {
   display: none;
 }
 
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.stats-row {
-  display: none;
-}
-
-.view-title {
-  display: none;
-}
-
-.add-note-form {
-  display: none;
-}
-
-.about-card-desktop {
-  display: none;
-}
-
-/* TAB MODE (ADVANCED DASHBOARD PANEL) STYLE */
+/* TAB MODE (ADVANCED DEDICATED PANEL) STYLE */
 html.mode-tab body, html.mode-tab {
   width: 100% !important;
   height: 100% !important;
@@ -811,337 +788,89 @@ html.mode-tab body, html.mode-tab {
   max-height: 100% !important;
   overflow: hidden !important;
   background-color: #070a12 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
-html.mode-tab .app-layout {
-  display: grid !important;
-  grid-template-columns: 260px 1fr !important;
-  width: 100vw !important;
-  height: 100vh !important;
+html.mode-tab .app-container {
+  width: 100% !important;
+  max-width: 600px !important;
+  height: 90vh !important;
+  max-height: 720px !important;
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  flex-direction: column !important;
   overflow: hidden !important;
 }
 
-/* SIDEBAR IN TAB MODE */
-html.mode-tab .sidebar {
-  display: flex !important;
-  flex-direction: column !important;
-  background-color: #0d1222;
-  border-right: 1px solid var(--border-color);
-  padding: 24px 18px;
-  justify-content: space-between;
-  height: 100%;
-}
-
-html.mode-tab .sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 24px;
-}
-
-html.mode-tab .sidebar-brand .brand-name {
-  font-family: var(--font-title);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-html.mode-tab .sidebar-brand .brand-name span {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-html.mode-tab .sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex-grow: 1;
-}
-
-html.mode-tab .menu-item {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 0.9rem;
-  justify-content: flex-start;
-  gap: 12px;
-  background-color: transparent;
-  transition: all var(--transition-fast);
-}
-
-html.mode-tab .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-  color: var(--text-primary);
-}
-
-html.mode-tab .menu-item.active {
-  background: var(--primary-gradient);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
-}
-
-html.mode-tab .menu-icon {
-  width: 18px;
-  height: 18px;
-}
-
-html.mode-tab .sidebar-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-/* CONTENT WRAPPER IN TAB MODE */
-html.mode-tab .content-wrapper {
-  height: 100vh;
-  overflow: hidden;
-  background-color: #070a12;
-}
-
+/* Header adjustment in tab mode */
 html.mode-tab .app-header {
-  display: none !important; /* Hide popup header */
+  padding: 16px 20px !important;
+  border-bottom: 1px solid var(--border-color) !important;
 }
 
+/* Stats bar inside tab mode container */
+html.mode-tab .stats-bar {
+  display: flex !important;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+html.mode-tab .stats-bar .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html.mode-tab .stats-bar .stat-lbl {
+  color: var(--text-muted);
+}
+
+html.mode-tab .stats-bar strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+html.mode-tab .stats-bar .stat-divider {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main body in tab mode */
 html.mode-tab .app-main {
-  padding: 32px 40px !important;
-  height: 100% !important;
+  flex: 1 !important;
+  height: auto !important;
+  overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
-  overflow-y: auto !important;
-  animation: fadeIn 0.3s ease-out;
+  padding: 16px 20px !important;
 }
 
-html.mode-tab .view-title {
-  display: block !important;
-  font-family: var(--font-title);
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 24px;
-}
-
-/* STATS ROW IN TAB MODE */
-html.mode-tab .stats-row {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 20px;
-  margin-bottom: 28px;
-}
-
-html.mode-tab .stat-card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  box-shadow: var(--shadow-md);
-  transition: border-color var(--transition-fast);
-}
-
-html.mode-tab .stat-card:hover {
-  border-color: rgba(14, 165, 233, 0.2);
-}
-
-html.mode-tab .stat-value {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-html.mode-tab .stat-label {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* ADD MANUAL NOTE IN TAB MODE MAIN VIEW */
-html.mode-tab .add-note-section {
-  max-width: 600px;
-  margin-bottom: 20px;
-}
-
-/* NOTES CONTAINER IN TAB MODE */
-html.mode-tab #notes-container {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-  gap: 16px !important;
-  height: auto !important;
-  padding-bottom: 24px;
-}
-
+/* Scroll area in tab mode */
 html.mode-tab .notes-list-section {
   flex: 1 !important;
   overflow-y: auto !important;
 }
 
-html.mode-tab .note-card {
-  height: auto;
-  min-height: 140px;
+/* Hide Advanced Mode Button in Tab Mode */
+html.mode-tab #advanced-mode-btn {
+  display: none !important;
 }
 
+/* Footer padding in tab mode */
 html.mode-tab .app-footer {
-  margin-top: auto;
-  padding: 16px 0 0 0;
-  background-color: transparent;
+  padding-bottom: 16px !important;
+  background-color: transparent !important;
 }
 
-/* ADD NOTE FORM (VIEW 2) IN TAB MODE */
-html.mode-tab .add-note-view {
-  max-width: 800px;
-}
-
-html.mode-tab .add-note-form {
-  display: flex !important;
-  flex-direction: column;
-  gap: 16px;
-}
-
-html.mode-tab #full-note-input {
-  width: 100%;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  font-family: var(--font-main);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  resize: vertical;
-  min-height: 200px;
-  outline: none;
-  transition: border-color var(--transition-fast);
-}
-
-html.mode-tab #full-note-input:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
-}
-
-html.mode-tab #full-add-note-btn {
-  align-self: flex-start;
-  padding: 12px 24px;
-  font-size: 0.95rem;
-}
-
-/* SETTINGS (VIEW 3) IN TAB MODE */
-html.mode-tab #settings-view {
-  max-width: 600px;
-}
-
-html.mode-tab .settings-header {
-  display: none !important; /* Hide back button in settings page in tab mode */
-}
-
-html.mode-tab .popup-about-block {
-  display: none !important; /* Hide about section inside settings in tab mode */
-}
-
-/* ABOUT AUTHOR (VIEW 4) IN TAB MODE */
-html.mode-tab .about-card-desktop {
-  display: flex !important;
-  flex-direction: column;
-  gap: 24px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  max-width: 700px;
-  box-shadow: var(--shadow-lg);
-}
-
-html.mode-tab .about-card-section {
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 20px;
-}
-
-html.mode-tab .about-card-section:last-of-type {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-html.mode-tab .about-card-section h3 {
-  font-family: var(--font-title);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 16px;
-}
-
-html.mode-tab .about-field {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-}
-
-html.mode-tab .field-label {
-  font-weight: 600;
-  color: var(--text-primary);
-  width: 120px;
-}
-
-html.mode-tab .field-val {
-  color: var(--text-secondary);
-}
-
-html.mode-tab .license-paragraph {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-html.mode-tab .license-list {
-  list-style-type: none;
-  padding-left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-html.mode-tab .license-list li {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  position: relative;
-  padding-left: 20px;
-}
-
-html.mode-tab .license-list li::before {
-  content: "•";
-  color: var(--primary);
-  font-weight: bold;
-  position: absolute;
-  left: 6px;
-  top: 0;
-}
-
-html.mode-tab .about-card-footer {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-color);
-  padding-top: 16px;
-}
 
