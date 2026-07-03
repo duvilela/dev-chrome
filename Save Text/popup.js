@@ -112,7 +112,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // CRIAR CARD DE NOTA (DOM Element)
   function createNoteCard(note) {
     const card = document.createElement("div");
-    card.className = "note-card";
+    
+    // Determina cor persistente (estilo Notas Autoadesivas)
+    const colors = ["yellow", "blue", "green", "purple", "pink"];
+    let hash = 0;
+    const noteIdStr = note.id || "";
+    for (let i = 0; i < noteIdStr.length; i++) {
+      hash = noteIdStr.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const colorClass = "note-color-" + colors[Math.abs(hash) % colors.length];
+    
+    card.className = `note-card ${colorClass}`;
     card.dataset.id = note.id;
 
     // Formata Data
@@ -426,11 +436,40 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleSettingsBtn.addEventListener("click", () => {
     mainView.classList.add("hidden");
     settingsView.classList.remove("hidden");
+    
+    // Sincroniza estado da sidebar
+    const settingsMenuItem = document.querySelector('.menu-item[data-target="settings-view"]');
+    if (settingsMenuItem) {
+      document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+      settingsMenuItem.classList.add("active");
+    }
   });
 
   backBtn.addEventListener("click", () => {
     settingsView.classList.add("hidden");
     mainView.classList.remove("hidden");
+    
+    // Sincroniza estado da sidebar
+    const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
+    if (recortesMenuItem) {
+      document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+      recortesMenuItem.classList.add("active");
+    }
+  });
+
+  // NAVEGAÇÃO DA SIDEBAR (MODO ABA/AVANÇADO)
+  const menuItems = document.querySelectorAll(".sidebar .menu-item");
+  menuItems.forEach(item => {
+    item.addEventListener("click", () => {
+      menuItems.forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+      
+      const target = item.getAttribute("data-target");
+      document.querySelectorAll(".app-main").forEach(view => {
+        view.classList.add("hidden");
+      });
+      document.getElementById(target).classList.remove("hidden");
+    });
   });
 
   // CONFIGURAÇÕES - SALVA ALTERAÇÕES

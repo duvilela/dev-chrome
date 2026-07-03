@@ -788,31 +788,110 @@ html.mode-tab body, html.mode-tab {
   max-height: 100% !important;
   overflow: hidden !important;
   background-color: #070a12 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
-html.mode-tab .app-container {
-  width: 100% !important;
-  max-width: 600px !important;
-  height: 90vh !important;
-  max-height: 720px !important;
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
-  display: flex !important;
-  flex-direction: column !important;
+html.mode-tab .app-layout {
+  display: grid !important;
+  grid-template-columns: 240px 1fr !important;
+  width: 100vw !important;
+  height: 100vh !important;
   overflow: hidden !important;
 }
 
-/* Header adjustment in tab mode */
+/* SIDEBAR IN TAB MODE */
+html.mode-tab .sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: #0b0f19;
+  border-right: 1px solid var(--border-color);
+  padding: 24px 18px;
+  justify-content: space-between;
+  height: 100%;
+}
+
+html.mode-tab .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+html.mode-tab .sidebar-brand .brand-name {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+html.mode-tab .sidebar-brand .brand-name span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.mode-tab .sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+html.mode-tab .menu-item {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  justify-content: flex-start;
+  gap: 12px;
+  background-color: transparent;
+  transition: all var(--transition-fast);
+}
+
+html.mode-tab .menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+
+html.mode-tab .menu-item.active {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+html.mode-tab .menu-icon {
+  width: 18px;
+  height: 18px;
+}
+
+html.mode-tab .sidebar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* CONTENT WRAPPER IN TAB MODE */
+html.mode-tab .content-wrapper {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #070a12;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide Popup Header in Tab Mode */
 html.mode-tab .app-header {
-  padding: 16px 20px !important;
-  border-bottom: 1px solid var(--border-color) !important;
+  display: none !important;
 }
 
 /* Stats bar inside tab mode container */
@@ -820,17 +899,17 @@ html.mode-tab .stats-bar {
   display: flex !important;
   justify-content: space-around;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: #0b0f19;
   border-bottom: 1px solid var(--border-color);
-  padding: 10px 16px;
-  font-size: 0.8rem;
+  padding: 14px 24px;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
 html.mode-tab .stats-bar .stat-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 html.mode-tab .stats-bar .stat-lbl {
@@ -853,13 +932,7 @@ html.mode-tab .app-main {
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
-  padding: 16px 20px !important;
-}
-
-/* Scroll area in tab mode */
-html.mode-tab .notes-list-section {
-  flex: 1 !important;
-  overflow-y: auto !important;
+  padding: 24px 32px !important;
 }
 
 /* Hide Advanced Mode Button in Tab Mode */
@@ -867,10 +940,123 @@ html.mode-tab #advanced-mode-btn {
   display: none !important;
 }
 
-/* Footer padding in tab mode */
-html.mode-tab .app-footer {
-  padding-bottom: 16px !important;
+/* Scroll area in tab mode */
+html.mode-tab .notes-list-section {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding-right: 8px;
+}
+
+/* Quick Add Box in Tab Mode */
+html.mode-tab .add-note-section {
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+/* NOTES CONTAINER GRID (STICKY NOTES STYLE) IN TAB MODE */
+html.mode-tab #notes-container {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  gap: 16px !important;
+  height: auto !important;
+  padding-bottom: 24px;
+}
+
+/* INDIVIDUAL STICKY NOTE STYLING */
+html.mode-tab .note-card {
+  height: 220px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: var(--radius-md) !important;
+  padding: 16px !important;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+
+html.mode-tab .note-card:hover {
+  transform: translateY(-4px) rotate(1deg) !important;
+}
+
+/* Colored post-it themes */
+html.mode-tab .note-color-yellow {
+  background-color: rgba(254, 240, 138, 0.08) !important;
+  border: 1px solid rgba(254, 240, 138, 0.2) !important;
+  border-top: 6px solid rgba(254, 240, 138, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(254, 240, 138, 0.04) !important;
+}
+html.mode-tab .note-color-yellow:hover {
+  box-shadow: 0 12px 30px rgba(254, 240, 138, 0.08) !important;
+}
+
+html.mode-tab .note-color-blue {
+  background-color: rgba(14, 165, 233, 0.08) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+  border-top: 6px solid rgba(14, 165, 233, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.04) !important;
+}
+html.mode-tab .note-color-blue:hover {
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.08) !important;
+}
+
+html.mode-tab .note-color-green {
+  background-color: rgba(34, 197, 94, 0.08) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
+  border-top: 6px solid rgba(34, 197, 94, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.04) !important;
+}
+html.mode-tab .note-color-green:hover {
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.08) !important;
+}
+
+html.mode-tab .note-color-purple {
+  background-color: rgba(168, 85, 247, 0.08) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  border-top: 6px solid rgba(168, 85, 247, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.04) !important;
+}
+html.mode-tab .note-color-purple:hover {
+  box-shadow: 0 12px 30px rgba(168, 85, 247, 0.08) !important;
+}
+
+html.mode-tab .note-color-pink {
+  background-color: rgba(236, 72, 153, 0.08) !important;
+  border: 1px solid rgba(236, 72, 153, 0.2) !important;
+  border-top: 6px solid rgba(236, 72, 153, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.04) !important;
+}
+html.mode-tab .note-color-pink:hover {
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.08) !important;
+}
+
+html.mode-tab .note-body {
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  padding-right: 4px;
+}
+
+html.mode-tab .note-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+html.mode-tab .note-actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 8px;
+  margin-top: auto;
+}
+
+/* Hide Default Footer in Tab Mode since action buttons are on main screen */
+html.mode-tab .app-main > .app-footer {
+  margin-top: 16px;
+  padding-top: 16px;
   background-color: transparent !important;
 }
+
 
 
