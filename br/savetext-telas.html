@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveText - Galeria de Telas e Apresentação</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-card: rgba(17, 17, 27, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-cyan: #00f2fe;
+            --accent-royal: #0ea5e9;
+            --accent-purple: #8b5cf6;
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background Effects */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb-1 {
+            top: -10%;
+            right: -10%;
+            background: var(--accent-cyan);
+        }
+
+        .orb-2 {
+            bottom: -15%;
+            left: -10%;
+            background: var(--accent-purple);
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            flex-grow: 1;
+        }
+
+        /* Fixed Navbar */
+        .navbar {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-title);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .brand-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-royal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #09090b;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Header block */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Showcase Grid Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Large Image Showcase Area */
+        .showcase-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 90px;
+        }
+
+        .showcase-frame {
+            background: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            cursor: zoom-in;
+        }
+
+        .showcase-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .showcase-details h2 {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .showcase-details h2 i {
+            color: var(--accent-cyan);
+        }
+
+        .showcase-details p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .showcase-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Thumbnails List Area */
+        .thumbnails-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .thumb-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 0.75rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .thumb-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .thumb-card.active {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.05);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        .thumb-img-wrapper {
+            width: 100px;
+            height: 56px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb-info {
+            flex-grow: 1;
+        }
+
+        .thumb-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thumb-title span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .thumb-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Lightbox CSS */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 9, 11, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .lightbox-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Fixed Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-brand">
+                <div class="brand-avatar">D</div>
+                <span>duvilela<span style="color:var(--accent-cyan)">.</span></span>
+            </a>
+            <div class="nav-right" style="display: flex; gap: 10px;">
+                <a href="savetext.html" class="nav-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar à Apresentação</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="../index.html">Hub de Extensões</a>
+            <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+            <a href="savetext.html">SaveText</a>
+            <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i>
+            <span>Galeria de Telas</span>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Galeria de Telas do SaveText</h1>
+            <p>Explore em alta resolução a interface do painel do aplicativo, funcionamento do menu de contexto e opções de exportação.</p>
+        </header>
+
+        <!-- Gallery Section -->
+        <section class="gallery-grid">
+            
+            <!-- Showcase Column (Sticky) -->
+            <div class="showcase-area">
+                <div class="showcase-frame" id="showcase-frame" title="Clique para ampliar a imagem">
+                    <img src="../Imagens/savetext1.png" id="active-image" class="showcase-img" alt="Dashboard Principal">
+                </div>
+                <div class="showcase-details">
+                    <h2 id="active-title"><i class="fas fa-desktop"></i> Dashboard Principal</h2>
+                    <span class="showcase-badge" id="active-badge">Interface Principal (Conceito)</span>
+                    <p id="active-desc" style="margin-top: 10px;">Visão geral do painel da extensão, contendo a área para anotação manual, barra de pesquisa de recortes e os cards de textos salvos com estilo glassmorphism.</p>
+                </div>
+            </div>
+
+            <!-- List Column -->
+            <div class="thumbnails-area" id="thumbnails-container">
+                
+                <!-- Thumb 1 -->
+                <div class="thumb-card active" data-img="../Imagens/savetext1.png" data-badge="Interface Principal (Conceito)" data-icon="fa-desktop" data-title="Dashboard Principal" data-desc="Visão geral do painel da extensão, contendo a área para anotação manual, barra de pesquisa de recortes e os cards de textos salvos com estilo glassmorphism.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext1.png" class="thumb-img" alt="Dashboard Principal">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Dashboard Principal <span>(Tela 1)</span></div>
+                        <p class="thumb-desc">Painel conceitual em tema escuro com notas, barra de busca e inserção manual.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 2 -->
+                <div class="thumb-card" data-img="../Imagens/savetext2.png" data-badge="Histórico Geral" data-icon="fa-list-ul" data-title="Lista de Anotações Salvas" data-desc="Lista cronológica de todos os recortes de textos salvos pelo usuário no popup. Cada nota exibe a data da cópia, o link clicável para a página web de origem e botões de ação (copiar, editar, baixar e excluir).">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext2.png" class="thumb-img" alt="Lista de Anotações Salvas">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Histórico de Anotações <span>(Tela 2)</span></div>
+                        <p class="thumb-desc">Lista geral das notas salvas e os botões de ação rápida no popup.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 3 -->
+                <div class="thumb-card" data-img="../Imagens/savetext3.png" data-badge="Histórico Vazio" data-icon="fa-folder-open" data-title="Painel de Histórico Vazio" data-desc="Interface amigável exibida quando o usuário não possui nenhuma anotação guardada. Apresenta instruções claras de como começar a capturar trechos da web.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext3.png" class="thumb-img" alt="Painel Vazio">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Sem Anotações Salvas <span>(Tela 3)</span></div>
+                        <p class="thumb-desc">Tela de estado vazio mostrando o tutorial inicial de uso.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 4 -->
+                <div class="thumb-card" data-img="../Imagens/savetext4.png" data-badge="Inserção Rápida" data-icon="fa-keyboard" data-title="Adicionar Nota Manualmente" data-desc="Campo de texto dinâmico na parte superior do popup que se expande conforme a digitação, permitindo registrar anotações e pensamentos rápidos na hora sem precisar de um site de origem.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext4.png" class="thumb-img" alt="Adicionar Nota">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Adicionar Nota Manual <span>(Tela 4)</span></div>
+                        <p class="thumb-desc">Campo de texto dinâmico para anotações instantâneas digitadas pelo usuário.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 5 -->
+                <div class="thumb-card" data-img="../Imagens/savetext5.png" data-badge="Pesquisa de Notas" data-icon="fa-search" data-title="Barra de Busca Inteligente" data-desc="A barra de pesquisa filtra instantaneamente as notas salvas no popup à medida que o usuário digita. É possível filtrar notas por conteúdo do texto, título da página ou link de origem.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext5.png" class="thumb-img" alt="Pesquisa">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Busca em Tempo Real <span>(Tela 5)</span></div>
+                        <p class="thumb-desc">Filtragem ágil e dinâmica de anotações por termos ou URL de origem.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 6 -->
+                <div class="thumb-card" data-img="../Imagens/savetext6.png" data-badge="Ações no Card" data-icon="fa-mouse-pointer" data-title="Botões de Ações de Notas" data-desc="Cada bloco de nota conta com quatro ações rápidas em sua barra inferior: Editar texto inline, Copiar para clipboard, Baixar como arquivo .txt ou Excluir a nota permanentemente.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext6.png" class="thumb-img" alt="Ações do Card">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Ações do Card de Nota <span>(Tela 6)</span></div>
+                        <p class="thumb-desc">Botões de controle rápido localizados abaixo de cada anotação.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 7 -->
+                <div class="thumb-card" data-img="../Imagens/savetext7.png" data-badge="Cópia de Segurança" data-icon="fa-clipboard" data-title="Feedback Visual de Cópia" data-desc="Ao clicar em copiar nota, o botão muda temporariamente de cor para verde e exibe um ícone de checkmark, fornecendo confirmação visual intuitiva de sucesso ao usuário.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext7.png" class="thumb-img" alt="Feedback de Cópia">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Confirmação de Cópia <span>(Tela 7)</span></div>
+                        <p class="thumb-desc">Feedback animado ao copiar a nota para a área de transferência.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 8 -->
+                <div class="thumb-card" data-img="../Imagens/savetext8.png" data-badge="Edição Inline" data-icon="fa-edit" data-title="Editar Nota In-Line" data-desc="Ao clicar em editar, o card substitui o texto da nota por uma caixa de edição de texto com botões de Salvar e Cancelar, permitindo correções ágeis diretamente na lista.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext8.png" class="thumb-img" alt="Edição Inline">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Edição Inline de Nota <span>(Tela 8)</span></div>
+                        <p class="thumb-desc">Alteração de conteúdo de texto diretamente na lista de anotações.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 9 -->
+                <div class="thumb-card" data-img="../Imagens/savetext9.png" data-badge="Configurações" data-icon="fa-sliders-h" data-title="Ajuste de Preferências" data-desc="Menu de configurações da extensão. Permite ligar ou desligar o download automático imediato ao copiar textos da web e definir um prefixo personalizado de nomes de arquivo (ex: 'savetext_').">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext9.png" class="thumb-img" alt="Configurações">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Painel de Configurações <span>(Tela 9)</span></div>
+                        <p class="thumb-desc">Ajuste de comportamento de download automático e prefixo do arquivo.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 10 -->
+                <div class="thumb-card" data-img="../Imagens/savetext10.png" data-badge="Download em Massa" data-icon="fa-file-download" data-title="Baixar Todos os Textos Consolidados" data-desc="Opção localizada no rodapé do aplicativo para fazer o download de todas as anotações organizadas e ordenadas em um único arquivo unificado de formato .txt.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext10.png" class="thumb-img" alt="Download em Massa">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Download Consolidado <span>(Tela 10)</span></div>
+                        <p class="thumb-desc">Exportação global de todas as notas em um único arquivo de texto estruturado.</p>
+                    </div>
+                </div>
+
+                <!-- Thumb 11 -->
+                <div class="thumb-card" data-img="../Imagens/savetext11.png" data-badge="Excluir Histórico" data-icon="fa-trash-alt" data-title="Limpeza Geral do Banco Local" data-desc="Botão de ação em lote que abre uma caixa de confirmação nativa do navegador para apagar por completo todas as notas e registros de forma definitiva, limpando o banco local.">
+                    <div class="thumb-img-wrapper">
+                        <img src="../Imagens/savetext11.png" class="thumb-img" alt="Excluir Histórico">
+                    </div>
+                    <div class="thumb-info">
+                        <div class="thumb-title">Limpar Histórico de Notas <span>(Tela 11)</span></div>
+                        <p class="thumb-desc">Exclusão definitiva de todos os itens do histórico local do storage.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
+        <div class="lightbox-content">
+            <img src="" id="lightbox-img" alt="Visualização Ampliada">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://github.com/duvilela" class="footer-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://duvilela.github.io/" class="footer-link" target="_blank"><i class="fas fa-briefcase"></i> Portfólio Principal</a>
+        </div>
+        <p>&copy; 2026 duvilela. Desenvolvido para facilitar produtividade e estudo pessoal.</p>
+    </footer>
+
+    <!-- Interactive script -->
+    <script>
+        const activeImg = document.getElementById('active-image');
+        const activeTitle = document.getElementById('active-title');
+        const activeBadge = document.getElementById('active-badge');
+        const activeDesc = document.getElementById('active-desc');
+        const showcaseFrame = document.getElementById('showcase-frame');
+        
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        const thumbCards = document.querySelectorAll('.thumb-card');
+
+        // Toggle Active image details
+        thumbCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove active class
+                thumbCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+
+                // Get details
+                const img = card.getAttribute('data-img');
+                const badge = card.getAttribute('data-badge');
+                const icon = card.getAttribute('data-icon');
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+
+                // Apply details with smooth fade
+                activeImg.style.opacity = 0;
+                setTimeout(() => {
+                    activeImg.src = img;
+                    activeTitle.innerHTML = `<i class="fas ${icon}"></i> ${title}`;
+                    activeBadge.textContent = badge;
+                    activeDesc.textContent = desc;
+                    activeImg.style.opacity = 1;
+                }, 200);
+            });
+        });
+
+        // Lightbox trigger
+        showcaseFrame.addEventListener('click', () => {
+            lightboxImg.src = activeImg.src;
+            lightbox.classList.add('open');
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('open');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
