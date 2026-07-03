@@ -693,69 +693,24 @@ input:checked + .slider:before {
 
 /* SETTINGS ABOUT */
 .settings-about {
-  margin-top: 10px;
-  padding: 18px;
+  margin-top: auto;
+  padding: 16px;
   border-radius: var(--radius-md);
   background-color: rgba(255, 255, 255, 0.02);
-  text-align: left;
+  text-align: center;
   border: 1px dashed var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
 .settings-about h3 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--primary);
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 6px;
-  margin-bottom: 4px;
-}
-
-.author-info p {
-  font-size: 0.785rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.author-info p strong {
-  color: var(--text-primary);
-}
-
-.about-link {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color var(--transition-fast);
-}
-
-.about-link:hover {
-  color: var(--primary-hover);
-  text-decoration: underline;
-}
-
-.license-info h4 {
-  font-size: 0.785rem;
+  font-size: 0.825rem;
   font-weight: 600;
-  color: var(--text-primary);
   margin-bottom: 4px;
-  margin-top: 6px;
 }
 
-.license-info p {
-  font-size: 0.7rem;
+.settings-about p {
+  font-size: 0.725rem;
   color: var(--text-muted);
   line-height: 1.4;
-}
-
-.version-tag {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: 4px;
-  font-weight: 500;
 }
 
 /* KEYFRAMES */
@@ -769,54 +724,3 @@ input:checked + .slider:before {
     transform: translateY(0);
   }
 }
-
-/* TAB MODE (ADVANCED PANEL) STYLE */
-html.mode-tab body, body.mode-tab {
-  width: 100% !important;
-  height: 100vh !important;
-  max-width: 100% !important;
-  overflow: hidden !important;
-  background-color: #070a12;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-}
-
-html.mode-tab .app-container, body.mode-tab .app-container {
-  width: 100% !important;
-  max-width: 1000px !important;
-  height: 100% !important;
-  max-height: 90vh !important;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background-color: var(--bg-card);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-}
-
-html.mode-tab #notes-container, body.mode-tab #notes-container {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-  gap: 16px !important;
-  padding-right: 6px;
-  height: auto !important;
-}
-
-html.mode-tab .notes-list-section, body.mode-tab .notes-list-section {
-  overflow-y: auto !important;
-}
-
-html.mode-tab .app-main, body.mode-tab .app-main {
-  padding: 24px;
-}
-
-html.mode-tab .app-header, body.mode-tab .app-header {
-  padding: 18px 24px;
-}
-
-html.mode-tab .app-footer, body.mode-tab .app-footer {
-  padding-bottom: 12px;
-}
-

@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SaveText Dashboard</title>
   <link rel="stylesheet" href="popup.css">
-  <script>
-    if (window.location.search.includes('mode=tab')) {
-      document.documentElement.classList.add('mode-tab');
-    }
-  </script>
 </head>
 <body>
   <div class="app-container">
@@ -21,9 +16,6 @@
         <h1 class="brand-name">Save<span>Text</span></h1>
       </div>
       <div class="header-actions">
-        <button id="advanced-mode-btn" class="icon-btn" title="Modo Avançado (Nova Aba)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </button>
         <button id="toggle-settings-btn" class="icon-btn" title="Configurações">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
@@ -115,19 +107,11 @@
           <input type="text" id="prefix-input" class="setting-text-input" placeholder="Ex: savetext_">
         </div>
         
-        <!-- ABOUT AUTHOR -->
+        <!-- ABOUT -->
         <div class="settings-about">
-          <h3>Sobre o Autor</h3>
-          <div class="author-info">
-            <p><strong>Desenvolvedor:</strong> Everton Vilela</p>
-            <p><strong>Contato:</strong> <a href="mailto:duhvilela@msn.com" class="about-link">duhvilela@msn.com</a></p>
-            <p><strong>Projeto:</strong> <a href="https://duvilela.github.io/dev-chrome/br/savetext.html" target="_blank" class="about-link">Página do Projeto</a></p>
-          </div>
-          <div class="license-info">
-            <h4>Licença de Uso</h4>
-            <p>Esta ferramenta é licenciada sob a **Licença de Uso Pessoal e Não Comercial**. O uso comercial, redistribuição ou modificação não autorizada são expressamente proibidos.</p>
-          </div>
-          <div class="version-tag">SaveText v1.1.0 (Modo Avançado)</div>
+          <h3>Sobre o SaveText</h3>
+          <p>Versão 1.0.0</p>
+          <p>Facilitando a captura de notas e recortes rápidos da web.</p>
         </div>
       </div>
     </main>

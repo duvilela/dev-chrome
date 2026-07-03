@@ -4,19 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const settingsView = document.getElementById("settings-view");
   
   const toggleSettingsBtn = document.getElementById("toggle-settings-btn");
-  const advancedModeBtn = document.getElementById("advanced-mode-btn");
   const backBtn = document.getElementById("back-btn");
-
-  // CONFIGURAÇÃO DO MODO ABA (AVANÇADO)
-  if (document.documentElement.classList.contains("mode-tab")) {
-    if (advancedModeBtn) advancedModeBtn.style.display = "none";
-  } else {
-    if (advancedModeBtn) {
-      advancedModeBtn.addEventListener("click", () => {
-        chrome.tabs.create({ url: chrome.runtime.getURL("popup.html?mode=tab") });
-      });
-    }
-  }
   const addNoteBtn = document.getElementById("add-note-btn");
   const downloadAllBtn = document.getElementById("download-all-btn");
   const clearAllBtn = document.getElementById("clear-all-btn");
