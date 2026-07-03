@@ -18,9 +18,17 @@
       </div>
       
       <nav class="sidebar-menu">
+        <button id="open-new-note-btn" class="menu-item btn-highlight-blue">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nova Nota
+        </button>
         <button class="menu-item active" data-target="main-view">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           Meus Recortes
+        </button>
+        <button class="menu-item" data-target="history-view">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
+          Históricos
         </button>
         <button class="menu-item" data-target="settings-view">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -60,29 +68,16 @@
         </div>
       </header>
 
-      <!-- STATS BAR (Visible only in tab mode) -->
-      <div class="stats-bar">
-        <span class="stat-item"><span class="stat-lbl">Notas Salvas:</span> <strong id="stats-total-notes">0</strong></span>
-        <span class="stat-divider">|</span>
-        <span class="stat-item"><span class="stat-lbl">Notas Manuais:</span> <strong id="stats-manual-notes">0</strong></span>
-        <span class="stat-divider">|</span>
-        <span class="stat-item"><span class="stat-lbl">Download:</span> <strong id="stats-auto-downloads">Ativo</strong></span>
-      </div>
-
       <!-- MAIN VIEW (MY CLIPPINGS) -->
       <main id="main-view" class="app-main">
         
         <!-- TOP CONTROLS BAR -->
         <div class="top-controls-bar">
-          <!-- MANUAL ADD NOTE -->
-          <section class="add-note-section">
-            <div class="input-group">
-              <textarea id="note-input" placeholder="Digite uma nota rápida para salvar..." rows="1"></textarea>
-              <button id="add-note-btn" class="btn-primary" title="Salvar Nota">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              </button>
-            </div>
-          </section>
+          <!-- NEW NOTE BUTTON (Visible in popup mode or as quick action) -->
+          <button id="quick-new-note-btn" class="btn-highlight-blue quick-action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nova Nota
+          </button>
 
           <!-- SEARCH & SUMMARY -->
           <section class="search-section">
@@ -124,6 +119,55 @@
             Limpar
           </button>
         </footer>
+      </main>
+
+      <!-- HISTORY / RESUMO VIEW (Históricos) -->
+      <main id="history-view" class="app-main hidden">
+        <div class="settings-header">
+          <button id="history-back-btn" class="icon-btn" title="Voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          </button>
+          <h2>Históricos e Métricas</h2>
+        </div>
+
+        <div class="settings-body">
+          <div class="history-grid">
+            <div class="stat-card">
+              <div class="stat-card-icon blue">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="stat-card-info">
+                <span class="stat-card-label">Total de Notas Salvas</span>
+                <strong id="stats-total-notes" class="stat-card-value">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon purple">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <div class="stat-card-info">
+                <span class="stat-card-label">Notas Manuais Criadas</span>
+                <strong id="stats-manual-notes" class="stat-card-value">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-icon green">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              <div class="stat-card-info">
+                <span class="stat-card-label">Download Automático (.txt)</span>
+                <strong id="stats-auto-downloads" class="stat-card-value">Ativo</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-summary-box">
+            <h3>Resumo do Armazenamento</h3>
+            <p>O SaveText armazena localmente de forma segura todos os textos capturados de páginas web e notas criadas manualmente. Todo o histórico permanece gravado no navegador sem envio para servidores externos.</p>
+          </div>
+        </div>
       </main>
 
       <!-- SETTINGS VIEW (Configurações) -->
@@ -184,6 +228,32 @@
           </div>
         </div>
       </main>
+
+      <!-- FLOATING MODAL FOR NEW NOTE -->
+      <div id="new-note-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+          <div class="modal-header">
+            <div class="modal-title-group">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="modal-title-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <h3>Adicionar Nova Nota</h3>
+            </div>
+            <button id="close-modal-btn" class="icon-btn" title="Fechar">&times;</button>
+          </div>
+          <div class="modal-body">
+            <textarea id="modal-note-input" placeholder="Digite ou cole aqui o texto da sua nota..." rows="6"></textarea>
+          </div>
+          <div class="modal-footer">
+            <span id="modal-feedback" class="modal-feedback"></span>
+            <div class="modal-actions">
+              <button id="modal-add-btn" class="btn-primary" title="Adicionar Nota (+)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Adicionar (+)
+              </button>
+              <button id="modal-close-action-btn" class="btn-secondary">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>

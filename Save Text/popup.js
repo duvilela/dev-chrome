@@ -3,12 +3,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainView = document.getElementById("main-view");
   const settingsView = document.getElementById("settings-view");
   const aboutView = document.getElementById("about-view");
+  const historyView = document.getElementById("history-view");
   
   const toggleSettingsBtn = document.getElementById("toggle-settings-btn");
   const toggleAboutBtn = document.getElementById("toggle-about-btn");
   const advancedModeBtn = document.getElementById("advanced-mode-btn");
   const backBtn = document.getElementById("back-btn");
   const aboutBackBtn = document.getElementById("about-back-btn");
+  const historyBackBtn = document.getElementById("history-back-btn");
+
+  const openNewNoteBtn = document.getElementById("open-new-note-btn");
+  const quickNewNoteBtn = document.getElementById("quick-new-note-btn");
+  const newNoteModal = document.getElementById("new-note-modal");
+  const closeModalBtn = document.getElementById("close-modal-btn");
+  const modalNoteInput = document.getElementById("modal-note-input");
+  const modalAddBtn = document.getElementById("modal-add-btn");
+  const modalCloseActionBtn = document.getElementById("modal-close-action-btn");
+  const modalFeedback = document.getElementById("modal-feedback");
 
   // CONFIGURAÇÃO DO MODO ABA (AVANÇADO)
   if (document.documentElement.classList.contains("mode-tab")) {
@@ -271,10 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ADICIONAR NOTA MANUALMENTE
+  // ADICIONAR NOTA MANUALMENTE (Pelo modal flutuante)
   function addManualNote() {
-    const text = noteInput.value.trim();
-    if (!text) return;
+    const inputEl = modalNoteInput || noteInput;
+    const text = inputEl ? inputEl.value.trim() : "";
+    if (!text) return false;
 
     const newNote = {
       id: "note_" + Date.now() + "_" + Math.random().toString(36).substring(2, 11),
@@ -287,15 +299,24 @@ document.addEventListener("DOMContentLoaded", () => {
     notes.unshift(newNote);
     
     chrome.storage.local.set({ notes: notes }, () => {
-      noteInput.value = "";
-      noteInput.style.height = "38px"; // Reseta altura do textarea
+      if (inputEl) {
+        inputEl.value = "";
+        if (inputEl === noteInput) inputEl.style.height = "38px";
+      }
       renderNotes();
       
-      // Auto-download para nota manual também, se ativado nas configurações
       if (settings.autoDownload) {
         downloadNoteAsTxt(newNote);
       }
+      if (modalFeedback) {
+        modalFeedback.textContent = "✅ Nota adicionada com sucesso!";
+        setTimeout(() => {
+          if (modalFeedback) modalFeedback.textContent = "";
+        }, 2500);
+      }
+      if (inputEl) inputEl.focus();
     });
+    return true;
   }
 
   // ATUALIZAR CONTEÚDO DE UMA NOTA
@@ -340,21 +361,61 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // EXPANDIR TEXTAREA DE INSERÇÃO MANUAL CONFORME DIGITA
-  noteInput.addEventListener("input", () => {
-    noteInput.style.height = "auto";
-    noteInput.style.height = (noteInput.scrollHeight) + "px";
-  });
+  if (noteInput) {
+    noteInput.addEventListener("input", () => {
+      noteInput.style.height = "auto";
+      noteInput.style.height = (noteInput.scrollHeight) + "px";
+    });
+  }
 
   // EVENTOS DE BOTÕES
-  addNoteBtn.addEventListener("click", addManualNote);
+  if (addNoteBtn) addNoteBtn.addEventListener("click", addManualNote);
   
   // Enter envia nota manual se não for Shift+Enter
-  noteInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
+  if (noteInput) {
+    noteInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        addManualNote();
+      }
+    });
+  }
+
+  // EVENTOS DO MODAL FLUTUANTE
+  const openModal = () => {
+    if (newNoteModal) {
+      newNoteModal.classList.remove("hidden");
+      if (modalNoteInput) modalNoteInput.focus();
+    }
+  };
+
+  const closeModal = () => {
+    if (modalNoteInput && modalNoteInput.value.trim() !== "") {
       addManualNote();
     }
-  });
+    if (newNoteModal) newNoteModal.classList.add("hidden");
+  };
+
+  if (openNewNoteBtn) openNewNoteBtn.addEventListener("click", openModal);
+  if (quickNewNoteBtn) quickNewNoteBtn.addEventListener("click", openModal);
+  if (modalAddBtn) modalAddBtn.addEventListener("click", addManualNote);
+  if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+  if (modalCloseActionBtn) modalCloseActionBtn.addEventListener("click", closeModal);
+  
+  if (newNoteModal) {
+    newNoteModal.addEventListener("click", (e) => {
+      if (e.target === newNoteModal) closeModal();
+    });
+  }
+
+  if (modalNoteInput) {
+    modalNoteInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        addManualNote();
+      }
+    });
+  }
 
   // BAIXAR NOTA INDIVIDUAL
   function downloadNoteAsTxt(note) {
@@ -440,6 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleSettingsBtn.addEventListener("click", () => {
       mainView.classList.add("hidden");
       if (aboutView) aboutView.classList.add("hidden");
+      if (historyView) historyView.classList.add("hidden");
       settingsView.classList.remove("hidden");
       
       // Sincroniza estado da sidebar
@@ -455,6 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleAboutBtn.addEventListener("click", () => {
       mainView.classList.add("hidden");
       settingsView.classList.add("hidden");
+      if (historyView) historyView.classList.add("hidden");
       if (aboutView) aboutView.classList.remove("hidden");
       
       const aboutMenuItem = document.querySelector('.menu-item[data-target="about-view"]');
@@ -469,6 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
     backBtn.addEventListener("click", () => {
       settingsView.classList.add("hidden");
       if (aboutView) aboutView.classList.add("hidden");
+      if (historyView) historyView.classList.add("hidden");
       mainView.classList.remove("hidden");
       
       // Sincroniza estado da sidebar
@@ -484,6 +548,22 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutBackBtn.addEventListener("click", () => {
       if (aboutView) aboutView.classList.add("hidden");
       settingsView.classList.add("hidden");
+      if (historyView) historyView.classList.add("hidden");
+      mainView.classList.remove("hidden");
+      
+      const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
+      if (recortesMenuItem) {
+        document.querySelectorAll(".sidebar .menu-item").forEach(i => i.classList.remove("active"));
+        recortesMenuItem.classList.add("active");
+      }
+    });
+  }
+
+  if (historyBackBtn) {
+    historyBackBtn.addEventListener("click", () => {
+      if (historyView) historyView.classList.add("hidden");
+      settingsView.classList.add("hidden");
+      if (aboutView) aboutView.classList.add("hidden");
       mainView.classList.remove("hidden");
       
       const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
@@ -498,10 +578,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuItems = document.querySelectorAll(".sidebar .menu-item");
   menuItems.forEach(item => {
     item.addEventListener("click", () => {
+      const target = item.getAttribute("data-target");
+      if (!target || !document.getElementById(target)) return;
+
       menuItems.forEach(i => i.classList.remove("active"));
       item.classList.add("active");
       
-      const target = item.getAttribute("data-target");
       document.querySelectorAll(".app-main").forEach(view => {
         view.classList.add("hidden");
       });
