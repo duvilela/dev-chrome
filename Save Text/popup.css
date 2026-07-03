@@ -242,6 +242,62 @@ button {
   margin-bottom: 16px;
 }
 
+/* QUICK NOTE INPUT (For initial popup mode, exact reference of Screenshot 2) */
+.note-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 6px 6px 6px 12px;
+  margin-bottom: 12px;
+  transition: all var(--transition-fast);
+}
+
+.note-input-container:focus-within {
+  border-color: var(--border-focus);
+  background-color: var(--bg-card);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+#note-input {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  width: 100%;
+  font-family: var(--font-main);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+#note-input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-btn {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+}
+
+.add-btn:hover {
+  filter: brightness(1.15);
+  transform: scale(1.05);
+}
+
 /* SEARCH SECTION */
 .search-section {
   display: flex;
@@ -513,8 +569,10 @@ button {
   align-items: center;
   justify-content: center;
   height: 100%;
+  max-height: calc(100vh - 180px);
   text-align: center;
   padding: 20px;
+  overflow: hidden !important;
 }
 
 .empty-icon-container {
@@ -803,6 +861,20 @@ html.mode-tab .app-layout {
   overflow: hidden !important;
 }
 
+/* IN NORMAL POPUP MODE (INITIAL APPLICATION): HIDE SIDEBAR AND TAB-ONLY BUTTONS */
+html:not(.mode-tab) .sidebar {
+  display: none !important;
+}
+
+html:not(.mode-tab) .tab-quick-buttons {
+  display: none !important;
+}
+
+/* IN TAB MODE: HIDE POPUP-ONLY QUICK NOTE INPUT CONTAINER */
+html.mode-tab #quick-note-input-container {
+  display: none !important;
+}
+
 /* SIDEBAR IN TAB MODE */
 html.mode-tab .sidebar {
   display: flex !important;
@@ -950,10 +1022,17 @@ html.mode-tab .notes-list-section {
   padding-right: 8px;
 }
 
+/* Prevent scrollbar when empty state is shown */
+html.mode-tab .notes-list-section:has(.empty-state:not(.hidden)) {
+  overflow: hidden !important;
+}
+
 /* Top Controls Bar in Tab Mode */
 html.mode-tab .top-controls-bar {
   display: flex !important;
   flex-direction: row !important;
+  align-items: center !important;
+  gap: 20px !important;
   width: 100% !important;
   margin-bottom: 24px !important;
   background: rgba(255, 255, 255, 0.015);
@@ -962,32 +1041,122 @@ html.mode-tab .top-controls-bar {
   border: 1px solid var(--border-color);
 }
 
+html.mode-tab .tab-quick-buttons {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 html.mode-tab #quick-new-note-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0;
+}
+
+html.mode-tab #quick-new-note-btn span,
+html.mode-tab #quick-new-note-btn .btn-text {
   display: none !important;
 }
 
+html.mode-tab #quick-new-note-btn svg {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+}
+
+html.mode-tab #refresh-notes-btn,
+html.mode-tab #tab-download-all-btn,
+html.mode-tab #tab-clear-all-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0;
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+html.mode-tab #refresh-notes-btn:hover,
+html.mode-tab #tab-download-all-btn:hover {
+  background-color: rgba(14, 165, 233, 0.15) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transform: translateY(-2px);
+}
+
+html.mode-tab #refresh-notes-btn:hover {
+  transform: rotate(45deg);
+}
+
+html.mode-tab #tab-clear-all-btn:hover {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: var(--danger) !important;
+  color: var(--danger) !important;
+  transform: translateY(-2px);
+}
+
+html.mode-tab #refresh-notes-btn svg,
+html.mode-tab #tab-download-all-btn svg,
+html.mode-tab #tab-clear-all-btn svg {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
 html.mode-tab .search-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
   margin-bottom: 0 !important;
   max-width: none !important;
   width: 100% !important;
+  flex: 1;
+}
+
+html.mode-tab .search-bar {
+  width: 100% !important;
+  flex: 1;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+html.mode-tab .summary-info {
+  display: none !important;
 }
 
 /* NOTES CONTAINER GRID (STICKY NOTES STYLE) IN TAB MODE */
 html.mode-tab #notes-container {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
-  gap: 16px !important;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)) !important;
+  gap: 20px !important;
   height: auto !important;
   padding-bottom: 24px;
 }
 
 /* INDIVIDUAL STICKY NOTE STYLING */
 html.mode-tab .note-card {
-  height: 220px !important;
+  height: 340px !important;
   display: flex !important;
   flex-direction: column !important;
   border-radius: var(--radius-md) !important;
-  padding: 16px !important;
+  padding: 20px !important;
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
@@ -1070,11 +1239,29 @@ html.mode-tab .note-actions {
   margin-top: auto;
 }
 
-/* Hide Default Footer in Tab Mode since action buttons are on main screen */
+/* Hide Default Footer in Tab Mode since action buttons are now under Meus Recortes in sidebar */
 html.mode-tab .app-main > .app-footer {
-  margin-top: 16px;
-  padding-top: 16px;
-  background-color: transparent !important;
+  display: none !important;
+}
+
+html:not(.mode-tab) .sidebar-subactions {
+  display: none !important;
+}
+
+/* SETTINGS & HISTORY VIEW IN TAB MODE (Centered and proportioned ~50% width) */
+html.mode-tab #settings-view .settings-body,
+html.mode-tab #history-view .settings-body {
+  max-width: 680px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 10px 0 30px 0 !important;
+}
+
+html.mode-tab #settings-view .settings-header,
+html.mode-tab #history-view .settings-header {
+  max-width: 680px !important;
+  width: 100% !important;
+  margin: 0 auto 24px auto !important;
 }
 
 /* HISTORY VIEW & STATS CARDS */
@@ -1169,8 +1356,8 @@ html.mode-tab .app-main > .app-footer {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(7, 10, 18, 0.8);
-  backdrop-filter: blur(6px);
+  background: rgba(7, 10, 18, 0.4);
+  backdrop-filter: blur(3px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -1288,6 +1475,255 @@ html.mode-tab .app-main > .app-footer {
 .modal-actions .btn-secondary {
   padding: 10px 18px;
   font-size: 0.9rem;
+}
+
+/* SIDEBAR SUBACTIONS (Under Meus Recortes) */
+.sidebar-subactions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.subaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent !important;
+  border: none !important;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: #ffffff !important;
+  font-family: var(--font-main);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 100%;
+  text-align: left;
+  box-shadow: none !important;
+}
+
+.subaction-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #38bdf8 !important;
+  transform: translateX(3px);
+}
+
+.btn-danger-sub:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  transform: translateX(3px);
+}
+
+.subaction-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.subaction-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #ffffff !important;
+}
+
+/* STOPRAM ABOUT CARD STYLE */
+.stopram-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 4px;
+}
+
+.header-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-sublegend {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 0 44px;
+}
+
+html:not(.mode-tab) .header-sublegend {
+  margin-left: 0;
+}
+
+.stopram-about-card {
+  background: #0b111e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+html:not(.mode-tab) .stopram-about-card {
+  padding: 18px 16px;
+}
+
+.about-card-title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.about-author-profile {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.author-avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  flex-shrink: 0;
+}
+
+.author-avatar-circle span {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.author-name-block h4 {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.author-role {
+  font-size: 0.9rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.about-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 24px 0;
+}
+
+.about-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-link-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.about-link-item .link-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.about-link-item strong {
+  color: var(--text-primary);
+  margin-right: 4px;
+}
+
+.cyan-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.cyan-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.about-license-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.license-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.license-icon {
+  width: 20px;
+  height: 20px;
+  color: #f59e0b;
+}
+
+.license-header-row h4 {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.license-main-text, .license-subheading {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.license-subheading {
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.license-bullet-list {
+  list-style-type: none;
+  padding-left: 12px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.license-bullet-list li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  position: relative;
+  padding-left: 14px;
+}
+
+.license-bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.license-bullet-list li strong {
+  color: var(--text-primary);
 }
 
 

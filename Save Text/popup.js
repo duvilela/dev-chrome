@@ -99,15 +99,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Atualiza contador
-    if (notes.length === 0) {
-      notesCounter.textContent = "Nenhuma nota salva";
+    const downloadBtns = document.querySelectorAll(".action-download-all, #download-all-btn");
+    const clearBtns = document.querySelectorAll(".action-clear-all, #clear-all-btn");
+    if (filteredNotes.length === 0) {
+      if (notes.length === 0) {
+        notesCounter.textContent = "Nenhuma nota salva";
+      } else {
+        notesCounter.textContent = "Nenhuma nota encontrada";
+      }
       emptyState.classList.remove("hidden");
-      downloadAllBtn.disabled = true;
-      clearAllBtn.disabled = true;
+      notesContainer.classList.add("hidden");
+      downloadBtns.forEach(btn => btn.disabled = (notes.length === 0));
+      clearBtns.forEach(btn => btn.disabled = (notes.length === 0));
     } else {
       emptyState.classList.add("hidden");
-      downloadAllBtn.disabled = false;
-      clearAllBtn.disabled = false;
+      notesContainer.classList.remove("hidden");
+      downloadBtns.forEach(btn => btn.disabled = false);
+      clearBtns.forEach(btn => btn.disabled = false);
 
       if (searchQuery) {
         notesCounter.textContent = `${filteredNotes.length} de ${notes.length} notas encontradas`;
@@ -282,9 +290,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ADICIONAR NOTA MANUALMENTE (Pelo modal flutuante)
+  // ADICIONAR NOTA MANUALMENTE
   function addManualNote() {
-    const inputEl = modalNoteInput || noteInput;
+    let inputEl = noteInput;
+    if (newNoteModal && !newNoteModal.classList.contains("hidden")) {
+      inputEl = modalNoteInput;
+    } else if (modalNoteInput && modalNoteInput.value.trim() !== "") {
+      inputEl = modalNoteInput;
+    }
     const text = inputEl ? inputEl.value.trim() : "";
     if (!text) return false;
 
@@ -398,6 +411,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (openNewNoteBtn) openNewNoteBtn.addEventListener("click", openModal);
   if (quickNewNoteBtn) quickNewNoteBtn.addEventListener("click", openModal);
+  const refreshNotesBtn = document.getElementById("refresh-notes-btn");
+  if (refreshNotesBtn) {
+    refreshNotesBtn.addEventListener("click", () => {
+      refreshNotesBtn.style.transform = "rotate(360deg)";
+      setTimeout(() => {
+        location.reload();
+      }, 150);
+    });
+  }
   if (modalAddBtn) modalAddBtn.addEventListener("click", addManualNote);
   if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
   if (modalCloseActionBtn) modalCloseActionBtn.addEventListener("click", closeModal);
@@ -442,8 +464,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // HELPER PARA EXIBIR/OCULTAR SUBAÇÕES DA SIDEBAR
+  const updateSidebarSubactions = (show) => {
+    const sidebarActions = document.getElementById("sidebar-clippings-actions");
+    if (sidebarActions) {
+      if (show) sidebarActions.classList.remove("hidden");
+      else sidebarActions.classList.add("hidden");
+    }
+  };
+
   // BAIXAR TODAS AS NOTAS CONSOLIDADAS
-  downloadAllBtn.addEventListener("click", () => {
+  const triggerDownloadAll = () => {
     if (notes.length === 0) return;
 
     const dateNow = new Date();
@@ -481,10 +512,14 @@ document.addEventListener("DOMContentLoaded", () => {
       filename: filename,
       saveAs: false
     });
+  };
+
+  document.querySelectorAll(".action-download-all, #download-all-btn").forEach(btn => {
+    btn.addEventListener("click", triggerDownloadAll);
   });
 
   // LIMPAR TODAS AS NOTAS
-  clearAllBtn.addEventListener("click", () => {
+  const triggerClearAll = () => {
     if (notes.length === 0) return;
 
     const confirmClear = confirm("Tem certeza de que deseja excluir permanentemente todo o histórico de notas salvas?");
@@ -494,6 +529,10 @@ document.addEventListener("DOMContentLoaded", () => {
         renderNotes();
       });
     }
+  };
+
+  document.querySelectorAll(".action-clear-all, #clear-all-btn").forEach(btn => {
+    btn.addEventListener("click", triggerClearAll);
   });
 
   // CONFIGURAÇÕES - ABRE E FECHA
@@ -503,6 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (aboutView) aboutView.classList.add("hidden");
       if (historyView) historyView.classList.add("hidden");
       settingsView.classList.remove("hidden");
+      updateSidebarSubactions(false);
       
       // Sincroniza estado da sidebar
       const settingsMenuItem = document.querySelector('.menu-item[data-target="settings-view"]');
@@ -519,6 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
       settingsView.classList.add("hidden");
       if (historyView) historyView.classList.add("hidden");
       if (aboutView) aboutView.classList.remove("hidden");
+      updateSidebarSubactions(false);
       
       const aboutMenuItem = document.querySelector('.menu-item[data-target="about-view"]');
       if (aboutMenuItem) {
@@ -534,6 +575,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (aboutView) aboutView.classList.add("hidden");
       if (historyView) historyView.classList.add("hidden");
       mainView.classList.remove("hidden");
+      updateSidebarSubactions(true);
       
       // Sincroniza estado da sidebar
       const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
@@ -550,6 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
       settingsView.classList.add("hidden");
       if (historyView) historyView.classList.add("hidden");
       mainView.classList.remove("hidden");
+      updateSidebarSubactions(true);
       
       const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
       if (recortesMenuItem) {
@@ -565,6 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
       settingsView.classList.add("hidden");
       if (aboutView) aboutView.classList.add("hidden");
       mainView.classList.remove("hidden");
+      updateSidebarSubactions(true);
       
       const recortesMenuItem = document.querySelector('.menu-item[data-target="main-view"]');
       if (recortesMenuItem) {
@@ -588,6 +632,9 @@ document.addEventListener("DOMContentLoaded", () => {
         view.classList.add("hidden");
       });
       document.getElementById(target).classList.remove("hidden");
+
+      if (target === "main-view") updateSidebarSubactions(true);
+      else updateSidebarSubactions(false);
     });
   });
 
