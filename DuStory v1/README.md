@@ -1,9 +1,9 @@
-# Criado por EEV - Antigravity
-# ExDU: Downloader profissional para Instagram (v1.1.7)
+# Criado por EEV
+# DuStory: Extensão para Instagram (v1.1.9)
 
-O **ExDU** é uma extensão de navegador premium e livre de anúncios, projetada para baixar Stories, Fotos, Vídeos, Carrosséis e Reels do Instagram com facilidade, rapidez e segurança.
+O **DuStory** é uma extensão de navegador premium e livre de anúncios, projetada para baixar Stories, Fotos, Vídeos, Carrosséis e Reels do Instagram com facilidade, rapidez e segurança.
 
-Esta versão (**v1.1.4**) foi adaptada por **@duhvilela** com melhorias de interface, remoção de todas as propagandas e anúncios integrados, tradução completa para o Português do Brasil (pt-BR) e um design moderno em azul metálico.
+Esta versão (**v1.1.9**) foi adaptada por **@duhvilela** com melhorias de interface, remoção de todas as propagandas e anúncios integrados, tradução completa para o Português do Brasil (pt-BR) e um design moderno em azul metálico.
 
 ---
 
@@ -22,11 +22,11 @@ Esta versão (**v1.1.4**) foi adaptada por **@duhvilela** com melhorias de inter
 
 Como se trata de uma extensão personalizada (não empacotada na Chrome Web Store), siga o passo a passo abaixo para instalá-la:
 
-1. Faça o download ou clone a pasta `Download for Instagram Adapt v114` para o seu computador.
+1. Faça o download ou clone a pasta `DuStory v119` para o seu computador.
 2. Abra o Google Chrome e digite **`chrome://extensions/`** na barra de endereços (ou vá em *Menu > Extensões > Gerenciar extensões*).
 3. No canto superior direito da página, ative o controle **"Modo do desenvolvedor"**.
 4. No canto superior esquerdo, clique no botão **"Carregar sem compactação"**.
-5. Navegue até a pasta onde salvou os arquivos e selecione a pasta **`Download for Instagram Adapt v114`** (a pasta que contém o arquivo `manifest.json`).
+5. Navegue até a pasta onde salvou os arquivos e selecione a pasta **`DuStory V1`** (a pasta que contém o arquivo `manifest.json`).
 6. A extensão será carregada e o ícone azul metálico aparecerá na sua lista de extensões!
 
 *Dica: Clique no ícone de quebra-cabeça na barra de ferramentas do Chrome e "fixe" (pin) o **ExDU** para acesso rápido.*
